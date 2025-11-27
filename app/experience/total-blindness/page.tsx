@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Eye, EyeOff } from "lucide-react"
+import { ArrowLeft, Eye, EyeOff, Keyboard, MousePointerClick, Ear, Volume2 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { ExperienceCards } from "@/components/experience-cards"
@@ -11,6 +11,7 @@ import { VideoSeriesSection } from "@/components/video-series-section"
 import { VisualImpairmentSection } from "@/components/visual-impairment-section"
 import { useLanguage } from "@/hooks/use-language"
 import { translations } from "@/lib/translations"
+import { cn } from "@/lib/utils"
 
 export default function TotalBlindnessExperience() {
   const [started, setStarted] = useState(false)
@@ -22,9 +23,11 @@ export default function TotalBlindnessExperience() {
   const { language } = useLanguage()
   const t = translations[language]
 
+  // --- TTS Logic ---
   useEffect(() => {
     if (started) {
-      speak(t.screenReader.welcome)
+      // Small delay to ensure audio context is ready
+      setTimeout(() => speak(t.screenReader.welcome), 500)
     }
   }, [started, language])
 
@@ -35,13 +38,17 @@ export default function TotalBlindnessExperience() {
       const target = e.target as HTMLElement
       let label = ""
 
+      // Logic to determine what to read
       if (target.getAttribute("aria-label")) {
         label = target.getAttribute("aria-label") || ""
-      } else if (target.textContent) {
-        label = target.textContent.trim().slice(0, 100)
+      } else if (target.textContent && target.tagName !== "SCRIPT") {
+        // Limit text length for better UX
+        label = target.textContent.trim().slice(0, 150)
       } else if (target.tagName === "A" && target.getAttribute("href")) {
         label =
-          language === "km" ? `តំណភ្ជាប់ទៅកាន់ ${target.getAttribute("href")}` : `Link to ${target.getAttribute("href")}`
+          language === "km"
+            ? `តំណភ្ជាប់ទៅកាន់ ${target.getAttribute("href")}`
+            : `Link to ${target.getAttribute("href")}`
       } else if (target.tagName === "BUTTON") {
         label = language === "km" ? "ប៊ូតុង" : "Button"
       }
@@ -50,11 +57,12 @@ export default function TotalBlindnessExperience() {
         setFocusedElement(label)
         speak(label)
 
+        // Show visual caption if accessibility mode is ON (Cheating mode)
         if (accessibilityMode) {
           setShowPopup(true)
-          setTimeout(() => {
-            setShowPopup(false)
-          }, 2000)
+          // Hide popup after a delay, but keep focus state
+          const timer = setTimeout(() => setShowPopup(false), 4000)
+          return () => clearTimeout(timer)
         }
       }
     }
@@ -64,117 +72,134 @@ export default function TotalBlindnessExperience() {
   }, [started, accessibilityMode, language])
 
   const speak = async (text: string) => {
+    if (!text) return
+
     try {
-      // Stop any ongoing speech
+      // Cancel existing speech
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current = null
       }
       window.speechSynthesis.cancel()
 
-      console.log("[v0] Requesting TTS for:", text.slice(0, 50) + "...")
-
+      // Attempt API call (Optional: Replace with your preferred TTS provider)
       const response = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, language }),
       })
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        if (errorData.useClientSynthesis) {
-          console.log("[v0] API unavailable, using browser fallback")
-          fallbackSpeak(text)
-          return
-        }
-      }
+      const contentType = response.headers.get("content-type")
 
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-
-      const audio = new Audio(audioUrl)
-      audioRef.current = audio
-
-      audio.onended = () => {
-        URL.revokeObjectURL(audioUrl)
-        audioRef.current = null
-      }
-
-      audio.onerror = () => {
-        console.log("[v0] Audio playback error, using fallback")
-        URL.revokeObjectURL(audioUrl)
+      if (response.ok && contentType?.includes("audio")) {
+        const audioBlob = await response.blob()
+        const audioUrl = URL.createObjectURL(audioBlob)
+        const audio = new Audio(audioUrl)
+        audioRef.current = audio
+        
+        audio.onended = () => URL.revokeObjectURL(audioUrl)
+        audio.onerror = () => fallbackSpeak(text)
+        
+        await audio.play()
+      } else {
         fallbackSpeak(text)
       }
-
-      await audio.play()
-      console.log("[v0] Playing AiVOOV audio")
     } catch (error) {
-      console.log("[v0] TTS API error, using fallback:", error)
       fallbackSpeak(text)
     }
   }
 
   const fallbackSpeak = (text: string) => {
     if ("speechSynthesis" in window) {
-      // Cancel any ongoing speech
       window.speechSynthesis.cancel()
-
       const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = 0.9
-      utterance.pitch = 1.0
-      utterance.volume = 1.0
-      utterance.lang = language === "km" ? "km-KH" : "en-US"
-
+      
+      // Attempt to find a Khmer voice if needed, otherwise default
       const voices = window.speechSynthesis.getVoices()
       if (language === "km") {
-        const khmerVoice = voices.find((voice) => voice.lang.includes("km") || voice.lang.includes("KH"))
-        if (khmerVoice) {
-          utterance.voice = khmerVoice
-          console.log("[v0] Using browser Khmer voice:", khmerVoice.name)
-        } else {
-          console.log("[v0] No Khmer voice available, using default with km-KH lang")
-        }
+        const khmerVoice = voices.find((v) => v.lang.includes("km") || v.lang.includes("KH"))
+        if (khmerVoice) utterance.voice = khmerVoice
       }
-
+      
+      utterance.rate = 1.0
       window.speechSynthesis.speak(utterance)
     }
   }
 
+  // --- START SCREEN UI ---
   if (!started) {
     return (
-      <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
-        <div className="max-w-3xl w-full space-y-8">
-          <Link href="/" className="text-sm underline hover:text-lima-blue transition-colors">
-            ← Back to main menu
+      <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+        {/* Background Decor */}
+        <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff751f]/5 rounded-full blur-[100px]" />
+
+        <div className="max-w-4xl w-full space-y-8 relative z-10">
+          <Link
+            href="/experience"
+            className="text-sm font-medium text-slate-500 hover:text-[#1351aa] transition-colors flex items-center gap-2 group w-fit"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to main menu
           </Link>
 
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-balance">Total Blindness Experience</h1>
-
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              During this experience, we would like you to imagine yourself as a blind person and try to navigate our
-              website using only the keyboard and a screen reader.
-            </p>
-
-            <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-              <h2 className="font-semibold text-lg">How to Navigate</h2>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-lima-blue">Tab</div>
-                  <p className="text-sm">Move between interactive elements</p>
+          <div className="space-y-8">
+            <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
+                    <Ear className="w-4 h-4" />
+                    <span>Visual Simulation 01</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-lima-blue">Enter</div>
-                  <p className="text-sm">Activate links and buttons</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-lima-blue">👁️</div>
-                  <p className="text-sm">Toggle to see what you're focusing on</p>
-                </div>
-              </div>
+                <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
+                  Total Blindness Lab
+                </h1>
             </div>
 
-            <Button size="lg" onClick={() => setStarted(true)} className="w-full md:w-auto">
+            <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
+              <h2 className="text-xl font-bold text-slate-900">Mission</h2>
+              <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
+                Experience the web as a screen reader user. 
+                Your screen will go <strong>black</strong>. You must navigate using only your keyboard and audio cues.
+              </p>
+            </div>
+
+            {/* Instruction Cards */}
+            <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
+                        <Keyboard className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 mb-2">TAB Key</h3>
+                    <p className="text-sm text-slate-500">
+                        Press <strong>Tab</strong> to jump between interactive elements (buttons, links, inputs).
+                    </p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
+                        <MousePointerClick className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 mb-2">ENTER Key</h3>
+                    <p className="text-sm text-slate-500">
+                        Press <strong>Enter</strong> to click/activate the element you are currently focused on.
+                    </p>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div className="w-12 h-12 bg-[#ff751f]/10 text-[#ff751f] rounded-xl flex items-center justify-center mb-4">
+                        <Eye className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 mb-2">Cheat Mode</h3>
+                    <p className="text-sm text-slate-500">
+                        Getting lost? Toggle the <strong>Eye Icon</strong> (top right) to peek at the screen.
+                    </p>
+                </div>
+            </div>
+
+            <Button
+              size="lg"
+              onClick={() => setStarted(true)}
+              className="bg-[#ff751f] hover:bg-[#e06519] text-white rounded-xl px-10 py-7 text-lg font-semibold shadow-xl shadow-orange-900/10 transition-all hover:-translate-y-1 w-full md:w-auto"
+            >
               Start Experience
             </Button>
           </div>
@@ -183,51 +208,77 @@ export default function TotalBlindnessExperience() {
     )
   }
 
+  // --- ACTIVE SIMULATION ---
   return (
-    <div className="relative">
+    <div className="relative min-h-screen bg-white">
+      
+      {/* 1. The "Blindness" Overlay */}
+      {/* We keep the underlying DOM accessible (no display:none) but visually hidden */}
       <div
-        className="fixed inset-0 bg-black z-40 pointer-events-none transition-opacity duration-300"
-        style={{ opacity: accessibilityMode ? 0 : 0.98 }}
+        className="fixed inset-0 z-[100] bg-[#0B0F19] transition-opacity duration-700 pointer-events-none"
+        style={{ opacity: accessibilityMode ? 0 : 1 }}
         aria-hidden="true"
-      />
+      >
+        {!accessibilityMode && (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-slate-500/50 space-y-4">
+                <Volume2 className="w-16 h-16 mx-auto animate-pulse" />
+                <p className="text-sm font-mono tracking-widest uppercase">Audio Navigation Active</p>
+            </div>
+        )}
+      </div>
 
+      {/* 2. Floating Toggle Button (Always visible/accessible) */}
       <button
         onClick={() => {
           setAccessibilityMode(!accessibilityMode)
           speak(accessibilityMode ? t.screenReader.accessibilityDisabled : t.screenReader.accessibilityEnabled)
         }}
-        className="fixed top-4 right-4 z-50 p-3 bg-white hover:bg-gray-100 rounded-full shadow-lg border-2 border-gray-300 transition-colors"
-        aria-label={accessibilityMode ? t.screenReader.disableAccessibility : t.screenReader.enableAccessibility}
+        className={cn(
+            "fixed top-6 right-6 z-[110] p-4 rounded-full shadow-2xl border-2 transition-all duration-300 group",
+            accessibilityMode 
+                ? "bg-white border-slate-200 text-slate-400 hover:text-[#1351aa]" 
+                : "bg-[#1351aa] border-[#1351aa] text-white hover:bg-[#1a5dc0]"
+        )}
+        title={accessibilityMode ? "Disable Visuals" : "Enable Visuals"}
       >
-        {accessibilityMode ? <Eye className="w-6 h-6 text-gray-900" /> : <EyeOff className="w-6 h-6 text-gray-900" />}
+        {accessibilityMode ? <Eye className="w-6 h-6" /> : <EyeOff className="w-6 h-6" />}
       </button>
 
+      {/* 3. Screen Reader Caption (Cheat Mode / Visual Aid) */}
       {showPopup && focusedElement && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-lg shadow-2xl p-8 max-w-md w-full animate-in fade-in zoom-in duration-200">
-          <div className="text-center space-y-4">
-            <div className="text-5xl">🔊</div>
-            <h2 className="text-2xl font-bold text-gray-900">Screen Reader Says:</h2>
-            <p className="text-lg text-gray-700 font-medium leading-relaxed">{focusedElement}</p>
-          </div>
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[110] w-[90%] max-w-lg">
+            <div className="bg-[#1e1e2e] text-slate-200 p-6 rounded-2xl shadow-2xl border-l-4 border-[#ff751f] animate-in fade-in slide-in-from-bottom-4">
+                <div className="flex items-start gap-4">
+                    <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                        <Volume2 className="w-5 h-5 text-[#ff751f]" />
+                    </div>
+                    <div>
+                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">VoiceOver Output</div>
+                        <p className="text-lg font-medium leading-relaxed font-mono">
+                            "{focusedElement}"
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
       )}
 
-      <div ref={containerRef} className="relative z-30">
-        <main className="min-h-screen flex flex-col">
-          <Navbar />
-          <HeroSection />
-          <ExperienceCards />
-          <VideoSeriesSection />
-          <VisualImpairmentSection />
+      {/* 4. The Actual Website Content (This is what is being navigated) */}
+      {/* We wrap it in a container that allows focus but is visually hidden by the overlay above */}
+      <div ref={containerRef} className="relative z-0">
+        <Navbar />
+        <HeroSection />
+        <ExperienceCards />
+        <VideoSeriesSection />
+        <VisualImpairmentSection />
 
-          <footer className="bg-slate-900 text-white py-12">
+        <footer className="bg-slate-900 text-white py-12">
             <div className="container mx-auto px-6 md:px-10 text-center">
-              <p className="opacity-60">
+              <p className="opacity-60 text-sm">
                 © {new Date().getFullYear()} Project Lima Clone. Built for accessibility awareness.
               </p>
             </div>
-          </footer>
-        </main>
+        </footer>
       </div>
     </div>
   )

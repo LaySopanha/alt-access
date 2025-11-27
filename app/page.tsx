@@ -8,15 +8,17 @@ import { AnimatedBackground } from "@/components/animated-background"
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
-      <AnimatedBackground />
-      <Navbar />
-      <HeroSection />
-      <ExperienceCards />
-      <VideoSeriesSection />
-      <VisualImpairmentSection />
+    <main className="relative isolate min-h-screen flex flex-col overflow-hidden">
+   
+      <div className="relative z-10 flex flex-col flex-1">
+        <Navbar />
+        <HeroSection />
+        <ExperienceCards />
+        <VideoSeriesSection />
+        <VisualImpairmentSection />
 
-      <Footer />
+        <Footer />
+      </div>
     </main>
   )
 }

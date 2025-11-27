@@ -4,17 +4,20 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --background: #ffffff;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+
+  /* Consolidating to use the two main brand colors */
+  --primary: #1351aa; /* Brand blue */
+  --primary-foreground: #ffffff;
+  --secondary: #ff751f; /* Brand orange */
+  --secondary-foreground: #ffffff;
+
+  --muted: #f4f4f5;
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
@@ -38,9 +41,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Custom Colors */
-  --lima-blue: #0044cc;
-  --lima-orange: #ff6b00;
+  /* Main brand colors for easy reference throughout the app */
+  --lima-blue: #1351aa;
+  --lima-orange: #ff751f;
 }
 
 .dark {
@@ -76,6 +79,20 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 @theme inline {
@@ -144,5 +161,19 @@
 
   .animate-scroll-left {
     animation: scroll-left 60s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 80s linear infinite;
+    will-change: transform;
   }
 }

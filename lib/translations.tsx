@@ -5,10 +5,14 @@ export const translations = {
       backHome: "Back to homepage",
     },
     hero: {
-      title: "Build the Web for Everyone",
+      titlePrefix: "Build the Web for",
+      titleHighlight: "Everyone.",
       description:
         "Discover why accessibility matters and learn how small changes in your code can make a big difference for people with disabilities.",
       cta: "Try the Visual Impaired Experience",
+      learnMore: "Learn More",
+      keyboardNav: "Keyboard Nav",
+      fullyOptimized: "Fully optimized",
     },
     experiences: {
       totalBlindness: {
@@ -39,6 +43,12 @@ export const translations = {
     },
     videoSeries: {
       title: "Watch our video series",
+      theCurriculum: "The Curriculum",
+      description:
+        "Short, high-impact lessons designed to upgrade your development skills. Learn how to build for the 15% of the population most sites ignore.",
+      pauseScroll: "Pause Scroll",
+      resumeScroll: "Resume Scroll",
+      watchLesson: "Watch Lesson",
       videos: [
         { ep: "EP.01", title: "PERCEPTION OF ACCESSIBILITY" },
         { ep: "EP.02", title: "LANGUAGE DIVERSITY" },
@@ -56,6 +66,12 @@ export const translations = {
       exploreCta: "Explore experience",
       trySimulation: "Try a simulation",
       joinMailingList: "Join Mailing List",
+      webIncompatibility: "Web Incompatibility",
+      usersImpacted: "Users Impacted",
+      inspector: "Inspector",
+      codeExample: "To a screen reader, a beautiful image is just <img /> unless you code it with purpose.",
+      altTextExample: "Diverse students collaborating",
+      voiceOverOutput: "VoiceOver Output",
     },
     footer: {
       copyright: "Alt Access. All rights reserved.",
@@ -73,6 +89,8 @@ export const translations = {
       email: "Email Us",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
+      github: "GitHub",
+      twitter: "Twitter",
     },
     screenReader: {
       welcome:
@@ -100,10 +118,14 @@ export const translations = {
       backHome: "ត្រឡប់ទៅទំព័រដើម",
     },
     hero: {
-      title: "បង្កើតគេហទំព័រសម្រាប់មនុស្សគ្រប់គ្នា",
+      titlePrefix: "បង្កើតគេហទំព័រសម្រាប់",
+      titleHighlight: "មនុស្សគ្រប់គ្នា។",
       description:
         "រកឃើញមូលហេតុដែលភាពងាយស្រួលប្រើប្រាស់មានសារៈសំខាន់ និងរៀនពីរបៀបដែលការផ្លាស់ប្តូរតូចៗក្នុងកូដរបស់អ្នកអាចធ្វើឱ្យមានភាពខុសគ្នាយ៉ាងធំសម្រាប់មនុស្សពិការ។",
       cta: "សាកល្បងបទពិសោធន៍ភ្នែកខ្សោយ",
+      learnMore: "ស្វែងយល់បន្ថែម",
+      keyboardNav: "ការរុករកតាមក្តារចុច",
+      fullyOptimized: "បានធ្វើឱ្យប្រសើរពេញលេញ",
     },
     experiences: {
       totalBlindness: {
@@ -131,6 +153,12 @@ export const translations = {
     },
     videoSeries: {
       title: "មើលស៊េរីវីដេអូរបស់យើង",
+      theCurriculum: "កម្មវិធីសិក្សា",
+      description:
+        "មេរៀនខ្លី និងមានឥទ្ធិពលខ្ពស់ដែលរចនាឡើងដើម្បីកែលម្អជំនាញអភិវឌ្ឍន៍របស់អ្នក។ រៀនពីរបៀបបង្កើតសម្រាប់ 15% នៃប្រជាជនដែលគេហទំព័រភាគច្រើនមិនអើពើ។",
+      pauseScroll: "ផ្អាករំកិល",
+      resumeScroll: "បន្តរំកិ",
+      watchLesson: "មើលមេរៀន",
       videos: [
         { ep: "EP.01", title: "ការយល់ឃើញអំពីភាពងាយស្រួលប្រើប្រាស់" },
         { ep: "EP.02", title: "ភាពចម្រុះនៃភាសា" },
@@ -148,6 +176,12 @@ export const translations = {
       exploreCta: "ស្វែងរកបទពិសោធន៍",
       trySimulation: "សាកល្បងការក្លែងធ្វើ",
       joinMailingList: "ចូលរួមបញ្ជីសំបុត្រ",
+      webIncompatibility: "គេហទំព័រមិនត្រូវគ្នា",
+      usersImpacted: "អ្នកប្រើប្រាស់ដែលរងផលប៉ះពាល់",
+      inspector: "អ្នកត្រួតពិនិត្យ",
+      codeExample: "សម្រាប់កម្មវិធីអានអេក្រង់ រូបភាពស្អាតគ្រាន់តែជា <img /> ប្រសិនបើអ្នកមិនសរសេរកូដជាមួយគោលបំណង។",
+      altTextExample: "សិស្សចម្រុះកំពុងសហការគ្នា",
+      voiceOverOutput: "លទ្ធផល VoiceOver",
     },
     footer: {
       copyright: "Alt Access។ រក្សាសិទ្ធិគ្រប់យ៉ាង។",
@@ -164,10 +198,12 @@ export const translations = {
       email: "អ៊ីមែលមកយើង",
       privacy: "គោលការណ៍ឯកជនភាព",
       terms: "លក្ខខណ្ឌសេវាកម្ម",
+      github: "GitHub",
+      twitter: "Twitter",
     },
     screenReader: {
       welcome:
-        "សូមស្វាគមន៍មកកាន់បទពិសោធន៍ភ្នែកពិការទាំងស្រុង។ អេក្រង់របស់អ្នកឥឡូវនេះពណ៌ខ្មៅ។ រុករកដោយប្រើតែក្តារចុច។ ចុច Tab ដើម្បីផ្លាស់ទីរវាងធាតុផ្សេងៗ ចុច Enter ដើម្បីជ្រើសរើស និងប្រើគ្រាប់ព្រួញដើម្បីរំកិល។ បើកបិទរូបតំណាងភ្នែកនៅខាងលើស្តាំដើម្បីមើលអ្វីដែលអ្នកកំពុងផ្តោតលើ។",
+        "សូមស្វាគមន៍មកកាន់បទពិសោធន៍ភ្នែកពិការទាំងស្រុង។ អេក្រង់របស់អ្នកឥឡូវនេះពណ៌ខ្មៅ។ រុករកដោយប្រើតែក្តារចុច។ ចុច Tab ដើម្បីផ្លាស់ទីរវាងធាតុផ្សេងៗ ចុច Enter ដើម្បីជ្រើសរើស និងប្រើគ្រាប់ព្រួញដើម្បីរំកិ។ បើកបិទរូបតំណាងភ្នែកនៅខាងលើស្តាំដើម្បីមើលអ្វីដែលអ្នកកំពុងផ្តោតលើ។",
       accessibilityEnabled: "បានបើករបៀបងាយស្រួលប្រើប្រាស់។ ឥឡូវនេះអ្នកអាចមើលឃើញទំព័រ។",
       accessibilityDisabled: "បានបិទរបៀបងាយស្រួលប្រើប្រាស់។ អេក្រង់ឥឡូវនេះពណ៌ខ្មៅ។",
       linkTo: "តំណភ្ជាប់ទៅ",

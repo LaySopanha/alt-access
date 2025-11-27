@@ -1,93 +1,119 @@
+import { NextResponse } from "next/server"
+
 export async function POST(request: Request) {
   try {
     const { text, language } = await request.json()
 
     if (!text) {
-      return new Response("Text is required", { status: 400 })
+      return NextResponse.json({ error: "Text is required" }, { status: 400 })
     }
 
-    const apiKey = "dd9814e2-8e0f-43de-b9f7-214b2709b33c"
-    const voiceId = language === "km" ? "km-KH-PisethNeural" : "en-US-GuyNeural"
+    // Google TTS has a character limit (approx 200 chars). 
+    // We must split long text into chunks.
+    const chunks = splitTextIntoChunks(text, 180) // Safe limit
+    const audioBuffers: Buffer[] = []
 
-    const formData = new FormData()
-    formData.append("voice_id", voiceId)
-    formData.append("transcribe_text[]", text)
-    formData.append("engine", "neural")
+    // Fetch audio for each chunk
+    for (const chunk of chunks) {
+      const buffer = await fetchGoogleTTS(chunk, language)
+      if (buffer) {
+        audioBuffers.push(buffer)
+      }
+    }
 
-    console.log("[v0] Calling AiVOOV API with voice:", voiceId)
+    if (audioBuffers.length === 0) {
+      throw new Error("No audio generated")
+    }
 
-    const response = await fetch("https://aivoov.com/api/v1/transcribe", {
-      method: "POST",
+    // Concatenate all audio buffers into one (MP3s can be joined directly)
+    const combinedBuffer = Buffer.concat(audioBuffers)
+
+    return new NextResponse(combinedBuffer, {
       headers: {
-        "X-API-KEY": apiKey,
+        "Content-Type": "audio/mpeg",
+        "Content-Length": combinedBuffer.length.toString(),
       },
-      body: formData,
+    })
+  } catch (error: any) {
+    console.error("[v0] TTS Error:", error)
+    return NextResponse.json(
+      { error: "Failed to generate speech", details: error.message },
+      { status: 500 }
+    )
+  }
+}
+
+// Helper to fetch a single chunk
+async function fetchGoogleTTS(text: string, language: string): Promise<Buffer | null> {
+  const targetLang = language === "km" ? "km" : "en"
+  // Use 'client=tw-ob' for the free public endpoint
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=${targetLang}&client=tw-ob`
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        // Essential: Google blocks requests without a User-Agent
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        Referer: "https://translate.google.com/",
+      },
     })
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error(`[v0] AiVOOV API returned ${response.status}:`, errorText)
-      return new Response(JSON.stringify({ error: "TTS service unavailable", useClientSynthesis: true }), {
-        status: response.status,
-        headers: { "Content-Type": "application/json" },
-      })
+      const body = await response.text()
+      console.error(`[v0] Google TTS failed for chunk "${text.slice(0, 20)}...": ${response.status}`, body)
+      return null
     }
 
-    const result = await response.json()
-    console.log("[v0] AiVOOV API response:", result)
-
-    if (result.audio_url) {
-      // Success - fetch the audio
-      const audioResponse = await fetch(result.audio_url)
-
-      if (!audioResponse.ok) {
-        console.error("[v0] Failed to fetch audio from URL")
-        return new Response(JSON.stringify({ error: "Failed to fetch audio", useClientSynthesis: true }), {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        })
-      }
-
-      const audioBuffer = await audioResponse.arrayBuffer()
-
-      return new Response(audioBuffer, {
-        headers: {
-          "Content-Type": "audio/mpeg",
-          "Cache-Control": "public, max-age=3600",
-        },
-      })
-    } else if (result.message && result.message.includes("successfully")) {
-      // API says success but no audio_url - might be in a different field
-      console.log("[v0] Success message but no audio_url, full response:", result)
-      // Check for alternative audio URL fields
-      const audioUrl = result.url || result.file_url || result.audio
-      if (audioUrl) {
-        const audioResponse = await fetch(audioUrl)
-        const audioBuffer = await audioResponse.arrayBuffer()
-        return new Response(audioBuffer, {
-          headers: {
-            "Content-Type": "audio/mpeg",
-            "Cache-Control": "public, max-age=3600",
-          },
-        })
-      }
-      return new Response(JSON.stringify({ error: "Audio URL not found in response", useClientSynthesis: true }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      })
-    } else {
-      // Error case
-      console.error("[v0] AiVOOV API error:", result.message || result.error)
-      return new Response(JSON.stringify({ error: result.message || result.error, useClientSynthesis: true }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      })
-    }
-  } catch (error) {
-    console.error("[v0] TTS Error:", error)
-    return new Response(JSON.stringify({ error: "TTS Error", useClientSynthesis: true }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
+    const arrayBuffer = await response.arrayBuffer()
+    return Buffer.from(arrayBuffer)
+  } catch (err) {
+    console.error("[v0] Fetch error:", err)
+    return null
   }
+}
+
+// Helper to intelligently split text by punctuation
+function splitTextIntoChunks(text: string, maxLength: number): string[] {
+  const chunks: string[] = []
+  
+  // If short enough, return as is
+  if (text.length <= maxLength) {
+    return [text]
+  }
+
+  // Split by sentence endings first
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text]
+  
+  let currentChunk = ""
+
+  for (const sentence of sentences) {
+    if ((currentChunk + sentence).length <= maxLength) {
+      currentChunk += sentence
+    } else {
+      // Current chunk is full, push it
+      if (currentChunk) chunks.push(currentChunk.trim())
+      
+      // If the sentence itself is too long, hard split it
+      if (sentence.length > maxLength) {
+        const words = sentence.split(" ")
+        let tempChunk = ""
+        for (const word of words) {
+          if ((tempChunk + " " + word).length <= maxLength) {
+            tempChunk += (tempChunk ? " " : "") + word
+          } else {
+            chunks.push(tempChunk)
+            tempChunk = word
+          }
+        }
+        currentChunk = tempChunk
+      } else {
+        currentChunk = sentence
+      }
+    }
+  }
+  
+  if (currentChunk) chunks.push(currentChunk.trim())
+  
+  return chunks
 }

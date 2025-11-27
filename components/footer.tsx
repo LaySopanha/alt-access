@@ -7,18 +7,18 @@ export function Footer() {
   const { language, t } = useLanguage()
 
   return (
-    <footer className="bg-slate-900 text-white py-16 border-t border-slate-800">
+    <footer className="bg-[#0a1628] text-white py-16 border-t border-lima-blue/20">
       <div className="container mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-1">
-            <Link href="/" className="text-2xl font-bold inline-block mb-4">
+            <Link href="/" className="text-2xl font-bold inline-block mb-4 text-lima-orange">
               {t.nav.logo}
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">{t.footer.tagline}</p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">{t.footer.quickLinks}</h3>
+            <h3 className="font-semibold text-lg mb-4 text-lima-orange">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/experience" className="text-slate-400 hover:text-white transition-colors text-sm">
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">{t.footer.simulationsTitle}</h3>
+            <h3 className="font-semibold text-lg mb-4 text-lima-orange">{t.footer.simulationsTitle}</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -69,7 +69,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">{t.footer.connect}</h3>
+            <h3 className="font-semibold text-lg mb-4 text-lima-orange">{t.footer.connect}</h3>
             <ul className="space-y-3">
               <li>
                 <a
@@ -103,7 +103,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-8 border-t border-lima-blue/20 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm text-center md:text-left">
             © {new Date().getFullYear()} {t.footer.copyright}
           </p>

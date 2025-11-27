@@ -1,91 +1,179 @@
 "use client"
 
-import { Play } from "lucide-react"
+import { useState } from "react"
 import { useLanguage } from "@/hooks/use-language"
+import { cn } from "@/lib/utils"
 
 export function VideoSeriesSection() {
   const { t } = useLanguage()
+  const [isPaused, setIsPaused] = useState(false)
 
   const videos = [
     {
       id: 1,
       youtubeId: "tTg8QT4NjvA",
       thumbnail: "/video-thumbnail-1.png",
+      duration: "5:20",
+      tag: "Fundamentals",
     },
     {
       id: 2,
       youtubeId: "tTg8QT4NjvA",
       thumbnail: "/video-thumbnail-2.png",
+      duration: "4:45",
+      tag: "Screen Readers",
     },
     {
       id: 3,
       youtubeId: "tTg8QT4NjvA",
       thumbnail: "/video-thumbnail-1.png",
+      duration: "6:10",
+      tag: "Coding Standards",
     },
     {
       id: 4,
       youtubeId: "tTg8QT4NjvA",
       thumbnail: "/video-thumbnail-2.png",
+      duration: "5:00",
+      tag: "Case Studies",
     },
   ]
 
+  // Triple the videos for seamless looping
+  const loopedVideos = [...videos, ...videos, ...videos]
+
   return (
-    <section className="bg-lima-blue text-white py-24 overflow-hidden">
-      <div className="container mx-auto px-6 md:px-10">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-          {/* Left Column: Title and Arrow */}
-          <div className="lg:w-1/3 relative shrink-0">
-            <h2 className="text-5xl md:text-6xl font-serif leading-tight text-white relative z-10 whitespace-pre-line">
-              {t.videoSeries.title}
-            </h2>
-            {/* Decorative Arrow SVG */}
-            <div className="absolute top-full left-0 mt-4 w-full max-w-[200px] text-white hidden md:block">
-              <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-                <path
-                  d="M20 20 C 20 80, 150 80, 150 20 C 150 -40, 20 120, 180 100"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path d="M170 90 L 185 102 L 170 110" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
+    <section className="bg-[#1351aa] text-white py-24 overflow-hidden relative">
+      {/* Background Texture */}
+      <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none" />
+      <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-[#1351aa]/60 to-[#1351aa]/20 pointer-events-none z-10" />
+
+      <div className="container mx-auto px-6 md:px-10 relative z-10">
+        <div className="flex flex-col lg:flex-row gap-16 items-center">
+          {/* Left Column: Title & Context */}
+          <div className="lg:w-1/3 relative shrink-0 space-y-8">
+            <div>
+              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold tracking-wide text-sm uppercase mb-4">
+                <span className="w-8 h-[2px] bg-[#ff751f]" />
+                <span>{t.videoSeries.theCurriculum}</span>
+              </div>
+
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight">
+                {t.videoSeries.title}
+              </h2>
             </div>
+
+            <p className="text-blue-100 text-lg leading-relaxed opacity-90">{t.videoSeries.description}</p>
+
+            <button
+              onClick={() => setIsPaused(!isPaused)}
+              className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-all focus:ring-2 focus:ring-[#ff751f] outline-none"
+              aria-label={isPaused ? "Play animation" : "Pause animation"}
+            >
+              {isPaused ? (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                </svg>
+              )}
+              <span className="text-sm font-medium">
+                {isPaused ? t.videoSeries.resumeScroll : t.videoSeries.pauseScroll}
+              </span>
+            </button>
           </div>
 
-          {/* Right Column: Horizontal Scroll */}
-          <div className="lg:w-2/3 w-full">
-            <div className="flex gap-6 overflow-x-auto pb-10 snap-x snap-mandatory hide-scrollbar -mr-6 pr-6">
-              {videos.map((video, index) => (
-                <a
-                  key={video.id}
-                  href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-shrink-0 w-[300px] md:w-[400px] snap-center group bg-black/20 backdrop-blur-sm border-2 border-white/20 hover:-translate-y-2 transition-transform duration-300"
-                >
-                  {/* Card Header */}
-                  <div className="bg-white/10 border-b-2 border-white/20 p-3">
-                    <p className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                      {t.videoSeries.videos[index].ep} {t.videoSeries.videos[index].title}
-                    </p>
-                  </div>
+          {/* Right Column: Infinite Scroll */}
+          <div className="lg:w-2/3 w-full overflow-hidden relative group">
+            {/* Gradient masks for smooth fade edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#1351aa] to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#1351aa] to-transparent z-20 pointer-events-none" />
 
-                  {/* Card Thumbnail */}
-                  <div className="relative aspect-video overflow-hidden bg-zinc-900">
-                    <img
-                      src={video.thumbnail || "/placeholder.svg"}
-                      alt={t.videoSeries.videos[index].title}
-                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                    />
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-[#FF0000] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-8 h-8 text-white fill-white ml-1" />
+            <div
+              className={cn(
+                "flex gap-6 animate-scroll-left w-max",
+                isPaused && "[animation-play-state:paused]",
+                "group-hover:[animation-play-state:paused]",
+              )}
+            >
+              {loopedVideos.map((video, index) => {
+                const originalIndex = index % videos.length
+                return (
+                  <a
+                    key={`${video.id}-${index}`}
+                    href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 w-[320px] group/card relative"
+                  >
+                    <div className="bg-white rounded-xl overflow-hidden shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/20">
+                      {/* Thumbnail Container */}
+                      <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                        <img
+                          src={video.thumbnail || "/placeholder.svg"}
+                          alt={t.videoSeries.videos[originalIndex].title}
+                          className="w-full h-full object-cover opacity-90 group-hover/card:opacity-60 group-hover/card:scale-105 transition-all duration-500"
+                        />
+
+                        {/* Play Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                          <div className="w-14 h-14 bg-[#ff751f] rounded-full flex items-center justify-center shadow-lg transform scale-50 group-hover/card:scale-100 transition-transform duration-300">
+                            <svg className="w-6 h-6 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Duration Badge */}
+                        <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
+                          <svg
+                            className="w-3 h-3"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                          </svg>
+                          {video.duration}
+                        </div>
+                      </div>
+
+                      {/* Content Info */}
+                      <div className="p-5 bg-white">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-[10px] font-bold text-[#1351aa] bg-[#1351aa]/10 px-2 py-1 rounded uppercase tracking-wider">
+                            {t.videoSeries.videos[originalIndex].ep}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-medium uppercase">{video.tag}</span>
+                        </div>
+
+                        <h3 className="text-slate-900 font-bold text-lg leading-tight line-clamp-2 mb-3 group-hover/card:text-[#1351aa] transition-colors">
+                          {t.videoSeries.videos[originalIndex].title}
+                        </h3>
+
+                        <div className="flex items-center text-sm font-medium text-slate-500 group-hover/card:text-[#ff751f] transition-colors">
+                          {t.videoSeries.watchLesson}
+                          <svg
+                            className="w-4 h-4 ml-1"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>

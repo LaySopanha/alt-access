@@ -2,44 +2,31 @@
 
 export function AnimatedBackground() {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      {/* Animated pattern container */}
-      <div className="absolute inset-0 opacity-15">
-        <div className="animate-scroll-left flex h-full">
-          {/* Repeating pattern - duplicated for seamless loop */}
-          {[0, 1, 2].map((set) => (
-            <div key={set} className="flex-shrink-0 flex items-center justify-around w-screen h-full px-20">
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none mix-blend-soft-light opacity-80 blur-[0.25px]" aria-hidden="true">
+      {/* Pattern layer */}
+      <div className="absolute inset-0 opacity-100">
+        <div className="flex animate-marquee w-[200%] select-none">
+          {/* Duplicate block twice for seamless marquee */}
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex w-1/2 h-full items-center justify-around px-20">
+              {/* Column set A */}
               <div className="flex flex-col gap-32">
-                <div className="text-9xl font-mono font-bold text-foreground/70">&lt;ALT+ ACCESS/&gt;</div>
-                <div className="text-6xl font-mono font-bold text-foreground/50">&lt;ALT+ ACCESS/&gt;</div>
-                <div className="text-8xl font-mono font-bold text-foreground/60">&lt;ALT+ ACCESS/&gt;</div>
+                <div className="text-9xl font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#1351aa] to-[#ff751f]">&lt;ALT+ ACCESS/&gt;</div>
+                <div className="text-6xl font-mono font-bold text-[#1351aa]/50">&lt;ALT+ ACCESS/&gt;</div>
+                <div className="text-8xl font-mono font-bold text-[#ff751f]/60">&lt;ALT+ ACCESS/&gt;</div>
               </div>
-
-              {/* Accessibility Icons Pattern */}
-              <div className="flex flex-col gap-24">
-                <div className="text-7xl opacity-50">👁️</div>
-                <div className="text-6xl opacity-40">♿</div>
-                <div className="text-8xl opacity-45">🎨</div>
-              </div>
-
+              {/* Column set B */}
               <div className="flex flex-col gap-32">
-                <div className="text-7xl font-mono font-bold text-foreground/55">&lt;ALT+ ACCESS/&gt;</div>
-                <div className="text-9xl font-mono font-bold text-foreground/65">&lt;ALT+ ACCESS/&gt;</div>
-                <div className="text-6xl font-mono font-bold text-foreground/45">&lt;ALT+ ACCESS/&gt;</div>
-              </div>
-
-              {/* More accessibility symbols */}
-              <div className="flex flex-col gap-28">
-                <div className="text-8xl opacity-40">🔊</div>
-                <div className="text-7xl opacity-50">👁️</div>
-                <div className="text-6xl opacity-45">♿</div>
+                <div className="text-7xl font-mono font-bold text-[#ff751f]/55">&lt;ALT+ ACCESS/&gt;</div>
+                <div className="text-9xl font-mono font-bold text-[#1351aa]/65">&lt;ALT+ ACCESS/&gt;</div>
+                <div className="text-6xl font-mono font-bold text-black/40 dark:text-white/40">&lt;ALT+ ACCESS/&gt;</div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/40" />
+      {/* Gradient mask */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background/40" />
     </div>
   )
 }

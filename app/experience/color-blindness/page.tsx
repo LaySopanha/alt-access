@@ -1,17 +1,21 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { ArrowLeft, Info, ScanEye, GripVertical, Check, X } from "lucide-react"
+import { cn } from "@/lib/utils"
 
+// --- SUB-COMPONENT: SLIDER ---
 function ImageComparisonSlider({
   imageSrc,
   filterType,
+  label,
 }: {
   imageSrc: string
-  filterType: "normal" | "protanopia" | "deuteranopia" | "tritanopia" | "monochromacy"
+  filterType: string
+  label: string
 }) {
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
@@ -22,8 +26,8 @@ function ImageComparisonSlider({
     setSliderPosition(Math.min(Math.max(percentage, 0), 100))
   }
 
-  const handleMouseDown = () => setIsDragging(true)
-  const handleMouseUp = () => setIsDragging(false)
+  const handleInteractionStart = () => setIsDragging(true)
+  const handleInteractionEnd = () => setIsDragging(false)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return
@@ -43,111 +47,139 @@ function ImageComparisonSlider({
   }
 
   const getFilterStyle = () => {
-    if (filterType === "protanopia") {
-      return "url('#protanopia')"
-    } else if (filterType === "deuteranopia") {
-      return "url('#deuteranopia')"
-    } else if (filterType === "tritanopia") {
-      return "url('#tritanopia')"
-    } else if (filterType === "monochromacy") {
-      return "grayscale(100%)"
+    switch (filterType) {
+      case "protanopia": return "url('#protanopia')"
+      case "deuteranopia": return "url('#deuteranopia')"
+      case "tritanopia": return "url('#tritanopia')"
+      case "monochromacy": return "grayscale(100%)"
+      default: return "none"
     }
-    return "none"
   }
 
   return (
-    <div
-      className="relative w-full aspect-video rounded-lg overflow-hidden cursor-ew-resize select-none"
-      onMouseMove={handleMouseMove}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleMouseDown}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleMouseUp}
-      onClick={handleClick}
-    >
-      {/* Original Image (Background - Full) */}
-      <div className="absolute inset-0">
-        <img src={imageSrc || "/placeholder.svg"} alt="" className="w-full h-full object-cover" draggable={false} />
-      </div>
-
-      {/* Filtered Image (Overlay - Clipped from right) */}
+    <div className="space-y-3 group/slider">
+      <h3 className="text-base font-bold text-slate-800 flex items-center gap-2">
+        <div className="w-1.5 h-4 bg-[#ff751f] rounded-full" />
+        {label}
+      </h3>
+      
       <div
-        className="absolute inset-0 overflow-hidden"
-        style={{
-          clipPath: `inset(0 0 0 ${sliderPosition}%)`,
-          filter: getFilterStyle(),
-        }}
+        className="relative w-full aspect-video rounded-xl overflow-hidden cursor-ew-resize select-none border border-slate-200 shadow-sm transition-shadow group-hover/slider:shadow-md hover:border-[#1351aa]/30"
+        onMouseMove={handleMouseMove}
+        onMouseDown={handleInteractionStart}
+        onMouseUp={handleInteractionEnd}
+        onMouseLeave={handleInteractionEnd}
+        onTouchStart={handleInteractionStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleInteractionEnd}
+        onClick={handleClick}
       >
-        <img src={imageSrc || "/placeholder.svg"} alt="" className="w-full h-full object-cover" draggable={false} />
-      </div>
-
-      {/* Slider Line and Handle */}
-      <div
-        className="absolute top-0 bottom-0 w-1 bg-white shadow-lg pointer-events-none"
-        style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
-          <div className="flex gap-1">
-            <div className="w-0.5 h-4 bg-gray-400" />
-            <div className="w-0.5 h-4 bg-gray-400" />
+        {/* Original (Left) */}
+        <div className="absolute inset-0">
+          <img src={imageSrc} alt="Original" className="w-full h-full object-cover" draggable={false} />
+          <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider pointer-events-none">
+            Normal
           </div>
         </div>
-      </div>
 
-      {/* Labels */}
-      <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded text-sm font-medium pointer-events-none">
-        Original
-      </div>
-      <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded text-sm font-medium pointer-events-none">
-        {filterType === "normal"
-          ? "Normal"
-          : filterType === "protanopia"
-            ? "Protanopia"
-            : filterType === "deuteranopia"
-              ? "Deuteranopia"
-              : filterType === "tritanopia"
-                ? "Tritanopia"
-                : "Monochromacy"}
+        {/* Filtered (Right) */}
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{
+            clipPath: `inset(0 0 0 ${sliderPosition}%)`,
+            filter: getFilterStyle(),
+          }}
+        >
+          <img src={imageSrc} alt="Simulated" className="w-full h-full object-cover" draggable={false} />
+          <div className="absolute top-3 right-3 bg-[#1351aa]/90 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider pointer-events-none shadow-sm">
+            {filterType}
+          </div>
+        </div>
+
+        {/* Handle */}
+        <div
+          className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_20px_rgba(0,0,0,0.5)] pointer-events-none z-10"
+          style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#ff751f] rounded-full shadow-lg flex items-center justify-center border-[3px] border-white text-white">
+            <GripVertical className="w-4 h-4" />
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
+// --- MAIN PAGE ---
+
 export default function ColorBlindnessExperience() {
   const [started, setStarted] = useState(false)
-  const [filterType, setFilterType] = useState<
-    "normal" | "protanopia" | "deuteranopia" | "tritanopia" | "monochromacy"
-  >("protanopia")
-  const [viewMode, setViewMode] = useState<"examples" | "images">("examples")
+  const [filterType, setFilterType] = useState("deuteranopia")
+  const [activeTab, setActiveTab] = useState<"abstract" | "real">("abstract")
 
   const filters = [
-    { value: "normal", label: "Normal Vision", description: "How most people see colors" },
-    { value: "protanopia", label: "Protanopia (Red-Blind)", description: "Difficulty distinguishing red and green" },
-    { value: "deuteranopia", label: "Deuteranopia (Green-Blind)", description: "Most common form of color blindness" },
-    { value: "tritanopia", label: "Tritanopia (Blue-Blind)", description: "Difficulty distinguishing blue and yellow" },
-    { value: "monochromacy", label: "Monochromacy (Total Color Blind)", description: "See only in shades of gray" },
+    { value: "normal", label: "Normal", desc: "Standard Vision" },
+    { value: "deuteranopia", label: "Deuteranopia", desc: "Green-Blind (Common)" },
+    { value: "protanopia", label: "Protanopia", desc: "Red-Blind" },
+    { value: "tritanopia", label: "Tritanopia", desc: "Blue-Blind (Rare)" },
+    { value: "monochromacy", label: "Monochromacy", desc: "Total Grayscale" },
   ]
 
+  const getFilterClass = () => {
+    switch (filterType) {
+      case "protanopia": return "[filter:url('#protanopia')]"
+      case "deuteranopia": return "[filter:url('#deuteranopia')]"
+      case "tritanopia": return "[filter:url('#tritanopia')]"
+      case "monochromacy": return "grayscale"
+      default: return ""
+    }
+  }
+
+  // --- INTRO SCREEN ---
   if (!started) {
     return (
-      <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
-        <div className="max-w-3xl w-full space-y-8">
-          <Link href="/" className="text-sm underline hover:text-lima-blue transition-colors">
-            ← Back to main menu
+      <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        {/* Brand Background Pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+        
+        {/* Glow */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff751f]/5 rounded-full blur-[100px]" />
+
+        <div className="max-w-3xl w-full space-y-8 relative z-10">
+          <Link
+            href="/experience"
+            className="text-sm font-medium text-slate-500 hover:text-[#1351aa] transition-colors flex items-center gap-2 group w-fit"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to main menu
           </Link>
 
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-balance">Color Blindness Experience</h1>
+          <div className="space-y-8">
+            <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
+                    <ScanEye className="w-4 h-4" />
+                    <span>Visual Simulation 03</span>
+                </div>
+                <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
+                Color Blindness Lab
+                </h1>
+            </div>
 
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              During this experience, we would like you to view an infographic about color blindness and toggle to see
-              how colors appear to a colorblind person.
-            </p>
+            <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
+              <h2 className="text-xl font-bold text-slate-900">Mission</h2>
+              <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
+                Colors convey meaning, but not everyone sees them the same way. 
+                In this lab, you will analyze standard UI components through the eyes of the 
+                <strong> 8% of men</strong> and <strong>0.5% of women</strong> who have Color Vision Deficiency (CVD).
+              </p>
+            </div>
 
-            <Button size="lg" onClick={() => setStarted(true)} className="w-full md:w-auto">
-              Start Experience
+            <Button
+              size="lg"
+              onClick={() => setStarted(true)}
+              className="bg-[#ff751f] hover:bg-[#e06519] text-white rounded-xl px-10 py-7 text-lg font-semibold shadow-xl shadow-orange-900/10 transition-all hover:-translate-y-1"
+            >
+              Enter Laboratory
             </Button>
           </div>
         </div>
@@ -155,200 +187,232 @@ export default function ColorBlindnessExperience() {
     )
   }
 
+  // --- LAB INTERFACE ---
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-6 py-12 space-y-8">
-        <Link href="/" className="text-sm underline hover:text-lima-blue transition-colors inline-block">
-          ← Back to main menu
-        </Link>
-
-        <div className="space-y-6">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold">Understanding Color Blindness</h1>
-
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            Use the slider to compare how colors appear with different types of color vision deficiency. About 8% of men
-            and 0.5% of women have some form of color blindness.
-          </p>
-
-          {/* Filter Controls */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {filters.map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => setFilterType(filter.value as any)}
-                className={`p-4 rounded-lg border-2 transition-all text-left ${
-                  filterType === filter.value
-                    ? "border-lima-blue bg-lima-blue/5"
-                    : "border-border hover:border-lima-blue/50"
-                }`}
-              >
-                <div className="font-semibold text-sm">{filter.label}</div>
-                <div className="text-xs text-muted-foreground mt-1">{filter.description}</div>
-              </button>
-            ))}
+    <main className="min-h-screen bg-slate-50 font-sans selection:bg-[#ff751f] selection:text-white">
+      
+      {/* Sticky Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/experience" className="flex items-center gap-2 text-slate-500 hover:text-[#1351aa] transition-colors group">
+            <div className="bg-slate-100 p-1.5 rounded-md group-hover:bg-[#1351aa]/10">
+                <ArrowLeft className="w-4 h-4 group-hover:text-[#1351aa]" />
+            </div>
+            <span className="text-sm font-bold uppercase tracking-wide hidden sm:inline">Exit</span>
+          </Link>
+          
+          <div className="font-serif font-bold text-[#1351aa] text-lg">CVD Simulator</div>
+          
+          <div className="w-16" /> {/* Spacer */}
+        </div>
+        
+        {/* Filter Controls */}
+        <div className="border-t border-slate-100 bg-white">
+          <div className="container mx-auto px-6 py-4 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-3 min-w-max mx-auto justify-center">
+              {filters.map((f) => (
+                <button
+                  key={f.value}
+                  onClick={() => setFilterType(f.value)}
+                  className={cn(
+                    "flex flex-col items-start px-4 py-2.5 rounded-lg border-2 transition-all min-w-[140px]",
+                    filterType === f.value
+                      ? "border-[#1351aa] bg-[#1351aa]/5"
+                      : "border-transparent hover:bg-slate-50"
+                  )}
+                >
+                  <span className={cn(
+                      "text-sm font-bold",
+                      filterType === f.value ? "text-[#1351aa]" : "text-slate-600"
+                  )}>{f.label}</span>
+                  <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{f.desc}</span>
+                </button>
+              ))}
+            </div>
           </div>
+        </div>
+      </header>
 
-          <div className="flex gap-2 justify-center">
-            <Button variant={viewMode === "examples" ? "default" : "outline"} onClick={() => setViewMode("examples")}>
-              View Examples
-            </Button>
-            <Button variant={viewMode === "images" ? "default" : "outline"} onClick={() => setViewMode("images")}>
-              View Images
-            </Button>
+      <div className="container mx-auto px-6 py-10 max-w-5xl">
+        
+        {/* Mode Switcher */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm inline-flex gap-1">
+            <button
+              onClick={() => setActiveTab("abstract")}
+              className={cn(
+                "px-6 py-2.5 rounded-xl text-sm font-bold transition-all",
+                activeTab === "abstract" 
+                    ? "bg-[#1351aa] text-white shadow-md" 
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+              )}
+            >
+              UI Components
+            </button>
+            <button
+              onClick={() => setActiveTab("real")}
+              className={cn(
+                "px-6 py-2.5 rounded-xl text-sm font-bold transition-all",
+                activeTab === "real" 
+                    ? "bg-[#1351aa] text-white shadow-md" 
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+              )}
+            >
+              Real World
+            </button>
           </div>
+        </div>
 
-          <div className="space-y-8">
-            {viewMode === "examples" ? (
-              <div className={`space-y-8 transition-all duration-300`}>
-                {/* Traffic Light Example */}
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Traffic Light Challenge</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Without position cues, colorblind individuals struggle to identify signals
+        <div className="space-y-12">
+          
+          {/* --- UI COMPONENTS MODE --- */}
+          {activeTab === "abstract" && (
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              
+              {/* Traffic Light */}
+              <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm grid md:grid-cols-2 gap-10 items-center">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-serif font-bold text-[#1351aa]">Signal Identification</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Colorblind users often rely on <strong>position</strong> or icons rather than color alone. 
+                    If you only use color to indicate status (Error/Success), they might miss critical warnings.
                   </p>
-                  <div className="flex gap-4 items-center justify-center py-8">
-                    <div className="w-20 h-20 rounded-full bg-red-500" />
-                    <div className="w-20 h-20 rounded-full bg-yellow-400" />
-                    <div className="w-20 h-20 rounded-full bg-green-500" />
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-[#ff751f] bg-[#ff751f]/10 px-3 py-1.5 rounded-full">
+                    <Info className="w-3.5 h-3.5" />
+                    <span>Best Practice: Always use icons alongside color</span>
                   </div>
                 </div>
-
-                {/* Color Palette Example */}
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Common Color Confusion</h2>
-                  <p className="text-sm text-muted-foreground">
-                    These colors are often indistinguishable for colorblind users
-                  </p>
-                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-red-600" />
-                      <p className="text-xs text-center">Red</p>
+                
+                <div className="flex justify-center bg-slate-50/50 p-8 rounded-2xl border border-slate-100">
+                  <div className={cn("bg-slate-800 p-5 rounded-[2rem] shadow-2xl flex flex-col gap-4 border-4 border-slate-700 transition-all duration-500", getFilterClass())}>
+                    {/* Red Light */}
+                    <div className="w-20 h-20 rounded-full bg-red-500 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] relative flex items-center justify-center">
+                        {/* Only visible symbol for colorblind accessible design */}
+                        <X className="w-10 h-10 text-red-900/40" strokeWidth={3} />
+                        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/20 rounded-full blur-sm" />
                     </div>
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-green-600" />
-                      <p className="text-xs text-center">Green</p>
+                    {/* Yellow Light */}
+                    <div className="w-20 h-20 rounded-full bg-yellow-400 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] opacity-30 relative flex items-center justify-center">
+                         <div className="w-8 h-1 bg-yellow-900/40 rounded-full" />
                     </div>
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-blue-600" />
-                      <p className="text-xs text-center">Blue</p>
+                    {/* Green Light */}
+                    <div className="w-20 h-20 rounded-full bg-green-500 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] opacity-30 relative flex items-center justify-center">
+                        <Check className="w-10 h-10 text-green-900/40" strokeWidth={3} />
                     </div>
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-orange-500" />
-                      <p className="text-xs text-center">Orange</p>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-purple-600" />
-                      <p className="text-xs text-center">Purple</p>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="w-full aspect-square rounded-lg bg-yellow-400" />
-                      <p className="text-xs text-center">Yellow</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chart Example */}
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Data Visualization Issues</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Red-green charts are nearly impossible to read for colorblind users
-                  </p>
-                  <div className="flex gap-2 h-64 items-end">
-                    <div className="flex-1 bg-red-500 rounded-t" style={{ height: "70%" }} />
-                    <div className="flex-1 bg-green-500 rounded-t" style={{ height: "85%" }} />
-                    <div className="flex-1 bg-blue-500 rounded-t" style={{ height: "60%" }} />
-                    <div className="flex-1 bg-orange-500 rounded-t" style={{ height: "75%" }} />
                   </div>
                 </div>
               </div>
-            ) : (
-              <>
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Nature Scene</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Drag the slider to compare how different types of color blindness affect natural scenery
-                  </p>
-                  <ImageComparisonSlider
-                    imageSrc="/vibrant-nature-landscape-with-flowers-trees-sky.jpg"
-                    filterType={filterType}
-                  />
-                </div>
 
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Colorful Food</h2>
-                  <p className="text-sm text-muted-foreground">
-                    See how fresh fruits and vegetables appear with color vision deficiency
-                  </p>
-                  <ImageComparisonSlider
-                    imageSrc="/colorful-fresh-fruits-and-vegetables-assortment.jpg"
-                    filterType={filterType}
-                  />
+              {/* Data Viz */}
+              <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm grid md:grid-cols-2 gap-10 items-center">
+                <div className="order-2 md:order-1 h-72 w-full bg-slate-50/50 rounded-2xl border border-slate-100 p-8 flex items-end gap-4 md:gap-6">
+                  {/* Bars */}
+                  <div className={cn("w-full bg-blue-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "60%"}}>
+                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">A</span>
+                  </div>
+                  <div className={cn("w-full bg-purple-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "80%"}}>
+                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">B</span>
+                  </div>
+                  <div className={cn("w-full bg-green-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "40%"}}>
+                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">C</span>
+                  </div>
+                  <div className={cn("w-full bg-red-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "90%"}}>
+                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">D</span>
+                  </div>
                 </div>
-
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">UI Interface</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Compare how color blindness affects user interface readability
+                <div className="order-1 md:order-2 space-y-4">
+                  <h3 className="text-2xl font-serif font-bold text-[#1351aa]">Data Visualization</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Charts relying solely on a color legend become unreadable. 
+                    Notice how the bars might blend together in Protanopia mode.
                   </p>
-                  <ImageComparisonSlider
-                    imageSrc="/colorful-user-interface-dashboard-with-buttons-cha.jpg"
-                    filterType={filterType}
-                  />
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-[#ff751f] bg-[#ff751f]/10 px-3 py-1.5 rounded-full">
+                    <Info className="w-3.5 h-3.5" />
+                    <span>Best Practice: Use patterns or direct labels</span>
+                  </div>
                 </div>
+              </div>
 
-                <div className="bg-card border rounded-lg p-6 space-y-4">
-                  <h2 className="text-xl font-semibold">City Lights</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Urban scenes with neon signs and traffic signals shown side by side
-                  </p>
-                  <ImageComparisonSlider
-                    imageSrc="/city-street-with-colorful-neon-signs-traffic-light.jpg"
-                    filterType={filterType}
-                  />
+              {/* Palette */}
+              <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                <div className="mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-[#1351aa] mb-2">Design System Contrast</h3>
+                  <p className="text-slate-600">Common accessible color pairings can become indistinguishable.</p>
                 </div>
-              </>
-            )}
-          </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { color: "bg-red-500", name: "Error", hex: "#EF4444" },
+                    { color: "bg-green-500", name: "Success", hex: "#22C55E" },
+                    { color: "bg-blue-600", name: "Link", hex: "#2563EB" },
+                    { color: "bg-purple-600", name: "Visited", hex: "#9333EA" },
+                    { color: "bg-orange-500", name: "Warning", hex: "#F97316" },
+                    { color: "bg-yellow-400", name: "Caution", hex: "#FACC15" },
+                    { color: "bg-pink-500", name: "Accent", hex: "#EC4899" },
+                    { color: "bg-cyan-500", name: "Info", hex: "#06B6D4" },
+                  ].map((swatch, i) => (
+                    <div key={i} className="group cursor-default">
+                      <div className={cn("h-28 rounded-xl shadow-inner transition-all duration-500 mb-3", swatch.color, getFilterClass())} />
+                      <div className="px-1">
+                        <div className="font-bold text-slate-700 text-sm">{swatch.name}</div>
+                        <div className="text-xs font-mono text-slate-400">{swatch.hex}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          <div className="bg-lima-blue/10 border border-lima-blue/20 rounded-lg p-6 space-y-3">
-            <h3 className="font-semibold text-lima-blue">Design Tip</h3>
-            <p className="text-sm">
-              Never rely on color alone to convey information. Always use text labels, patterns, or icons alongside
-              color to ensure accessibility for all users.
-            </p>
-          </div>
+            </div>
+          )}
+
+          {/* --- REAL WORLD SCENES (IMAGES) --- */}
+          {activeTab === "real" && (
+            <div className="grid md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                <ImageComparisonSlider 
+                  label="Nature & Scenery"
+                  imageSrc="/vibrant-nature-landscape-with-flowers-trees-sky.jpg" 
+                  filterType={filterType} 
+                />
+              </div>
+              <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                <ImageComparisonSlider 
+                  label="Fresh Produce (Red/Green)"
+                  imageSrc="/colorful-fresh-fruits-and-vegetables-assortment.jpg" 
+                  filterType={filterType} 
+                />
+              </div>
+              <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                <ImageComparisonSlider 
+                  label="Dashboard UI"
+                  imageSrc="/colorful-user-interface-dashboard-with-buttons-cha.jpg" 
+                  filterType={filterType} 
+                />
+              </div>
+              <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                <ImageComparisonSlider 
+                  label="Urban Night Lights"
+                  imageSrc="/city-street-with-colorful-neon-signs-traffic-light.jpg" 
+                  filterType={filterType} 
+                />
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
 
-      {/* SVG Filters for Color Blindness Simulation */}
-      <svg className="absolute w-0 h-0">
+      {/* SVG Filters Definition (Hidden) */}
+      <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
           <filter id="protanopia">
-            <feColorMatrix
-              type="matrix"
-              values="0.567, 0.433, 0,     0, 0
-                                                   0.558, 0.442, 0,     0, 0
-                                                   0,     0.242, 0.758, 0, 0
-                                                   0,     0,     0,     1, 0"
-            />
+            <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0 0.558, 0.442, 0, 0, 0 0, 0.242, 0.758, 0, 0 0, 0, 0, 1, 0" />
           </filter>
           <filter id="deuteranopia">
-            <feColorMatrix
-              type="matrix"
-              values="0.625, 0.375, 0,   0, 0
-                                                   0.7,   0.3,   0,   0, 0
-                                                   0,     0.3,   0.7, 0, 0
-                                                   0,     0,     0,   1, 0"
-            />
+            <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0 0.7, 0.3, 0, 0, 0 0, 0.3, 0.7, 0, 0 0, 0, 0, 1, 0" />
           </filter>
           <filter id="tritanopia">
-            <feColorMatrix
-              type="matrix"
-              values="0.95, 0.05,  0,     0, 0
-                                                   0,    0.433, 0.567, 0, 0
-                                                   0,    0.475, 0.525, 0, 0
-                                                   0,    0,     0,     1, 0"
-            />
+            <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0 0, 0.433, 0.567, 0, 0 0, 0.475, 0.525, 0, 0 0, 0, 0, 1, 0" />
           </filter>
         </defs>
       </svg>
