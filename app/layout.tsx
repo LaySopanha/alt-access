@@ -9,24 +9,23 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 const _playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  // 1. The Title shown in the browser tab
+  title: "Alt Access | Bridging the Digital Divide",
+  
+  // 2. The description for SEO and social sharing
+  description: "Cultivating a national tech ecosystem in Cambodia where accessibility is standard practice.",
+  
+  generator: "Next.js",
+  
+  // 3. The Logo/Icon setup
   icons: {
     icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
+      // Standard favicon 
+      { url: "/favicon.ico" },
+      // High-res icon 
+      { url: "/icon.png", type: "image/png" },
     ],
+    // Icon for iPhone/iPad home screen
     apple: "/apple-icon.png",
   },
 }
