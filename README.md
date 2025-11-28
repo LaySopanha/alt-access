@@ -6,7 +6,7 @@
   <h3>Bridging the Digital Divide in Cambodia</h3>
 
   <p>
-    An interactive educational platform designed to cultivate a national tech ecosystem where accessibility is standard practice.
+    An interactive educational platform designed to cultivate a national tech ecosystem where accessibility is standard practice. <br />
     link: https://altaccess.vercel.app/
   </p>
 
