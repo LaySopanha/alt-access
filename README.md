@@ -7,6 +7,7 @@
 
   <p>
     An interactive educational platform designed to cultivate a national tech ecosystem where accessibility is standard practice.
+    link: https://altaccess.vercel.app/
   </p>
 
   <!-- BADGES -->
