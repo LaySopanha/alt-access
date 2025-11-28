@@ -28,7 +28,7 @@ We don't just tell you about accessibility; **we make you feel it.**
 
 ### Screenshots
 <div align="center"> 
-  <img src="./public/altacesslogo.png" alt="Homepage Screenshot" />
+  <img src="./public/website.png" alt="Homepage Screenshot" />
 </div>
 
 
