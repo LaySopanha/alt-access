@@ -20,21 +20,21 @@
 
 <br />
 
-## 📖 About The Project
+## About The Project
 
 **Alt Access** aims to equip the next generation of Cambodian developers with the empathy and technical skills needed to build inclusive digital products for the **120,000+ visually impaired individuals** in the country.
 
 We don't just tell you about accessibility; **we make you feel it.**
 
-### 📸 Screenshots
-<!-- Add screenshots of your labs here by uploading them to your repo or an image host -->
+### Screenshots
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Dashboard+Preview" alt="Dashboard Screenshot" />
+  <img src="./public/altacesslogo.png" alt="Homepage Screenshot" />
 </div>
+
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 ### 👁️ Interactive Experience Labs
 Simulations designed to build empathy through experience.
