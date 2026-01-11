@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   // 3. The Logo/Icon setup
   icons: {
     icon: [
-      // Standard favicon 
-      { url: "/favicon.ico" },
-      // High-res icon 
-      { url: "/icon.png", type: "image/png" },
+      // Default tab icon (light mode)
+      { url: "/images/alt-access-black-logo.png", type: "image/png" },
+      // Alt for dark backgrounds
+      { url: "/images/alt-access-white-logo.png", type: "image/png" },
     ],
     // Icon for iPhone/iPad home screen
-    apple: "/apple-icon.png",
+    apple: "/images/alt-access-black-logo.png",
   },
 }
 
