@@ -3,6 +3,10 @@ export const translations = {
     nav: {
       logo: "<ALT+ ACCESS/>",
       backHome: "Back to homepage",
+      home: "Home",
+      about: "About",
+      experience: "Experiences",
+      menu: "Menu",
     },
     hero: {
       titlePrefix: "Build the Web for",
@@ -116,6 +120,10 @@ export const translations = {
     nav: {
       logo: "<ALT+ ចូលប្រើ/>",
       backHome: "ត្រឡប់ទៅទំព័រដើម",
+      home: "ទំព័រដើម",
+      about: "អំពីយើង",
+      experience: "បទពិសោធន៍",
+      menu: "ម៉ឺនុយ",
     },
     hero: {
       titlePrefix: "បង្កើតគេហទំព័រសម្រាប់",
