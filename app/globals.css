@@ -14,42 +14,55 @@
   --wong-purple: #CC79A7;
 
   /* Strict High Contrast Theme - Light Mode */
-  --background: #FEFEFE; /* Off-White */
-  --foreground: #000000; /* Black */
-  
+  --background: #FEFEFE;
+  /* Off-White */
+  --foreground: #000000;
+  /* Black */
+
   --card: #FEFEFE;
   --card-foreground: #000000;
-  
+
   --popover: #FEFEFE;
   --popover-foreground: #000000;
-  
+
   --primary: #000000;
   --primary-foreground: #FEFEFE;
-  
-  --secondary: #E69F00; /* Action/Orange */
+
+  --secondary: #E69F00;
+  /* Action/Orange */
   --secondary-foreground: #000000;
-  
+
   --muted: #F4F4F5;
-  --muted-foreground: #000000; /* High contrast for readability */
-  
-  --accent: #CC79A7; /* Purple */
+  --muted-foreground: #000000;
+  /* High contrast for readability */
+
+  --accent: #CC79A7;
+  /* Purple */
   --accent-foreground: #FEFEFE;
-  
-  --destructive: #D55E00; /* Vermilion */
+
+  --destructive: #D55E00;
+  /* Vermilion */
   --destructive-foreground: #FEFEFE;
-  
-  --border: #000000; /* Strong borders */
+
+  --border: #000000;
+  /* Strong borders */
   --input: #000000;
-  --ring: #E69F00; /* Ring color for focus states */
-  
-  --chart-1: #E69F00; /* Orange */
-  --chart-2: #56B4E9; /* SkyBlue */
-  --chart-3: #009E73; /* Teal */
-  --chart-4: #F0E442; /* Yellow */
-  --chart-5: #0072B2; /* DarkBlue */
-  
+  --ring: #E69F00;
+  /* Ring color for focus states */
+
+  --chart-1: #E69F00;
+  /* Orange */
+  --chart-2: #56B4E9;
+  /* SkyBlue */
+  --chart-3: #009E73;
+  /* Teal */
+  --chart-4: #F0E442;
+  /* Yellow */
+  --chart-5: #0072B2;
+  /* DarkBlue */
+
   --radius: 0.625rem;
-  
+
   --sidebar: #FEFEFE;
   --sidebar-foreground: #000000;
   --sidebar-primary: #000000;
@@ -60,46 +73,48 @@
   --sidebar-ring: #E69F00;
 
   /* Mappings for legacy/ease of use */
-  --lima-blue: #0072B2; /* Mapped to Wong DarkBlue */
-  --lima-orange: #E69F00; /* Mapped to Wong Orange */
+  --lima-blue: #0072B2;
+  /* Mapped to Wong DarkBlue */
+  --lima-orange: #E69F00;
+  /* Mapped to Wong Orange */
 }
 
 .dark {
   /* Strict High Contrast Theme - Dark Mode */
   --background: #000000;
   --foreground: #FEFEFE;
-  
+
   --card: #000000;
   --card-foreground: #FEFEFE;
-  
+
   --popover: #000000;
   --popover-foreground: #FEFEFE;
-  
+
   --primary: #FEFEFE;
   --primary-foreground: #000000;
-  
+
   --secondary: #E69F00;
   --secondary-foreground: #000000;
-  
+
   --muted: #27272a;
   --muted-foreground: #FEFEFE;
-  
+
   --accent: #CC79A7;
   --accent-foreground: #FEFEFE;
-  
+
   --destructive: #D55E00;
   --destructive-foreground: #FEFEFE;
-  
+
   --border: #FEFEFE;
   --input: #FEFEFE;
   --ring: #E69F00;
-  
+
   --chart-1: #E69F00;
   --chart-2: #56B4E9;
   --chart-3: #009E73;
   --chart-4: #F0E442;
   --chart-5: #0072B2;
-  
+
   --sidebar: #000000;
   --sidebar-foreground: #FEFEFE;
   --sidebar-primary: #E69F00;
@@ -111,10 +126,12 @@
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -125,7 +142,7 @@
 }
 
 @theme inline {
-  --font-sans: "Inter", "Geist", "Geist Fallback", sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, "Inter", "Geist", "Geist Fallback", sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --color-background: var(--background);
@@ -168,7 +185,7 @@
   /* Custom Color Mappings */
   --color-lima-blue: var(--lima-blue);
   --color-lima-orange: var(--lima-orange);
-  
+
   /* Wong Palette Exposed */
   --color-wong-orange: var(--wong-orange);
   --color-wong-sky-blue: var(--wong-sky-blue);
@@ -183,6 +200,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -192,6 +210,7 @@
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-33.333%);
     }
@@ -205,6 +224,7 @@
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }
