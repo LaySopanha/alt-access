@@ -59,19 +59,28 @@ export function Navbar({ theme = "light" }: { theme?: "light" | "dark" }) {
         <nav className="hidden md:flex items-center gap-8">
           <Link
             href="/"
-            className={cn("text-lg font-medium transition-colors hover:opacity-80", currentTheme.text)}
+            className={cn(
+              "text-lg font-medium transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1",
+              currentTheme.text
+            )}
           >
             {t.nav.home}
           </Link>
           <Link
             href="/experience"
-            className={cn("text-lg font-medium transition-colors hover:opacity-80", currentTheme.text)}
+            className={cn(
+              "text-lg font-medium transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1",
+              currentTheme.text
+            )}
           >
             {t.nav.experience}
           </Link>
           <Link
             href="/about"
-            className={cn("text-lg font-medium transition-colors hover:opacity-80", currentTheme.text)}
+            className={cn(
+              "text-lg font-medium transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1",
+              currentTheme.text
+            )}
           >
             {t.nav.about}
           </Link>
@@ -130,13 +139,25 @@ export function Navbar({ theme = "light" }: { theme?: "light" | "dark" }) {
         {isMenuOpen && (
           <div className="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center gap-8 animate-in slide-in-from-top-10 duration-200">
             <nav className="flex flex-col items-center gap-8 text-2xl font-serif font-bold text-slate-900">
-              <Link href="/" onClick={() => setIsMenuOpen(false)}>
+              <Link
+                href="/"
+                onClick={() => setIsMenuOpen(false)}
+                className="transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1"
+              >
                 {t.nav.home}
               </Link>
-              <Link href="/experience" onClick={() => setIsMenuOpen(false)}>
+              <Link
+                href="/experience"
+                onClick={() => setIsMenuOpen(false)}
+                className="transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1"
+              >
                 {t.nav.experience}
               </Link>
-              <Link href="/about" onClick={() => setIsMenuOpen(false)}>
+              <Link
+                href="/about"
+                onClick={() => setIsMenuOpen(false)}
+                className="transition-all duration-300 hover:underline hover:decoration-4 hover:underline-offset-8 hover:decoration-[#E69F00] hover:text-[#E69F00] focus-visible:ring-4 focus-visible:ring-[#E69F00] focus-visible:outline-none rounded-sm px-1"
+              >
                 {t.nav.about}
               </Link>
             </nav>

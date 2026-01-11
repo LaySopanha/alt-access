@@ -28,17 +28,26 @@ export function Footer() {
             <h3 className="font-semibold text-lg mb-4 text-secondary">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/experience" className="text-slate-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/experience"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                   {t.footer.experiences}
                 </Link>
               </li>
               <li>
-                <Link href="/#video-series" className="text-slate-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/#video-series"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                   {t.footer.videoSeries}
                 </Link>
               </li>
               <li>
-                <Link href="/#about" className="text-slate-400 hover:text-white transition-colors text-sm">
+                <Link
+                  href="/#about"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                   {t.footer.about}
                 </Link>
               </li>
@@ -51,7 +60,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experience/total-blindness"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   {t.footer.totalBlindness}
                 </Link>
@@ -59,7 +68,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experience/low-vision"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   {t.footer.lowVision}
                 </Link>
@@ -67,7 +76,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experience/color-blindness"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   {t.footer.colorBlindness}
                 </Link>
@@ -81,7 +90,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:hello@altaccess.com"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   {t.footer.email}
                 </a>
@@ -91,7 +100,7 @@ export function Footer() {
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   GitHub
                 </a>
@@ -101,7 +110,7 @@ export function Footer() {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-white transition-colors text-sm"
+                  className="inline-block px-2 py-1 rounded text-sm text-slate-400 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                 >
                   Twitter
                 </a>
@@ -115,10 +124,10 @@ export function Footer() {
             © {new Date().getFullYear()} {t.footer.copyright}
           </p>
           <div className="flex gap-6">
-            <Link href="/privacy" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+            <Link href="/privacy" className="inline-block px-2 py-1 rounded text-sm text-slate-500 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
               {t.footer.privacy}
             </Link>
-            <Link href="/terms" className="text-slate-500 hover:text-slate-300 transition-colors text-sm">
+            <Link href="/terms" className="inline-block px-2 py-1 rounded text-sm text-slate-500 transition-all duration-300 hover:bg-[#E69F00] hover:text-black focus-visible:ring-2 focus-visible:ring-[#E69F00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
               {t.footer.terms}
             </Link>
           </div>
