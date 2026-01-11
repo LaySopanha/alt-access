@@ -57,7 +57,7 @@ export function ExperienceCards() {
 
   return (
     <section className="py-24 bg-white relative overflow-hidden">
-      
+
       {/* SVG Filters Definition (Hidden) */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
@@ -75,7 +75,7 @@ export function ExperienceCards() {
       </svg>
 
       <div className="container mx-auto px-6 md:px-10 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-[#ff751f] font-bold tracking-widest uppercase text-xs mb-2 block">
@@ -110,7 +110,7 @@ export function ExperienceCards() {
 
                 {/* Main Content */}
                 <div className={cn("relative z-10 flex flex-col h-full", exp.contentClass)}>
-                  
+
                   {/* Top Row */}
                   <div className="flex justify-between items-start mb-8">
                     <span className="text-4xl font-serif font-bold text-slate-100 group-hover:text-slate-200 transition-colors">

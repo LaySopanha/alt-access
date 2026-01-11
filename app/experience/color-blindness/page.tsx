@@ -62,7 +62,7 @@ function ImageComparisonSlider({
         <div className="w-1.5 h-4 bg-[#ff751f] rounded-full" />
         {label}
       </h3>
-      
+
       <div
         className="relative w-full aspect-video rounded-xl overflow-hidden cursor-ew-resize select-none border border-slate-200 shadow-sm transition-shadow group-hover/slider:shadow-md hover:border-[#1351aa]/30"
         onMouseMove={handleMouseMove}
@@ -141,7 +141,7 @@ export default function ColorBlindnessExperience() {
       <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
         {/* Brand Background Pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
-        
+
         {/* Glow */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff751f]/5 rounded-full blur-[100px]" />
 
@@ -156,20 +156,20 @@ export default function ColorBlindnessExperience() {
 
           <div className="space-y-8">
             <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
-                    <ScanEye className="w-4 h-4" />
-                    <span>Visual Simulation 03</span>
-                </div>
-                <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
+              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
+                <ScanEye className="w-4 h-4" />
+                <span>Visual Simulation 03</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
                 Color Blindness Lab
-                </h1>
+              </h1>
             </div>
 
             <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
               <h2 className="text-xl font-bold text-slate-900">Mission</h2>
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
-                Colors convey meaning, but not everyone sees them the same way. 
-                In this lab, you will analyze standard UI components through the eyes of the 
+                Colors convey meaning, but not everyone sees them the same way.
+                In this lab, you will analyze standard UI components through the eyes of the
                 <strong> 8% of men</strong> and <strong>0.5% of women</strong> who have Color Vision Deficiency (CVD).
               </p>
             </div>
@@ -190,22 +190,22 @@ export default function ColorBlindnessExperience() {
   // --- LAB INTERFACE ---
   return (
     <main className="min-h-screen bg-slate-50 font-sans selection:bg-[#ff751f] selection:text-white">
-      
+
       {/* Sticky Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/experience" className="flex items-center gap-2 text-slate-500 hover:text-[#1351aa] transition-colors group">
             <div className="bg-slate-100 p-1.5 rounded-md group-hover:bg-[#1351aa]/10">
-                <ArrowLeft className="w-4 h-4 group-hover:text-[#1351aa]" />
+              <ArrowLeft className="w-4 h-4 group-hover:text-[#1351aa]" />
             </div>
             <span className="text-sm font-bold uppercase tracking-wide hidden sm:inline">Exit</span>
           </Link>
-          
+
           <div className="font-serif font-bold text-[#1351aa] text-lg">CVD Simulator</div>
-          
+
           <div className="w-16" /> {/* Spacer */}
         </div>
-        
+
         {/* Filter Controls */}
         <div className="border-t border-slate-100 bg-white">
           <div className="container mx-auto px-6 py-4 overflow-x-auto no-scrollbar">
@@ -222,8 +222,8 @@ export default function ColorBlindnessExperience() {
                   )}
                 >
                   <span className={cn(
-                      "text-sm font-bold",
-                      filterType === f.value ? "text-[#1351aa]" : "text-slate-600"
+                    "text-sm font-bold",
+                    filterType === f.value ? "text-[#1351aa]" : "text-slate-600"
                   )}>{f.label}</span>
                   <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{f.desc}</span>
                 </button>
@@ -234,7 +234,7 @@ export default function ColorBlindnessExperience() {
       </header>
 
       <div className="container mx-auto px-6 py-10 max-w-5xl">
-        
+
         {/* Mode Switcher */}
         <div className="flex justify-center mb-12">
           <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm inline-flex gap-1">
@@ -242,9 +242,9 @@ export default function ColorBlindnessExperience() {
               onClick={() => setActiveTab("abstract")}
               className={cn(
                 "px-6 py-2.5 rounded-xl text-sm font-bold transition-all",
-                activeTab === "abstract" 
-                    ? "bg-[#1351aa] text-white shadow-md" 
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                activeTab === "abstract"
+                  ? "bg-[#1351aa] text-white shadow-md"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               )}
             >
               UI Components
@@ -253,9 +253,9 @@ export default function ColorBlindnessExperience() {
               onClick={() => setActiveTab("real")}
               className={cn(
                 "px-6 py-2.5 rounded-xl text-sm font-bold transition-all",
-                activeTab === "real" 
-                    ? "bg-[#1351aa] text-white shadow-md" 
-                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                activeTab === "real"
+                  ? "bg-[#1351aa] text-white shadow-md"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               )}
             >
               Real World
@@ -264,17 +264,17 @@ export default function ColorBlindnessExperience() {
         </div>
 
         <div className="space-y-12">
-          
+
           {/* --- UI COMPONENTS MODE --- */}
           {activeTab === "abstract" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              
+
               {/* Traffic Light */}
               <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm grid md:grid-cols-2 gap-10 items-center">
                 <div className="space-y-4">
                   <h3 className="text-2xl font-serif font-bold text-[#1351aa]">Signal Identification</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Colorblind users often rely on <strong>position</strong> or icons rather than color alone. 
+                    Colorblind users often rely on <strong>position</strong> or icons rather than color alone.
                     If you only use color to indicate status (Error/Success), they might miss critical warnings.
                   </p>
                   <div className="inline-flex items-center gap-2 text-xs font-bold text-[#ff751f] bg-[#ff751f]/10 px-3 py-1.5 rounded-full">
@@ -282,22 +282,22 @@ export default function ColorBlindnessExperience() {
                     <span>Best Practice: Always use icons alongside color</span>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-center bg-slate-50/50 p-8 rounded-2xl border border-slate-100">
                   <div className={cn("bg-slate-800 p-5 rounded-[2rem] shadow-2xl flex flex-col gap-4 border-4 border-slate-700 transition-all duration-500", getFilterClass())}>
                     {/* Red Light */}
                     <div className="w-20 h-20 rounded-full bg-red-500 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] relative flex items-center justify-center">
-                        {/* Only visible symbol for colorblind accessible design */}
-                        <X className="w-10 h-10 text-red-900/40" strokeWidth={3} />
-                        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/20 rounded-full blur-sm" />
+                      {/* Only visible symbol for colorblind accessible design */}
+                      <X className="w-10 h-10 text-red-900/40" strokeWidth={3} />
+                      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/20 rounded-full blur-sm" />
                     </div>
                     {/* Yellow Light */}
                     <div className="w-20 h-20 rounded-full bg-yellow-400 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] opacity-30 relative flex items-center justify-center">
-                         <div className="w-8 h-1 bg-yellow-900/40 rounded-full" />
+                      <div className="w-8 h-1 bg-yellow-900/40 rounded-full" />
                     </div>
                     {/* Green Light */}
                     <div className="w-20 h-20 rounded-full bg-green-500 border-4 border-black/20 shadow-[inset_0_4px_12px_rgba(0,0,0,0.4)] opacity-30 relative flex items-center justify-center">
-                        <Check className="w-10 h-10 text-green-900/40" strokeWidth={3} />
+                      <Check className="w-10 h-10 text-green-900/40" strokeWidth={3} />
                     </div>
                   </div>
                 </div>
@@ -307,23 +307,23 @@ export default function ColorBlindnessExperience() {
               <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm grid md:grid-cols-2 gap-10 items-center">
                 <div className="order-2 md:order-1 h-72 w-full bg-slate-50/50 rounded-2xl border border-slate-100 p-8 flex items-end gap-4 md:gap-6">
                   {/* Bars */}
-                  <div className={cn("w-full bg-blue-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "60%"}}>
+                  <div className={cn("w-full bg-blue-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{ height: "60%" }}>
                     <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">A</span>
                   </div>
-                  <div className={cn("w-full bg-purple-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "80%"}}>
+                  <div className={cn("w-full bg-purple-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{ height: "80%" }}>
                     <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">B</span>
                   </div>
-                  <div className={cn("w-full bg-green-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "40%"}}>
+                  <div className={cn("w-full bg-green-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{ height: "40%" }}>
                     <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">C</span>
                   </div>
-                  <div className={cn("w-full bg-red-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{height: "90%"}}>
+                  <div className={cn("w-full bg-red-500 rounded-t-lg transition-all duration-500 relative group", getFilterClass())} style={{ height: "90%" }}>
                     <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-400">D</span>
                   </div>
                 </div>
                 <div className="order-1 md:order-2 space-y-4">
                   <h3 className="text-2xl font-serif font-bold text-[#1351aa]">Data Visualization</h3>
                   <p className="text-slate-600 leading-relaxed">
-                    Charts relying solely on a color legend become unreadable. 
+                    Charts relying solely on a color legend become unreadable.
                     Notice how the bars might blend together in Protanopia mode.
                   </p>
                   <div className="inline-flex items-center gap-2 text-xs font-bold text-[#ff751f] bg-[#ff751f]/10 px-3 py-1.5 rounded-full">
@@ -339,7 +339,7 @@ export default function ColorBlindnessExperience() {
                   <h3 className="text-2xl font-serif font-bold text-[#1351aa] mb-2">Design System Contrast</h3>
                   <p className="text-slate-600">Common accessible color pairings can become indistinguishable.</p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { color: "bg-red-500", name: "Error", hex: "#EF4444" },
@@ -369,31 +369,31 @@ export default function ColorBlindnessExperience() {
           {activeTab === "real" && (
             <div className="grid md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <ImageComparisonSlider 
+                <ImageComparisonSlider
                   label="Nature & Scenery"
-                  imageSrc="/vibrant-nature-landscape-with-flowers-trees-sky.jpg" 
-                  filterType={filterType} 
+                  imageSrc="/vibrant-nature-landscape-with-flowers-trees-sky.jpg"
+                  filterType={filterType}
                 />
               </div>
               <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <ImageComparisonSlider 
+                <ImageComparisonSlider
                   label="Fresh Produce (Red/Green)"
-                  imageSrc="/colorful-fresh-fruits-and-vegetables-assortment.jpg" 
-                  filterType={filterType} 
+                  imageSrc="/colorful-fresh-fruits-and-vegetables-assortment.jpg"
+                  filterType={filterType}
                 />
               </div>
               <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <ImageComparisonSlider 
+                <ImageComparisonSlider
                   label="Dashboard UI"
-                  imageSrc="/colorful-user-interface-dashboard-with-buttons-cha.jpg" 
-                  filterType={filterType} 
+                  imageSrc="/colorful-user-interface-dashboard-with-buttons-cha.jpg"
+                  filterType={filterType}
                 />
               </div>
               <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                <ImageComparisonSlider 
+                <ImageComparisonSlider
                   label="Urban Night Lights"
-                  imageSrc="/city-street-with-colorful-neon-signs-traffic-light.jpg" 
-                  filterType={filterType} 
+                  imageSrc="/city-street-with-colorful-neon-signs-traffic-light.jpg"
+                  filterType={filterType}
                 />
               </div>
             </div>

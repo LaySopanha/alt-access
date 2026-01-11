@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -18,8 +19,15 @@ export function Navbar() {
   return (
     <header className="absolute top-0 left-0 w-full z-50 p-6 md:p-10">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-white font-bold text-xl tracking-wider font-mono">
-          {t.nav.logo}
+        <Link href="/" className="inline-block">
+          <Image
+            src="/images/alt-access-white-logo.png"
+            alt="Alt Access Logo"
+            width={240}
+            height={60}
+            className="h-20 w-auto object-contain"
+            priority
+          />
         </Link>
 
         <DropdownMenu>

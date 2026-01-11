@@ -96,10 +96,10 @@ export default function TotalBlindnessExperience() {
         const audioUrl = URL.createObjectURL(audioBlob)
         const audio = new Audio(audioUrl)
         audioRef.current = audio
-        
+
         audio.onended = () => URL.revokeObjectURL(audioUrl)
         audio.onerror = () => fallbackSpeak(text)
-        
+
         await audio.play()
       } else {
         fallbackSpeak(text)
@@ -113,14 +113,14 @@ export default function TotalBlindnessExperience() {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel()
       const utterance = new SpeechSynthesisUtterance(text)
-      
+
       // Attempt to find a Khmer voice if needed, otherwise default
       const voices = window.speechSynthesis.getVoices()
       if (language === "km") {
         const khmerVoice = voices.find((v) => v.lang.includes("km") || v.lang.includes("KH"))
         if (khmerVoice) utterance.voice = khmerVoice
       }
-      
+
       utterance.rate = 1.0
       window.speechSynthesis.speak(utterance)
     }
@@ -145,54 +145,54 @@ export default function TotalBlindnessExperience() {
 
           <div className="space-y-8">
             <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
-                    <Ear className="w-4 h-4" />
-                    <span>Visual Simulation 01</span>
-                </div>
-                <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
-                  Total Blindness Lab
-                </h1>
+              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
+                <Ear className="w-4 h-4" />
+                <span>Visual Simulation 01</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
+                Total Blindness Lab
+              </h1>
             </div>
 
             <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
               <h2 className="text-xl font-bold text-slate-900">Mission</h2>
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
-                Experience the web as a screen reader user. 
+                Experience the web as a screen reader user.
                 Your screen will go <strong>black</strong>. You must navigate using only your keyboard and audio cues.
               </p>
             </div>
 
             {/* Instruction Cards */}
             <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
-                        <Keyboard className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-bold text-slate-900 mb-2">TAB Key</h3>
-                    <p className="text-sm text-slate-500">
-                        Press <strong>Tab</strong> to jump between interactive elements (buttons, links, inputs).
-                    </p>
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
+                  <Keyboard className="w-6 h-6" />
                 </div>
-                
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
-                        <MousePointerClick className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-bold text-slate-900 mb-2">ENTER Key</h3>
-                    <p className="text-sm text-slate-500">
-                        Press <strong>Enter</strong> to click/activate the element you are currently focused on.
-                    </p>
-                </div>
+                <h3 className="font-bold text-slate-900 mb-2">TAB Key</h3>
+                <p className="text-sm text-slate-500">
+                  Press <strong>Tab</strong> to jump between interactive elements (buttons, links, inputs).
+                </p>
+              </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div className="w-12 h-12 bg-[#ff751f]/10 text-[#ff751f] rounded-xl flex items-center justify-center mb-4">
-                        <Eye className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-bold text-slate-900 mb-2">Cheat Mode</h3>
-                    <p className="text-sm text-slate-500">
-                        Getting lost? Toggle the <strong>Eye Icon</strong> (top right) to peek at the screen.
-                    </p>
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
+                  <MousePointerClick className="w-6 h-6" />
                 </div>
+                <h3 className="font-bold text-slate-900 mb-2">ENTER Key</h3>
+                <p className="text-sm text-slate-500">
+                  Press <strong>Enter</strong> to click/activate the element you are currently focused on.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div className="w-12 h-12 bg-[#ff751f]/10 text-[#ff751f] rounded-xl flex items-center justify-center mb-4">
+                  <Eye className="w-6 h-6" />
+                </div>
+                <h3 className="font-bold text-slate-900 mb-2">Cheat Mode</h3>
+                <p className="text-sm text-slate-500">
+                  Getting lost? Toggle the <strong>Eye Icon</strong> (top right) to peek at the screen.
+                </p>
+              </div>
             </div>
 
             <Button
@@ -211,7 +211,7 @@ export default function TotalBlindnessExperience() {
   // --- ACTIVE SIMULATION ---
   return (
     <div className="relative min-h-screen bg-white">
-      
+
       {/* 1. The "Blindness" Overlay */}
       {/* We keep the underlying DOM accessible (no display:none) but visually hidden */}
       <div
@@ -220,10 +220,10 @@ export default function TotalBlindnessExperience() {
         aria-hidden="true"
       >
         {!accessibilityMode && (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-slate-500/50 space-y-4">
-                <Volume2 className="w-16 h-16 mx-auto animate-pulse" />
-                <p className="text-sm font-mono tracking-widest uppercase">Audio Navigation Active</p>
-            </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-slate-500/50 space-y-4">
+            <Volume2 className="w-16 h-16 mx-auto animate-pulse" />
+            <p className="text-sm font-mono tracking-widest uppercase">Audio Navigation Active</p>
+          </div>
         )}
       </div>
 
@@ -234,10 +234,10 @@ export default function TotalBlindnessExperience() {
           speak(accessibilityMode ? t.screenReader.accessibilityDisabled : t.screenReader.accessibilityEnabled)
         }}
         className={cn(
-            "fixed top-6 right-6 z-[110] p-4 rounded-full shadow-2xl border-2 transition-all duration-300 group",
-            accessibilityMode 
-                ? "bg-white border-slate-200 text-slate-400 hover:text-[#1351aa]" 
-                : "bg-[#1351aa] border-[#1351aa] text-white hover:bg-[#1a5dc0]"
+          "fixed top-6 right-6 z-[110] p-4 rounded-full shadow-2xl border-2 transition-all duration-300 group",
+          accessibilityMode
+            ? "bg-white border-slate-200 text-slate-400 hover:text-[#1351aa]"
+            : "bg-[#1351aa] border-[#1351aa] text-white hover:bg-[#1a5dc0]"
         )}
         title={accessibilityMode ? "Disable Visuals" : "Enable Visuals"}
       >
@@ -247,19 +247,19 @@ export default function TotalBlindnessExperience() {
       {/* 3. Screen Reader Caption (Cheat Mode / Visual Aid) */}
       {showPopup && focusedElement && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[110] w-[90%] max-w-lg">
-            <div className="bg-[#1e1e2e] text-slate-200 p-6 rounded-2xl shadow-2xl border-l-4 border-[#ff751f] animate-in fade-in slide-in-from-bottom-4">
-                <div className="flex items-start gap-4">
-                    <div className="p-2 bg-white/10 rounded-lg shrink-0">
-                        <Volume2 className="w-5 h-5 text-[#ff751f]" />
-                    </div>
-                    <div>
-                        <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">VoiceOver Output</div>
-                        <p className="text-lg font-medium leading-relaxed font-mono">
-                            "{focusedElement}"
-                        </p>
-                    </div>
-                </div>
+          <div className="bg-[#1e1e2e] text-slate-200 p-6 rounded-2xl shadow-2xl border-l-4 border-[#ff751f] animate-in fade-in slide-in-from-bottom-4">
+            <div className="flex items-start gap-4">
+              <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                <Volume2 className="w-5 h-5 text-[#ff751f]" />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">VoiceOver Output</div>
+                <p className="text-lg font-medium leading-relaxed font-mono">
+                  "{focusedElement}"
+                </p>
+              </div>
             </div>
+          </div>
         </div>
       )}
 
@@ -273,11 +273,11 @@ export default function TotalBlindnessExperience() {
         <VisualImpairmentSection />
 
         <footer className="bg-slate-900 text-white py-12">
-            <div className="container mx-auto px-6 md:px-10 text-center">
-              <p className="opacity-60 text-sm">
-                © {new Date().getFullYear()} Project Lima Clone. Built for accessibility awareness.
-              </p>
-            </div>
+          <div className="container mx-auto px-6 md:px-10 text-center">
+            <p className="opacity-60 text-sm">
+              © {new Date().getFullYear()} Project Lima Clone. Built for accessibility awareness.
+            </p>
+          </div>
         </footer>
       </div>
     </div>
