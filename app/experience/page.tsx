@@ -58,7 +58,7 @@ export default function ExperiencePage() {
 
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-[#ff751f] selection:text-white overflow-hidden relative">
-      
+
       {/* Global SVG Filters for Simulations */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
@@ -76,8 +76,14 @@ export default function ExperiencePage() {
 
       {/* Header - Transparent absolute */}
       <header className="w-full px-6 md:px-10 py-8 flex justify-between items-center absolute top-0 left-0 right-0 z-20">
-        <Link href="/" className="text-[#1351aa] font-bold text-xl tracking-wider font-mono hover:opacity-80 transition-opacity">
-          {t.nav.logo}
+        <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
+          <Image
+            src="/images/alt-access-black-logo.png"
+            alt="Alt Access Logo"
+            width={240}
+            height={60}
+            className="h-20 w-auto object-contain"
+          />
         </Link>
 
         <div className="flex items-center gap-4">
@@ -143,7 +149,7 @@ export default function ExperiencePage() {
                   />
                   {/* Overlay for effects (like blindness black screen) */}
                   {exp.overlay}
-                  
+
                   {/* Badge */}
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#1351aa] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2 border border-[#1351aa]/10">
                     <span className="font-mono">{exp.id}</span>
@@ -157,7 +163,7 @@ export default function ExperiencePage() {
                   <h2 className="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-[#1351aa] transition-colors">
                     {content.title}
                   </h2>
-                  
+
                   <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
                     {content.description}
                   </p>
