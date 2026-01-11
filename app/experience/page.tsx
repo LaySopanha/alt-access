@@ -2,17 +2,10 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Globe, Eye, EyeOff, Palette } from "lucide-react"
+import { ArrowRight, Eye, EyeOff, Palette } from "lucide-react"
 import { useLanguage } from "@/hooks/use-language"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+import { Navbar } from "@/components/navbar"
 
 export default function ExperiencePage() {
   const { language, setLanguage, t } = useLanguage()
@@ -75,41 +68,7 @@ export default function ExperiencePage() {
       </svg>
 
       {/* Header - Transparent absolute */}
-      <header className="w-full px-6 md:px-10 py-8 flex justify-between items-center absolute top-0 left-0 right-0 z-20">
-        <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
-          <Image
-            src="/images/alt-access-black-logo.png"
-            alt="Alt Access Logo"
-            width={240}
-            height={60}
-            className="h-20 w-auto object-contain"
-          />
-        </Link>
-
-        <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="text-xs md:text-sm font-medium text-slate-600 hover:text-[#1351aa] transition-colors"
-          >
-            {t.nav.backHome}
-          </Link>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-slate-600 hover:bg-[#1351aa]/10 hover:text-[#1351aa]">
-                <Globe className="h-5 w-5" />
-                <span className="sr-only">Change language</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuRadioGroup value={language} onValueChange={(val) => setLanguage(val as "en" | "km")}>
-                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="km">ភាសាខ្មែរ (Khmer)</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </header>
+      <Navbar theme="dark" />
 
       {/* Page Title Area */}
       <div className="pt-32 pb-16 px-6 text-center z-10 relative">

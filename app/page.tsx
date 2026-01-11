@@ -9,9 +9,9 @@ import { AnimatedBackground } from "@/components/animated-background"
 export default function Home() {
   return (
     <main className="relative isolate min-h-screen flex flex-col overflow-hidden">
-   
+
       <div className="relative z-10 flex flex-col flex-1">
-        <Navbar />
+        <Navbar theme="light" />
         <HeroSection />
         <ExperienceCards />
         <VideoSeriesSection />

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-slate-50 font-sans selection:bg-[#ff751f] selection:text-white">
-      <Navbar />
+      <Navbar theme="light" />
 
       {/* --- HERO SECTION --- */}
       <section className="relative pt-40 pb-20 overflow-hidden bg-[#1351aa] text-white">
