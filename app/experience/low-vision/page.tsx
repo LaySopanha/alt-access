@@ -3,26 +3,62 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Eye, FileText, CheckCircle2 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye, CheckCircle2, Folder, Search } from "lucide-react"
 import { Navbar } from "@/components/navbar"
+import { cn } from "@/lib/utils"
+
+// Game Item Type
+type FileItem = {
+  id: string
+  name: string
+  isTarget: boolean
+  color: string
+}
 
 export default function LowVisionExperience() {
   const [started, setStarted] = useState(false)
-  const [signed, setSigned] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [blobOffset, setBlobOffset] = useState({ x: 0, y: 0 })
 
+  // Generate Items (Static for consistency)
+  const [items] = useState<FileItem[]>([
+    { id: "1", name: "Tax Returns 2023", isTarget: false, color: "bg-blue-100" },
+    { id: "2", name: "Holiday Photos", isTarget: false, color: "bg-yellow-100" },
+    { id: "3", name: "Project Alpha", isTarget: false, color: "bg-red-100" },
+    { id: "4", name: "Medical Records", isTarget: false, color: "bg-green-100" },
+    { id: "5", name: "Project Beta", isTarget: false, color: "bg-purple-100" },
+    { id: "6", name: "Project AltAccess", isTarget: true, color: "bg-wong-orange" }, // Target
+    { id: "7", name: "Invoice #9921", isTarget: false, color: "bg-gray-100" },
+    { id: "8", name: "Design Assets", isTarget: false, color: "bg-pink-100" },
+    { id: "9", name: "Legal Docs", isTarget: false, color: "bg-indigo-100" },
+    { id: "10", name: "Meeting Notes", isTarget: false, color: "bg-orange-100" },
+    { id: "11", name: "Budget Q1", isTarget: false, color: "bg-teal-100" },
+    { id: "12", name: "User Research", isTarget: false, color: "bg-cyan-100" },
+    { id: "13", name: "Project Delta", isTarget: false, color: "bg-emerald-100" },
+    { id: "14", name: "Project Gamma", isTarget: false, color: "bg-rose-100" },
+    { id: "15", name: "Client List", isTarget: false, color: "bg-sky-100" },
+    { id: "16", name: "Annual Report", isTarget: false, color: "bg-amber-100" },
+  ])
+
+  // Mouse Tracking
   useEffect(() => {
-    if (started && !signed) {
+    if (started && !success) {
       const handleMouseMove = (e: MouseEvent) => {
         setMousePos({ x: e.clientX, y: e.clientY })
-        // Make blobs float slightly for realism (lag behind movement)
-        setBlobOffset({ x: e.clientX * 0.08, y: e.clientY * 0.08 })
       }
       window.addEventListener("mousemove", handleMouseMove)
       return () => window.removeEventListener("mousemove", handleMouseMove)
     }
-  }, [started, signed])
+  }, [started, success])
+
+  const handleItemClick = (item: FileItem) => {
+    if (item.isTarget) {
+      setSuccess(true)
+    } else {
+      // Small shake or feedback could be added here
+      // alert("Wrong file. Keep looking.") 
+    }
+  }
 
   // --- START SCREEN ---
   if (!started) {
@@ -32,7 +68,6 @@ export default function LowVisionExperience() {
 
         <div className="flex-1 flex flex-col justify-center py-10 px-6 md:px-24">
           <div className="max-w-4xl mx-auto w-full">
-
             {/* Back Link */}
             <div className="mb-8">
               <Link
@@ -45,67 +80,52 @@ export default function LowVisionExperience() {
             </div>
 
             {/* Header */}
-            <div className="mb-16 border-b-2 border-black pb-8">
+            <div className="mb-12 border-b-2 border-black pb-12">
               <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
                 Simulation 02 / Field Loss
               </span>
               <h1 className="font-serif text-6xl md:text-8xl font-bold text-black mb-6 tracking-tight">
                 Low Vision.
               </h1>
-              <p className="font-sans text-xl md:text-2xl text-stone-600 max-w-2xl leading-relaxed font-light">
-                Experience Scotomas (blind spots) and peripheral loss. See how difficult it becomes to perform simple tasks like signing a petition.
+              <p className="font-sans text-xl md:text-2xl text-stone-600 max-w-2xl leading-relaxed font-light mb-8">
+                Experience severe Myopia (nearsightedness) or Tunnel Vision.
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">1</div>
+                  <p className="text-lg leading-relaxed">Search the grid of files.</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">2</div>
+                  <p className="text-lg leading-relaxed">Move your mouse to <strong>focus</strong> on specific areas.</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">3</div>
+                  <p className="text-lg leading-relaxed">Find and click the file named <strong>"Project AltAccess"</strong>.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Fun Fact */}
+            <div className="bg-wong-teal/10 border-l-4 border-wong-teal p-6 mb-12 rounded-r-lg">
+              <h3 className="font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
+                <Eye className="w-4 h-4" />
+                Did you know?
+              </h3>
+              <p className="text-stone-700 italic">
+                "Users with tunnel vision often experience <strong>visual fatigue</strong> quickly because their brain has to constantly piece together small fragments of visual information to build a complete picture."
               </p>
             </div>
 
-            {/* Content Layout */}
-            <div className="grid md:grid-cols-12 gap-12 mb-16">
-
-              {/* Left Column: Context */}
-              <div className="md:col-span-12 lg:col-span-5 space-y-8">
-                <div>
-                  <div className="w-16 pt-1 border-t-4 border-wong-orange mb-4">
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Condition</span>
-                  </div>
-                  <h3 className="text-2xl font-serif font-bold text-black mb-2">Diabetic Retinopathy</h3>
-                  <p className="text-stone-600 leading-relaxed">
-                    Causes patchy vision, floating spots (floaters), and blurriness.
-                  </p>
-                </div>
-
-                <div className="bg-stone-100 p-6 border-l-4 border-black">
-                  <h4 className="font-bold mb-2 flex items-center gap-2">
-                    <Eye className="w-5 h-5" />
-                    <span>Challenge</span>
-                  </h4>
-                  <p className="text-sm text-stone-600 font-serif italic">
-                    "You will have to read 'around' the blind spots. Moving your eyes (mouse) shifts the spots, requiring constant scanning."
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column: Mission & CTA */}
-              <div className="md:col-span-12 lg:col-span-7 flex flex-col justify-between">
-                <div className="mb-8 lg:mb-0">
-                  <div className="w-16 pt-1 border-t-4 border-wong-dark-blue mb-4">
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Mission</span>
-                  </div>
-                  <p className="text-lg text-stone-700 leading-relaxed mb-8">
-                    Your goal is to <strong>read the terms</strong> and <strong>sign the petition</strong>.
-                    Navigate the form while your central vision is obscured by dynamic scotomas.
-                  </p>
-                </div>
-
-                <Button
-                  size="lg"
-                  onClick={() => setStarted(true)}
-                  className="w-full md:w-auto bg-black hover:bg-stone-800 text-white rounded-none border-2 border-transparent hover:border-black px-12 py-8 text-xl font-bold uppercase tracking-wider transition-all flex items-center justify-between group"
-                >
-                  <span>Start Experience</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </div>
-
+            <Button
+              size="lg"
+              onClick={() => setStarted(true)}
+              className="w-full md:w-auto bg-black hover:bg-stone-800 text-white rounded-none border-2 border-transparent hover:border-black px-12 py-8 text-xl font-bold uppercase tracking-wider transition-all flex items-center justify-between group"
+            >
+              <span>Start Search</span>
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
         </div>
       </main>
@@ -113,49 +133,34 @@ export default function LowVisionExperience() {
   }
 
   // --- SUCCESS SCREEN ---
-  if (signed) {
+  if (success) {
     return (
-      <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+      <main className="min-h-screen bg-wong-teal text-black flex flex-col items-center justify-center p-6 text-center font-sans">
         <Navbar theme="light" showLogo={true} />
-        <div className="absolute inset-0 bg-[radial-gradient(var(--color-wong-dark-blue)_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
-
-        <div className="max-w-2xl w-full bg-card p-10 rounded-3xl shadow-xl border border-border text-center relative z-10 animate-in fade-in zoom-in duration-500">
-          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
+        <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+            <CheckCircle2 className="w-12 h-12 text-wong-teal" />
           </div>
-
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-wong-dark-blue mb-4">Mission Complete</h1>
-
-          <div className="space-y-4 mb-8 text-left bg-muted p-6 rounded-2xl border border-border">
-            <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">Lab Report</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              That was frustrating, wasn't it? The "blobs" forced you to constantly move your mouse to read simple text.
-            </p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-wong-orange">•</span>
-                <span><strong>Impact:</strong> Users with scotomas cannot "scan" a page. They read letter-by-letter.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-wong-orange">•</span>
-                <span><strong>Solution:</strong> Large, bold typography and clear proximity between labels and inputs reduces the mental mapping required.</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex gap-4 justify-center">
-            <Link href="/experience">
-              <Button variant="outline" size="lg" className="rounded-xl h-12 px-8 border-border">
-                Exit Lab
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 font-serif">Found it!</h2>
+          <p className="text-xl md:text-2xl font-medium mb-12 max-w-lg mx-auto leading-relaxed text-wong-teal-900">
+            You pieced it together. But imagine doing that for every single link on a webpage.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => {
+                setSuccess(false)
+                setStarted(false)
+              }}
+              variant="outline"
+              className="border-black text-black hover:bg-black hover:text-white h-14 px-8 text-lg uppercase tracking-wide font-bold"
+            >
+              Try Again
+            </Button>
+            <Link href="/experience/color-blindness">
+              <Button className="bg-black text-white hover:bg-gray-900 border-2 border-transparent h-14 px-8 text-lg uppercase tracking-wide font-bold">
+                Next Lesson
               </Button>
             </Link>
-            <Button
-              onClick={() => { setSigned(false); setStarted(false); }}
-              size="lg"
-              className="bg-wong-dark-blue hover:bg-wong-dark-blue/90 text-white rounded-xl h-12 px-8"
-            >
-              Replay
-            </Button>
           </div>
         </div>
       </main>
@@ -164,151 +169,61 @@ export default function LowVisionExperience() {
 
   // --- ACTIVE SIMULATION ---
   return (
-    <main className="min-h-screen bg-slate-100 relative overflow-hidden font-sans cursor-none">
+    <main className="min-h-screen bg-stone-200 relative overflow-hidden font-sans cursor-none select-none">
       <Navbar theme="light" showLogo={true} />
 
-      {/* 
-        LAYER 1: SURROUNDING TUNNEL (Toned Down)
-        - Covers the whole screen.
-        - Uses mask-image to cut a softer hole where the mouse is.
-      */}
-      <div
-        className="fixed inset-0 z-[60] pointer-events-none"
-        style={{
-          backdropFilter: "blur(8px)",
-          backgroundColor: "rgba(30, 40, 50, 0.75)",
-          // Larger gradient fade for smoother edge
-          maskImage: `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, transparent 10%, black 80%)`,
-          WebkitMaskImage: `radial-gradient(circle 220px at ${mousePos.x}px ${mousePos.y}px, transparent 10%, black 80%)`
-        }}
-      />
+      {/* Target Hint Overlay */}
+      <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-black/80 text-white px-6 py-2 rounded-full backdrop-blur-md pointer-events-none">
+        <p className="text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+          <Search className="w-4 h-4" />
+          Find: "Project AltAccess"
+        </p>
+      </div>
 
       {/* 
-        LAYER 2: THE "VISION SPOT" (Follows Mouse)
-        - Contains the "Blobs" (Scotomas).
+         LAYER 1: BLURRED (Underneath)
+         This layer is always fully visible but heavily blurred.
+      */}
+      <div className="absolute inset-0 flex items-center justify-center p-12 filter blur-[20px] opacity-100 transition-all duration-300">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-full">
+          {items.map((item) => (
+            <div key={`blur-${item.id}`} className={cn("aspect-[4/3] rounded-xl flex flex-col items-center justify-center gap-4 shadow-sm", item.color)}>
+              <Folder className="w-16 h-16 text-black/50" />
+              <span className="font-bold text-xl text-black/50">{item.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 
+         LAYER 2: SHARP (On Top)
+         This layer is identical but sharp. It is MASKED so it only shows around the mouse.
       */}
       <div
-        className="fixed z-[70] pointer-events-none w-[400px] h-[400px] rounded-full"
+        className="absolute inset-0 flex items-center justify-center p-12 pointer-events-auto"
         style={{
-
-          top: mousePos.y,
-          left: mousePos.x,
-          transform: 'translate(-50%, -50%)',
-          backdropFilter: "blur(2px)",
+          maskImage: `radial-gradient(circle 80px at ${mousePos.x}px ${mousePos.y}px, black 100%, transparent) `,
+          WebkitMaskImage: `radial-gradient(circle 80px at ${mousePos.x}px ${mousePos.y}px, black 100%, transparent)`,
         }}
       >
-        {/* 
-           THE SCOTOMAS (Blind Spot Blobs) 
-           - Increased opacity/contrast so they are clearly visible.
-           - Moving slightly opposite to mouse for organic feel.
-        */}
-
-        {/* Large Central Blob (The annoying one) */}
-        <div
-          className="absolute w-28 h-24 bg-neutral-800/80 rounded-[40%_60%_70%_30%] blur-md mix-blend-multiply"
-          style={{
-            top: '35%', left: '35%',
-            transform: `translate(${blobOffset.x * 0.1}px, ${blobOffset.y * 0.1}px)`
-          }}
-        />
-
-        {/* Side Blob */}
-        <div
-          className="absolute w-20 h-20 bg-neutral-800/60 rounded-full blur-lg mix-blend-multiply"
-          style={{
-            top: '20%', right: '20%',
-            transform: `translate(${-blobOffset.x * 0.2}px, ${blobOffset.y * 0.1}px)`
-          }}
-        />
-
-        {/* Bottom Blob */}
-        <div
-          className="absolute w-24 h-16 bg-neutral-900/50 rounded-[30%] blur-md mix-blend-multiply"
-          style={{
-            bottom: '20%', left: '25%',
-            transform: `translate(${blobOffset.x * 0.15}px, ${-blobOffset.y * 0.1}px)`
-          }}
-        />
-      </div>
-
-      {/* THE CONTENT */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 relative z-10 pointer-events-auto">
-
-        {/* Sticky Exit Button (Top Left) */}
-        <div className="absolute top-6 left-6 z-40">
-          <Link href="/experience">
-            <Button variant="ghost" size="sm" className="text-slate-400 hover:text-slate-900 cursor-none">
-              Exit Simulation
-            </Button>
-          </Link>
-        </div>
-
-        {/* The Petition Form */}
-        <div className="max-w-xl w-full bg-white p-8 md:p-12 rounded-xl shadow-2xl border border-slate-200">
-          <div className="mb-8 border-b border-slate-100 pb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-green-100 rounded-lg">
-                <FileText className="w-6 h-6 text-green-700" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-serif font-bold text-slate-900">Climate Action Petition</h1>
-                <p className="text-xs text-slate-500 uppercase tracking-widest font-bold">Official Document</p>
-              </div>
-            </div>
-
-            <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
-              <p>
-                <strong>To the Legislative Council:</strong>
-              </p>
-              <p>
-                We, the undersigned citizens, demand immediate legislative action to reduce carbon emissions by
-                <span className="text-slate-400"> 50% </span> (hard to read low contrast) by the year 2030.
-                The scientific consensus is clear: climate change represents an existential threat to our ecosystem
-                and future generations.
-              </p>
-              <div className="bg-slate-50 p-4 rounded-lg border border-slate-100 text-xs text-slate-500">
-                <p className="mb-2 font-bold text-slate-700">Terms of Signature:</p>
-                <p>
-                  By signing this document, you acknowledge that your name will be entered into the public record
-                  and may be displayed on the council website for verification purposes.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Full Name <span className="text-red-500">*</span></label>
-              <input
-                type="text"
-                className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-[#1351aa] focus:border-[#1351aa] outline-none transition-all cursor-none"
-                placeholder="e.g. Sok Piseth"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">Email Address <span className="text-red-500">*</span></label>
-              <input
-                type="email"
-                className="w-full border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:ring-2 focus:ring-[#1351aa] focus:border-[#1351aa] outline-none transition-all cursor-none"
-                placeholder="name@example.com"
-              />
-            </div>
-
-            <div className="pt-4">
-              <Button
-                onClick={() => setSigned(true)}
-                className="w-full bg-[#1351aa] hover:bg-[#0f4291] text-white font-bold h-12 rounded-lg shadow-lg cursor-none"
-              >
-                Sign Petition
-              </Button>
-              <p className="text-[10px] text-center text-slate-400 mt-3">
-                Secure transmission encrypted via 256-bit SSL.
-              </p>
-            </div>
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-full">
+          {items.map((item) => (
+            <button
+              key={`sharp-${item.id}`}
+              onClick={() => handleItemClick(item)}
+              className={cn(
+                "aspect-[4/3] rounded-xl flex flex-col items-center justify-center gap-4 shadow-2xl transform transition-transform hover:scale-105 active:scale-95 cursor-none",
+                item.color,
+                "border-2 border-transparent hover:border-black"
+              )}
+            >
+              <Folder className="w-16 h-16 text-black" />
+              <span className="font-bold text-xl text-black">{item.name}</span>
+            </button>
+          ))}
         </div>
       </div>
+
     </main>
   )
 }
