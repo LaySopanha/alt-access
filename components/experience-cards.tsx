@@ -1,7 +1,8 @@
 "use client"
 
-import { ArrowRight, Eye, EyeOff, Palette } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, Eye, EyeOff, Palette } from "lucide-react"
 import { useLanguage } from "@/hooks/use-language"
 import { cn } from "@/lib/utils"
 
@@ -11,57 +12,48 @@ export function ExperienceCards() {
   const experiences = [
     {
       id: "01",
+      key: "totalBlindness",
       icon: EyeOff,
       href: "/experience/total-blindness",
-      key: "totalBlindness",
-      // Blindness: Fades to black, text vanishes
-      className: "group hover:bg-black transition-colors duration-700",
-      contentClass: "group-hover:opacity-0 transition-opacity duration-500",
+      image: "/screen-reader-accessibility-blind-user.jpg",
+      // Hover: Fade to black
+      imageClass: "group-hover:opacity-0 transition-opacity duration-700",
       overlay: (
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-          <div className="border-2 border-white/50 w-full h-12 bg-white/10 rounded animate-pulse" />
-          <span className="absolute text-white font-mono text-xs tracking-widest uppercase opacity-70">
-            VoiceOver Active
+        <div className="absolute inset-0 bg-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+          <span className="font-mono text-xl tracking-widest uppercase animate-pulse border-2 border-white px-6 py-2 text-white">
+            Audio Only
           </span>
         </div>
       )
     },
     {
       id: "02",
+      key: "lowVision",
       icon: Eye,
       href: "/experience/low-vision",
-      key: "lowVision",
-      // Low Vision: Blurs + "Smear" spots
-      className: "group",
-      contentClass: "group-hover:blur-[3px] transition-all duration-700",
-      overlay: (
-        // Floaters / Smear Effect
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-24 h-24 bg-black/10 rounded-full blur-xl animate-float-delayed" />
-          <div className="absolute bottom-1/3 right-1/4 w-32 h-20 bg-black/15 rounded-[100%] blur-2xl animate-float" />
-          <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-black/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
-        </div>
-      )
+      image: "/blurred-vision-accessibility-simulation.jpg",
+      // Hover: Blur effect
+      imageClass: "group-hover:blur-[6px] transition-all duration-700",
+      overlay: null
     },
     {
       id: "03",
+      key: "colorBlindness",
       icon: Palette,
       href: "/experience/color-blindness",
-      key: "colorBlindness",
-      // Color Blind: Applies Deuteranopia filter
-      className: "group hover:bg-slate-50",
-      contentClass: "group-hover:[filter:url('#deuteranopia')] transition-all duration-500",
+      image: "/color-blindness-spectrum-visual.jpg",
+      // Hover: Deuteranopia filter
+      imageClass: "group-hover:[filter:url('#deuteranopia')] transition-all duration-700",
       overlay: null
     },
-  ]
+  ] as const
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section id="chapter-5" className="bg-[#FDFCF8] border-b-8 border-black">
 
-      {/* SVG Filters Definition (Hidden) */}
+      {/* Global SVG Filters */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
-          {/* Deuteranopia Filter (Red-Green Color Blindness) */}
           <filter id="deuteranopia">
             <feColorMatrix
               type="matrix"
@@ -74,73 +66,79 @@ export function ExperienceCards() {
         </defs>
       </svg>
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
-
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-[#ff751f] font-bold tracking-widest uppercase text-xs mb-2 block">
-            Interactive Simulations
+      {/* Header Section */}
+      <div className="py-24 px-8 md:px-24 border-b-8 border-black">
+        <div className="max-w-7xl mx-auto">
+          <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
+            Chapter 05 / The Practice
           </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1351aa]">
-            Experience the Barrier
+          <h2 className="text-6xl md:text-8xl font-black text-black mb-8 tracking-tighter uppercase leading-none">
+            Simulation<br />Laboratory
           </h2>
-          <p className="text-slate-500 mt-4">
-            Select a card to toggle the simulation. Understand the web through a different lens.
+          <p className="text-xl md:text-2xl font-medium max-w-2xl leading-relaxed text-stone-700">
+            Theory teaches you "what". Experience teaches you "why".
+            Step into the user's perspective to test your assumptions.
           </p>
         </div>
+      </div>
 
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {experiences.map((exp) => {
-            // @ts-ignore
-            const content = t.experiences[exp.key]
-            const Icon = exp.icon
+      {/* Experience Grid */}
+      <div className="w-full">
+        {experiences.map((exp, index) => {
+          // @ts-ignore
+          const content = t.experiences[exp.key]
+          const Icon = exp.icon
 
-            return (
-              <Link
-                key={exp.id}
-                href={exp.href}
-                className={cn(
-                  "relative flex flex-col p-8 rounded-2xl border border-slate-200 shadow-sm transition-all duration-500 hover:shadow-2xl hover:border-[#1351aa]/30 hover:-translate-y-1 overflow-hidden bg-white",
-                  exp.className
-                )}
-              >
-                {/* Specific Simulation Overlay */}
-                {exp.overlay}
+          return (
+            <Link
+              key={exp.id}
+              href={exp.href}
+              className="group block border-b-4 border-black last:border-b-0"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px] lg:min-h-[500px]">
 
-                {/* Main Content */}
-                <div className={cn("relative z-10 flex flex-col h-full", exp.contentClass)}>
-
-                  {/* Top Row */}
-                  <div className="flex justify-between items-start mb-8">
-                    <span className="text-4xl font-serif font-bold text-slate-100 group-hover:text-slate-200 transition-colors">
-                      {exp.id}
-                    </span>
-                    <div className="p-3 bg-[#1351aa]/5 rounded-xl group-hover:bg-[#1351aa] transition-colors duration-500">
-                      <Icon className="w-6 h-6 text-[#1351aa] group-hover:text-white transition-colors duration-500" />
+                {/* Text Content */}
+                <div className="lg:col-span-5 p-8 md:p-16 flex flex-col justify-between bg-white relative z-10">
+                  <div>
+                    <div className="flex items-center gap-4 mb-8">
+                      <span className="font-mono text-sm font-bold border-2 border-black px-2 py-1">
+                        SIM-{exp.id}
+                      </span>
+                      <Icon className="w-6 h-6" />
                     </div>
+                    <h3 className="text-4xl md:text-6xl font-black uppercase mb-6 leading-[0.9] group-hover:translate-x-2 transition-transform duration-300">
+                      {content.title}
+                    </h3>
+                    <p className="text-lg font-medium text-stone-600 leading-relaxed max-w-md">
+                      {content.description}
+                    </p>
                   </div>
 
-                  {/* Text */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#1351aa] transition-colors">
-                    {content.title}
-                  </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
-                    {content.description}
-                  </p>
-
-                  {/* CTA */}
-                  <div className="flex items-center text-sm font-bold text-[#ff751f] mt-auto">
-                    <span className="group-hover:mr-2 transition-all duration-300">
-                      {content.cta}
-                    </span>
-                    <ArrowRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
+                  <div className="mt-12 flex items-center gap-4 font-mono text-sm uppercase tracking-widest font-bold group-hover:gap-6 transition-all">
+                    <span>Enter Simulation</span>
+                    <ArrowRight className="w-5 h-5" />
                   </div>
                 </div>
-              </Link>
-            )
-          })}
-        </div>
+
+                {/* Visual Preview */}
+                <div className="lg:col-span-7 relative bg-stone-100 overflow-hidden border-t-4 lg:border-t-0 lg:border-l-4 border-black">
+                  <Image
+                    src={exp.image}
+                    alt={content.title}
+                    fill
+                    className={cn(
+                      "object-cover transition-all duration-700 group-hover:scale-105",
+                      exp.imageClass
+                    )}
+                  />
+                  {/* Interaction Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
+                  {exp.overlay}
+                </div>
+              </div>
+            </Link>
+          )
+        })}
       </div>
     </section>
   )

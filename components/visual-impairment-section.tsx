@@ -1,171 +1,109 @@
 "use client"
 
-import Link from "next/link"
-import { useLanguage } from "@/hooks/use-language"
+import { Eye, EyeOff, AlertTriangle, Activity, Moon, Sun, Layers, Search } from "lucide-react"
 
 export function VisualImpairmentSection() {
-  const { t } = useLanguage()
+  const impairmentTypes = [
+    {
+      category: "Blindness",
+      items: [
+        { name: "Total Blindness", desc: "No light perception. Relies entirely on screen readers/Braille." },
+        { name: "Partial Blindness", desc: "Some light perception but limited useful vision." }
+      ]
+    },
+    {
+      category: "Low Vision",
+      items: [
+        { name: "Blurred Vision", desc: "Lack of sharpness, details are fuzzy (e.g., cataracts)." },
+        { name: "Reduced Visual Acuity", desc: "Cannot see small details even with correction." }
+      ]
+    },
+    {
+      category: "Color Deficiency",
+      items: [
+        { name: "Red-Green (Deuteranopia)", desc: "Difficulty distinguishing red and green shades." },
+        { name: "Blue-Yellow (Tritanopia)", desc: "Difficulty distinguishing blue and yellow." },
+        { name: "Monochromacy", desc: "Complete color blindness (seeing in grayscale)." }
+      ]
+    },
+    {
+      category: "Field Loss",
+      items: [
+        { name: "Tunnel Vision", desc: "Loss of peripheral vision (e.g., Glaucoma)." },
+        { name: "Central Vision Loss", desc: "Loss of center focus (e.g., Macular Degeneration)." },
+        { name: "Visual Field Loss", desc: "Blind spots or patchy vision." }
+      ]
+    },
+    {
+      category: "Sensitivity",
+      items: [
+        { name: "Photophobia", desc: "Extreme sensitivity to light and glare." },
+        { name: "Nyctalopia", desc: "Night blindness or poor vision in low light." },
+        { name: "Contrast Sensitivity", desc: "Difficulty distinguishing objects from background." }
+      ]
+    }
+  ]
 
   return (
-    <section className="bg-gradient-to-b from-[#1351aa]/20 via-slate-50 to-white text-slate-900 py-24 lg:py-32 relative overflow-hidden">
-      {/* Background Pattern with Smooth Fade-out Gradient */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* The Pattern */}
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#1351aa_1.5px,transparent_1.5px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,black_80%,transparent_100%)]" />
+    <section id="chapter-1" className="bg-[#FDFCF8] text-black py-32 px-6 md:px-24">
+      <div className="max-w-4xl mx-auto">
 
-        {/* Ambient Glow for depth */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1351aa]/5 rounded-full blur-[120px]" />
-      </div>
+        {/* Chapter Header */}
+        <div className="mb-20 border-b-2 border-black pb-8">
+          <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-2 block">Chapter 01</span>
+          <h2 className="font-serif text-5xl md:text-7xl font-bold text-black">The Spectrum.</h2>
+          <p className="font-sans text-xl text-stone-600 mt-6 max-w-2xl leading-relaxed">
+            Visual impairment is not binary. It is a wide range of human experiences that affects how people <span className="highlight-yellow px-1">perceive, navigate, and interact</span> with your work.
+          </p>
+        </div>
 
-      <div className="container mx-auto px-6 md:px-10 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* LEFT: Content */}
-          <div className="relative z-10 space-y-10">
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-6xl font-serif leading-[1.1] text-[#1351aa] drop-shadow-sm">
-                {t.visualImpairment.mainTitle.split("...")[0]} <br />
-                <span className=" bg-clip-text bg-gradient-to-r text-[#ff751f] to-orange-400">
-                  {t.visualImpairment.mainTitle.split("...")[1]}
-                </span>
-              </h2>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-lg md:text-xl text-slate-700 leading-relaxed font-light max-w-lg">
-                {t.visualImpairment.description}
-              </p>
-
-              <div className="bg-[#1351aa]/5 border-l-2 border-[#ff751f] p-4 rounded-r-lg max-w-md">
-                <p className="text-slate-700 font-medium text-sm flex gap-2">
-                  <svg
-                    className="w-5 h-5 text-[#ff751f] shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <polyline points="4 17 10 11 4 5" />
-                    <line x1="12" y1="19" x2="20" y2="19" />
-                  </svg>
-                  <span>{t.visualImpairment.codeExample}</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="flex gap-12 pt-2">
-              <div>
-                <div className="text-4xl font-serif font-bold text-[#1351aa] mb-1">98%</div>
-                <div className="text-sm text-slate-600 tracking-wide uppercase opacity-80">
-                  {t.visualImpairment.webIncompatibility}
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-serif font-bold text-[#ff751f]">120k+</div>
-                <div className="text-sm text-slate-600 tracking-wide uppercase opacity-80">
-                  {t.visualImpairment.usersImpacted}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-4">
-              <Link
-                href="/experience"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#1351aa] text-white font-semibold hover:bg-[#ff751f] transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(19,81,170,0.4)]"
-              >
-                {t.visualImpairment.exploreCta}
-                <svg
-                  className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-            </div>
+        {/* Textbook Content: The Definition */}
+        <div className="mb-24 flex gap-8 items-start">
+          <div className="hidden md:block w-32 pt-2 border-t-4 border-wong-vermilion">
+            <span className="font-mono text-xs font-bold uppercase">Definition</span>
           </div>
-
-          {/* RIGHT: The "DevTools Inspector" Visual */}
-          <div className="relative perspective-1000 group">
-            {/* Background Decor */}
-            <div className="absolute inset-0 bg-[#ff751f]/20 blur-3xl rounded-full transform translate-x-10 translate-y-10 group-hover:translate-x-5 group-hover:translate-y-5 transition-transform duration-700" />
-
-            {/* Main Browser Card */}
-            <div className="relative bg-white rounded-xl overflow-hidden shadow-2xl border border-slate-200 transform transition-transform duration-500 hover:scale-[1.01]">
-              {/* Browser Header */}
-              <div className="bg-[#1e1e2e] px-4 py-3 flex items-center gap-4 border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                </div>
-                <div className="flex-1 bg-black/20 rounded-md h-6 flex items-center px-3">
-                  <span className="text-[10px] text-slate-400 font-mono flex items-center gap-2">
-                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="m21 21-4.35-4.35" />
-                    </svg>
-                    localhost:3000/accessibility-demo
-                  </span>
-                </div>
-              </div>
-
-              {/* Viewport Area */}
-              <div className="relative aspect-[4/3] bg-slate-100">
-                <img
-                  src="/blurred-vision-accessibility-simulation.jpg"
-                  alt="Visual Impairment Illustration"
-                  className="w-full h-full object-cover"
-                />
-
-                {/* The Code Panel (DevTools Style) */}
-                <div className="absolute bottom-6 left-6 right-auto bg-[#1e1e2e]/95 backdrop-blur-md text-slate-300 p-4 rounded-lg shadow-2xl border-l-4 border-[#ff751f] max-w-sm transform transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center gap-2 mb-2 border-b border-white/10 pb-2">
-                    <svg
-                      className="w-4 h-4 text-[#ff751f]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
-                    </svg>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                      {t.visualImpairment.inspector}
-                    </span>
-                  </div>
-                  <div className="font-mono text-xs md:text-sm leading-relaxed">
-                    <div>
-                      <span className="text-purple-400">&lt;img</span> <span className="text-cyan-400">src</span>="..."
-                    </div>
-                    <div className="pl-4">
-                      <span className="text-cyan-400">alt</span>=<span className="text-[#a5d6ff]">"</span>
-                      <span className="text-green-400 font-semibold bg-green-400/10 px-1 rounded">
-                        {t.visualImpairment.altTextExample}
-                      </span>
-                      <span className="text-[#a5d6ff]">"</span>
-                    </div>
-                    <div>
-                      <span className="text-purple-400">/&gt;</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Badge Tag */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur text-[#1351aa] text-xs font-bold px-3 py-1.5 rounded-md shadow-lg flex items-center gap-2">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                  </svg>
-                  {t.visualImpairment.voiceOverOutput}
-                </div>
-              </div>
+          <div className="flex-1">
+            <p className="text-2xl md:text-3xl font-serif leading-relaxed mb-8">
+              "Visual impairment refers to a wide range of conditions that reduce a person’s ability to see clearly, even with glasses or medical treatment."
+            </p>
+            <div className="bg-stone-100 p-8 border-l-4 border-black font-sans text-stone-600 leading-relaxed">
+              <strong>Why it matters:</strong> It is not limited to complete blindness. Barriers include unreadable text, unclear navigation, missing labels, and interfaces that rely solely on visual cues.
             </div>
           </div>
         </div>
+
+        {/* Textbook Content: The Types */}
+        <div>
+          <div className="hidden md:block w-32 pt-2 border-t-4 border-wong-blue mb-12">
+            <span className="font-mono text-xs font-bold uppercase">Taxonomy</span>
+          </div>
+
+          <div className="space-y-16">
+            {impairmentTypes.map((group, i) => (
+              <div key={i} className="grid md:grid-cols-12 gap-8">
+                <div className="md:col-span-4">
+                  <h3 className="text-2xl font-bold uppercase tracking-tight flex items-center gap-3">
+                    {group.category === "Blindness" && <EyeOff className="w-6 h-6" />}
+                    {group.category === "Low Vision" && <Activity className="w-6 h-6" />}
+                    {group.category === "Color Deficiency" && <Layers className="w-6 h-6" />}
+                    {group.category === "Field Loss" && <Search className="w-6 h-6" />}
+                    {group.category === "Sensitivity" && <Sun className="w-6 h-6" />}
+                    {group.category}
+                  </h3>
+                </div>
+                <div className="md:col-span-8 space-y-6">
+                  {group.items.map((item, j) => (
+                    <div key={j} className="group hover:bg-stone-50 p-4 -mx-4 rounded-lg transition-colors">
+                      <h4 className="font-bold text-lg mb-1 group-hover:text-wong-vermilion transition-colors">{item.name}</h4>
+                      <p className="text-stone-600 font-serif italic">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   )
