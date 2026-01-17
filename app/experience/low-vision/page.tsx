@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowLeft, Eye, FileText, CheckCircle2, ScanEye } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye, FileText, CheckCircle2 } from "lucide-react"
+import { Navbar } from "@/components/navbar"
 
 export default function LowVisionExperience() {
   const [started, setStarted] = useState(false)
@@ -26,48 +27,85 @@ export default function LowVisionExperience() {
   // --- START SCREEN ---
   if (!started) {
     return (
-      <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1351aa]/5 rounded-full blur-[100px]" />
+      <main className="min-h-screen bg-[#FDFCF8] text-black relative flex flex-col font-sans selection:bg-wong-orange selection:text-black overflow-hidden">
+        <Navbar theme="light" showLogo={true} />
 
-        <div className="max-w-3xl w-full space-y-8 relative z-10">
-          <Link
-            href="/experience"
-            className="text-sm font-medium text-slate-500 hover:text-[#1351aa] transition-colors flex items-center gap-2 group w-fit"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to main menu
-          </Link>
+        <div className="flex-1 flex flex-col justify-center py-10 px-6 md:px-24">
+          <div className="max-w-4xl mx-auto w-full">
 
-          <div className="space-y-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
-                <Eye className="w-4 h-4" />
-                <span>Visual Simulation 02</span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
-                Low Vision Lab
-              </h1>
+            {/* Back Link */}
+            <div className="mb-8">
+              <Link
+                href="/#chapter-5"
+                className="inline-flex items-center gap-2 group border-b-2 border-transparent hover:border-black transition-all pb-1 text-stone-600 hover:text-black"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-mono text-sm uppercase tracking-widest font-bold">Back to Curriculum</span>
+              </Link>
             </div>
 
-            <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
-              <h2 className="text-xl font-bold text-slate-900">Mission</h2>
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
-                Experience <strong>Scotomas (Blind Spots)</strong> with Peripheral Loss.
-                <br /><br />
-                In this simulation, your peripheral vision is blurred (Glaucoma), and your central focus is obstructed by <strong>dark floating blobs</strong> (Diabetic Retinopathy).
-                <br />
-                <strong>Goal:</strong> Read the text <em>around</em> the blobs to find the inputs and sign the petition.
+            {/* Header */}
+            <div className="mb-16 border-b-2 border-black pb-8">
+              <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
+                Simulation 02 / Field Loss
+              </span>
+              <h1 className="font-serif text-6xl md:text-8xl font-bold text-black mb-6 tracking-tight">
+                Low Vision.
+              </h1>
+              <p className="font-sans text-xl md:text-2xl text-stone-600 max-w-2xl leading-relaxed font-light">
+                Experience Scotomas (blind spots) and peripheral loss. See how difficult it becomes to perform simple tasks like signing a petition.
               </p>
             </div>
 
-            <Button
-              size="lg"
-              onClick={() => setStarted(true)}
-              className="bg-[#ff751f] hover:bg-[#e06519] text-white rounded-xl px-10 py-7 text-lg font-semibold shadow-xl shadow-orange-900/10 transition-all hover:-translate-y-1 w-full md:w-auto"
-            >
-              Start Experience
-            </Button>
+            {/* Content Layout */}
+            <div className="grid md:grid-cols-12 gap-12 mb-16">
+
+              {/* Left Column: Context */}
+              <div className="md:col-span-12 lg:col-span-5 space-y-8">
+                <div>
+                  <div className="w-16 pt-1 border-t-4 border-wong-orange mb-4">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Condition</span>
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-black mb-2">Diabetic Retinopathy</h3>
+                  <p className="text-stone-600 leading-relaxed">
+                    Causes patchy vision, floating spots (floaters), and blurriness.
+                  </p>
+                </div>
+
+                <div className="bg-stone-100 p-6 border-l-4 border-black">
+                  <h4 className="font-bold mb-2 flex items-center gap-2">
+                    <Eye className="w-5 h-5" />
+                    <span>Challenge</span>
+                  </h4>
+                  <p className="text-sm text-stone-600 font-serif italic">
+                    "You will have to read 'around' the blind spots. Moving your eyes (mouse) shifts the spots, requiring constant scanning."
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column: Mission & CTA */}
+              <div className="md:col-span-12 lg:col-span-7 flex flex-col justify-between">
+                <div className="mb-8 lg:mb-0">
+                  <div className="w-16 pt-1 border-t-4 border-wong-dark-blue mb-4">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Mission</span>
+                  </div>
+                  <p className="text-lg text-stone-700 leading-relaxed mb-8">
+                    Your goal is to <strong>read the terms</strong> and <strong>sign the petition</strong>.
+                    Navigate the form while your central vision is obscured by dynamic scotomas.
+                  </p>
+                </div>
+
+                <Button
+                  size="lg"
+                  onClick={() => setStarted(true)}
+                  className="w-full md:w-auto bg-black hover:bg-stone-800 text-white rounded-none border-2 border-transparent hover:border-black px-12 py-8 text-xl font-bold uppercase tracking-wider transition-all flex items-center justify-between group"
+                >
+                  <span>Start Experience</span>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </div>
+
           </div>
         </div>
       </main>
@@ -77,28 +115,29 @@ export default function LowVisionExperience() {
   // --- SUCCESS SCREEN ---
   if (signed) {
     return (
-      <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
+      <main className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+        <Navbar theme="light" showLogo={true} />
+        <div className="absolute inset-0 bg-[radial-gradient(var(--color-wong-dark-blue)_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
 
-        <div className="max-w-2xl w-full bg-white p-10 rounded-3xl shadow-xl border border-slate-200 text-center relative z-10 animate-in fade-in zoom-in duration-500">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-10 h-10 text-green-600" />
+        <div className="max-w-2xl w-full bg-card p-10 rounded-3xl shadow-xl border border-border text-center relative z-10 animate-in fade-in zoom-in duration-500">
+          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#1351aa] mb-4">Mission Complete</h1>
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-wong-dark-blue mb-4">Mission Complete</h1>
 
-          <div className="space-y-4 mb-8 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider">Lab Report</h3>
-            <p className="text-slate-600 leading-relaxed">
+          <div className="space-y-4 mb-8 text-left bg-muted p-6 rounded-2xl border border-border">
+            <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">Lab Report</h3>
+            <p className="text-muted-foreground leading-relaxed">
               That was frustrating, wasn't it? The "blobs" forced you to constantly move your mouse to read simple text.
             </p>
-            <ul className="space-y-2 text-sm text-slate-500">
+            <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
-                <span className="text-[#ff751f]">•</span>
+                <span className="text-wong-orange">•</span>
                 <span><strong>Impact:</strong> Users with scotomas cannot "scan" a page. They read letter-by-letter.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#ff751f]">•</span>
+                <span className="text-wong-orange">•</span>
                 <span><strong>Solution:</strong> Large, bold typography and clear proximity between labels and inputs reduces the mental mapping required.</span>
               </li>
             </ul>
@@ -106,14 +145,14 @@ export default function LowVisionExperience() {
 
           <div className="flex gap-4 justify-center">
             <Link href="/experience">
-              <Button variant="outline" size="lg" className="rounded-xl h-12 px-8 border-slate-300">
+              <Button variant="outline" size="lg" className="rounded-xl h-12 px-8 border-border">
                 Exit Lab
               </Button>
             </Link>
             <Button
               onClick={() => { setSigned(false); setStarted(false); }}
               size="lg"
-              className="bg-[#1351aa] hover:bg-[#0f4291] text-white rounded-xl h-12 px-8"
+              className="bg-wong-dark-blue hover:bg-wong-dark-blue/90 text-white rounded-xl h-12 px-8"
             >
               Replay
             </Button>
@@ -126,6 +165,7 @@ export default function LowVisionExperience() {
   // --- ACTIVE SIMULATION ---
   return (
     <main className="min-h-screen bg-slate-100 relative overflow-hidden font-sans cursor-none">
+      <Navbar theme="light" showLogo={true} />
 
       {/* 
         LAYER 1: SURROUNDING TUNNEL (Toned Down)

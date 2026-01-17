@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowLeft, Eye, EyeOff, Keyboard, MousePointerClick, Ear, Volume2 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye, EyeOff, Keyboard, MousePointerClick, Ear, Volume2 } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { ExperienceCards } from "@/components/experience-cards"
@@ -129,79 +129,85 @@ export default function TotalBlindnessExperience() {
   // --- START SCREEN UI ---
   if (!started) {
     return (
-      <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        {/* Background Decor */}
-        <div className="absolute inset-0 bg-[radial-gradient(#1351aa_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.03]" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff751f]/5 rounded-full blur-[100px]" />
+      <main className="min-h-screen bg-[#FDFCF8] text-black relative flex flex-col font-sans selection:bg-wong-orange selection:text-black overflow-hidden">
+        <Navbar theme="light" showLogo={true} />
 
-        <div className="max-w-4xl w-full space-y-8 relative z-10">
-          <Link
-            href="/experience"
-            className="text-sm font-medium text-slate-500 hover:text-[#1351aa] transition-colors flex items-center gap-2 group w-fit"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to main menu
-          </Link>
+        <div className="flex-1 flex flex-col justify-center py-10 px-6 md:px-24">
+          <div className="max-w-4xl mx-auto w-full">
 
-          <div className="space-y-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold text-xs uppercase tracking-widest">
-                <Ear className="w-4 h-4" />
-                <span>Visual Simulation 01</span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#1351aa]">
-                Total Blindness Lab
-              </h1>
+            {/* Back Link */}
+            <div className="mb-8">
+              <Link
+                href="/#chapter-5"
+                className="inline-flex items-center gap-2 group border-b-2 border-transparent hover:border-black transition-all pb-1 text-stone-600 hover:text-black"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-mono text-sm uppercase tracking-widest font-bold">Back to Curriculum</span>
+              </Link>
             </div>
 
-            <div className="space-y-6 border-l-4 border-[#ff751f] pl-6 py-2">
-              <h2 className="text-xl font-bold text-slate-900">Mission</h2>
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
-                Experience the web as a screen reader user.
-                Your screen will go <strong>black</strong>. You must navigate using only your keyboard and audio cues.
+            {/* Header */}
+            <div className="mb-16 border-b-2 border-black pb-8">
+              <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
+                Simulation 01 / Audio Interface
+              </span>
+              <h1 className="font-serif text-6xl md:text-8xl font-bold text-black mb-6 tracking-tight">
+                Total Blindness.
+              </h1>
+              <p className="font-sans text-xl md:text-2xl text-stone-600 max-w-2xl leading-relaxed font-light">
+                Experience the web without a screen. Navigate a pitch-black interface using only audio cues and keyboard commands.
               </p>
             </div>
 
-            {/* Instruction Cards */}
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
-                  <Keyboard className="w-6 h-6" />
+            {/* Content Layout */}
+            <div className="grid md:grid-cols-12 gap-12 mb-16">
+
+              {/* Left Column: Context */}
+              <div className="md:col-span-12 lg:col-span-5 space-y-8">
+                <div>
+                  <div className="w-16 pt-1 border-t-4 border-wong-orange mb-4">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Context</span>
+                  </div>
+                  <p className="text-lg font-serif italic text-stone-800 leading-relaxed">
+                    "Screen reader users don't 'scan' a page visually. They traverse it linearly, relying on structure, headings, and semantic landmarks to build a mental model."
+                  </p>
                 </div>
-                <h3 className="font-bold text-slate-900 mb-2">TAB Key</h3>
-                <p className="text-sm text-slate-500">
-                  Press <strong>Tab</strong> to jump between interactive elements (buttons, links, inputs).
-                </p>
+
+                <div className="bg-stone-100 p-6 border-l-4 border-black">
+                  <h4 className="font-bold mb-2 flex items-center gap-2">
+                    <Keyboard className="w-5 h-5" />
+                    <span>Controls</span>
+                  </h4>
+                  <ul className="space-y-2 text-sm text-stone-600 font-mono">
+                    <li><span className="font-bold text-black">[TAB]</span> ... Next Element</li>
+                    <li><span className="font-bold text-black">[ENTER]</span> . Activate</li>
+                  </ul>
+                </div>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="w-12 h-12 bg-[#1351aa]/10 text-[#1351aa] rounded-xl flex items-center justify-center mb-4">
-                  <MousePointerClick className="w-6 h-6" />
+              {/* Right Column: Mission & CTA */}
+              <div className="md:col-span-12 lg:col-span-7 flex flex-col justify-between">
+                <div className="mb-8 lg:mb-0">
+                  <div className="w-16 pt-1 border-t-4 border-wong-dark-blue mb-4">
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider">Mission</span>
+                  </div>
+                  <p className="text-lg text-stone-700 leading-relaxed mb-8">
+                    Your goal is to <strong>find the secret link</strong> hidden in the dark.
+                    You must listen carefully to the Voice synthesis to understand where you are.
+                  </p>
                 </div>
-                <h3 className="font-bold text-slate-900 mb-2">ENTER Key</h3>
-                <p className="text-sm text-slate-500">
-                  Press <strong>Enter</strong> to click/activate the element you are currently focused on.
-                </p>
-              </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                <div className="w-12 h-12 bg-[#ff751f]/10 text-[#ff751f] rounded-xl flex items-center justify-center mb-4">
-                  <Eye className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-slate-900 mb-2">Cheat Mode</h3>
-                <p className="text-sm text-slate-500">
-                  Getting lost? Toggle the <strong>Eye Icon</strong> (top right) to peek at the screen.
-                </p>
+                <Button
+                  size="lg"
+                  onClick={() => setStarted(true)}
+                  className="w-full md:w-auto bg-black hover:bg-stone-800 text-white rounded-none border-2 border-transparent hover:border-black px-12 py-8 text-xl font-bold uppercase tracking-wider transition-all flex items-center justify-between group"
+                >
+                  <span>Enter Simulation</span>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </div>
 
-            <Button
-              size="lg"
-              onClick={() => setStarted(true)}
-              className="bg-[#ff751f] hover:bg-[#e06519] text-white rounded-xl px-10 py-7 text-lg font-semibold shadow-xl shadow-orange-900/10 transition-all hover:-translate-y-1 w-full md:w-auto"
-            >
-              Start Experience
-            </Button>
           </div>
         </div>
       </main>
@@ -210,17 +216,18 @@ export default function TotalBlindnessExperience() {
 
   // --- ACTIVE SIMULATION ---
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative min-h-screen bg-background">
+      <Navbar theme="light" showLogo={true} />
 
       {/* 1. The "Blindness" Overlay */}
       {/* We keep the underlying DOM accessible (no display:none) but visually hidden */}
       <div
-        className="fixed inset-0 z-[100] bg-[#0B0F19] transition-opacity duration-700 pointer-events-none"
+        className="fixed inset-0 z-[100] bg-black transition-opacity duration-700 pointer-events-none"
         style={{ opacity: accessibilityMode ? 0 : 1 }}
         aria-hidden="true"
       >
         {!accessibilityMode && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-slate-500/50 space-y-4">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white/50 space-y-4">
             <Volume2 className="w-16 h-16 mx-auto animate-pulse" />
             <p className="text-sm font-mono tracking-widest uppercase">Audio Navigation Active</p>
           </div>
@@ -236,8 +243,8 @@ export default function TotalBlindnessExperience() {
         className={cn(
           "fixed top-6 right-6 z-[110] p-4 rounded-full shadow-2xl border-2 transition-all duration-300 group",
           accessibilityMode
-            ? "bg-white border-slate-200 text-slate-400 hover:text-[#1351aa]"
-            : "bg-[#1351aa] border-[#1351aa] text-white hover:bg-[#1a5dc0]"
+            ? "bg-background border-border text-muted-foreground hover:text-wong-dark-blue"
+            : "bg-wong-dark-blue border-wong-dark-blue text-white hover:bg-wong-dark-blue/90"
         )}
         title={accessibilityMode ? "Disable Visuals" : "Enable Visuals"}
       >
@@ -247,13 +254,13 @@ export default function TotalBlindnessExperience() {
       {/* 3. Screen Reader Caption (Cheat Mode / Visual Aid) */}
       {showPopup && focusedElement && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[110] w-[90%] max-w-lg">
-          <div className="bg-[#1e1e2e] text-slate-200 p-6 rounded-2xl shadow-2xl border-l-4 border-[#ff751f] animate-in fade-in slide-in-from-bottom-4">
+          <div className="bg-popover text-popover-foreground p-6 rounded-2xl shadow-2xl border-l-4 border-wong-orange animate-in fade-in slide-in-from-bottom-4">
             <div className="flex items-start gap-4">
-              <div className="p-2 bg-white/10 rounded-lg shrink-0">
-                <Volume2 className="w-5 h-5 text-[#ff751f]" />
+              <div className="p-2 bg-muted rounded-lg shrink-0">
+                <Volume2 className="w-5 h-5 text-wong-orange" />
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-1">VoiceOver Output</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold mb-1">VoiceOver Output</div>
                 <p className="text-lg font-medium leading-relaxed font-mono">
                   "{focusedElement}"
                 </p>
