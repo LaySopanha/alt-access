@@ -210,7 +210,7 @@ export default function TotalBlindnessExperience() {
             >
               Try Again
             </Button>
-            <Link href="/#chapter-5">
+            <Link href="/experience/low-vision">
               <Button className="bg-black text-white hover:bg-gray-900 border-2 border-transparent h-14 px-8 text-lg uppercase tracking-wide font-bold">
                 Next Lesson
               </Button>
