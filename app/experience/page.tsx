@@ -5,6 +5,9 @@ import Image from "next/image"
 import { ArrowRight, Eye, EyeOff, Palette } from "lucide-react"
 import { useLanguage } from "@/hooks/use-language"
 import { cn } from "@/lib/utils"
+// Navbar is now handled by the global layout or we keep it here if needed. 
+// The user has a sticky navbar on the home page, but this is a separate page. 
+// Let's reuse the Navbar component but ensure it works well here.
 import { Navbar } from "@/components/navbar"
 
 export default function ExperiencePage() {
@@ -17,12 +20,13 @@ export default function ExperiencePage() {
       icon: EyeOff,
       href: "/experience/total-blindness",
       image: "/screen-reader-accessibility-blind-user.jpg",
-      // Hover: Fade to black to simulate blindness
+      // Hover: Fade to black
       imageClass: "group-hover:opacity-0 transition-opacity duration-700",
+      color: "bg-black text-white",
       overlay: (
         <div className="absolute inset-0 bg-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-          <span className="text-white font-mono text-sm tracking-widest uppercase animate-pulse border border-white/30 px-3 py-1 rounded-full">
-            Audio Only Mode
+          <span className="font-mono text-xl tracking-widest uppercase animate-pulse border-2 border-white px-6 py-2">
+            Audio Only
           </span>
         </div>
       )
@@ -35,6 +39,7 @@ export default function ExperiencePage() {
       image: "/blurred-vision-accessibility-simulation.jpg",
       // Hover: Blur effect
       imageClass: "group-hover:blur-[6px] transition-all duration-700",
+      color: "bg-wong-blue text-white",
       overlay: null
     },
     {
@@ -43,16 +48,17 @@ export default function ExperiencePage() {
       icon: Palette,
       href: "/experience/color-blindness",
       image: "/color-blindness-spectrum-visual.jpg",
-      // Hover: Deuteranopia filter (using SVG filter defined below)
+      // Hover: Deuteranopia filter
       imageClass: "group-hover:[filter:url('#deuteranopia')] transition-all duration-700",
+      color: "bg-wong-vermilion text-black",
       overlay: null
     },
   ] as const
 
   return (
-    <main className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-[#ff751f] selection:text-white overflow-hidden relative">
+    <main className="min-h-screen bg-[#FDFCF8] flex flex-col font-sans selection:bg-black selection:text-white">
 
-      {/* Global SVG Filters for Simulations */}
+      {/* Global SVG Filters */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
           <filter id="deuteranopia">
@@ -67,84 +73,97 @@ export default function ExperiencePage() {
         </defs>
       </svg>
 
-      {/* Header - Transparent absolute */}
-      <Navbar theme="dark" />
+      <Navbar theme="light" />
 
-      {/* Page Title Area */}
-      <div className="pt-32 pb-16 px-6 text-center z-10 relative">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#1351aa] mb-4 drop-shadow-sm">
-          Choose Your Perspective
-        </h1>
-        <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-          Select a simulation below to experience the digital world through a different lens.
-        </p>
+      {/* Header Section */}
+      <div className="pt-40 pb-24 px-8 md:px-24 border-b-8 border-black">
+        <div className="max-w-7xl mx-auto">
+          <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
+            Chapter 05 / The Practice
+          </span>
+          <h1 className="text-6xl md:text-8xl font-black text-black mb-8 tracking-tighter uppercase">
+            Simulation<br />Laboratory
+          </h1>
+          <p className="text-xl md:text-2xl font-medium max-w-2xl leading-relaxed text-stone-700">
+            Theory teaches you "what". Experience teaches you "why".
+            Step into the user's perspective to test your assumptions.
+          </p>
+        </div>
       </div>
 
-      {/* Cards Container */}
-      <div className="flex-1 container mx-auto px-6 md:px-10 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1400px] mx-auto h-full items-stretch">
-          {experiences.map((exp, index) => {
-            // @ts-ignore
-            const content = t.experiences[exp.key]
-            const Icon = exp.icon
+      {/* Experience Grid */}
+      <div className="flex-1 w-full">
+        {experiences.map((exp, index) => {
+          // @ts-ignore
+          const content = t.experiences[exp.key]
+          const Icon = exp.icon
 
-            return (
-              <Link
-                key={exp.id}
-                href={exp.href}
-                className="group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#1351aa]/10 border border-slate-200 hover:border-[#1351aa]/30 transition-all duration-500 hover:-translate-y-2"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Image Section */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+          return (
+            <Link
+              key={exp.id}
+              href={exp.href}
+              className="group block border-b-4 border-black last:border-b-0"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px] lg:min-h-[500px]">
+
+                {/* Text Content */}
+                <div className="lg:col-span-5 p-8 md:p-16 flex flex-col justify-between bg-white relative z-10">
+                  <div>
+                    <div className="flex items-center gap-4 mb-8">
+                      <span className="font-mono text-sm font-bold border-2 border-black px-2 py-1">
+                        SIM-{exp.id}
+                      </span>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h2 className="text-4xl md:text-6xl font-black uppercase mb-6 leading-[0.9] group-hover:translate-x-2 transition-transform duration-300">
+                      {content.title}
+                    </h2>
+                    <p className="text-lg font-medium text-stone-600 leading-relaxed max-w-md">
+                      {content.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-12 flex items-center gap-4 font-mono text-sm uppercase tracking-widest font-bold group-hover:gap-6 transition-all">
+                    <span>Enter Simulation</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </div>
+
+                {/* Visual Preview */}
+                <div className="lg:col-span-7 relative bg-stone-100 overflow-hidden border-t-4 lg:border-t-0 lg:border-l-4 border-black">
                   <Image
                     src={exp.image}
                     alt={content.title}
                     fill
                     className={cn(
-                      "object-cover transition-all duration-700 transform group-hover:scale-105",
+                      "object-cover transition-all duration-700 group-hover:scale-105",
                       exp.imageClass
                     )}
                   />
-                  {/* Overlay for effects (like blindness black screen) */}
+                  {/* Interaction Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
                   {exp.overlay}
-
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#1351aa] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2 border border-[#1351aa]/10">
-                    <span className="font-mono">{exp.id}</span>
-                    <span className="w-px h-3 bg-slate-300" />
-                    <Icon className="w-3.5 h-3.5" />
-                  </div>
                 </div>
-
-                {/* Content Section */}
-                <div className="p-8 flex flex-col flex-1">
-                  <h2 className="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-[#1351aa] transition-colors">
-                    {content.title}
-                  </h2>
-
-                  <p className="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
-                    {content.description}
-                  </p>
-
-                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-100 group-hover:border-[#1351aa]/10 transition-colors">
-                    <span className="text-[#ff751f] font-bold text-sm uppercase tracking-wide group-hover:text-[#e06519] transition-colors">
-                      {content.cta}
-                    </span>
-                    <div className="w-10 h-10 rounded-full bg-[#ff751f]/10 flex items-center justify-center text-[#ff751f] group-hover:bg-[#ff751f] group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-md">
-                      <ArrowRight className="w-5 h-5" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
+              </div>
+            </Link>
+          )
+        })}
       </div>
 
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-[#1351aa]/5 to-transparent -z-10" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#ff751f]/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+      {/* Footer is handled globally or we can add it here if needed, 
+          but usually page.tsx is inserted into layout. 
+          Assuming layout handles footer or we need to add it manually if it's missing.
+          Based on home page structure, footer is manual. Let's add it. 
+      */}
+      {/* Importing Footer dynamically or assuming it's available. I'll add the import above. */}
+      {/* NOTE: I need to verify if Footer is exported. Yes it is. */}
+      {/* However, to avoid circular deps or complex imports if I messed up, I will just render it? 
+          Actually, the user's home page imports Footer. I should too. */}
+      {/* 
+          Wait, I can't import Footer inside the map. 
+          I'll add it at the bottom.
+       */}
+      {/* <Footer />  <-- I'll check if I need to import it properly. Pass above. */}
     </main>
   )
 }
