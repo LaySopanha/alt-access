@@ -202,7 +202,7 @@ export default function ColorBlindnessExperience() {
       {/* CVD SIMULATION FILTER APPLY TO WRAPPER */}
       <div
         className="w-full h-full flex flex-col items-center justify-center relative p-4"
-        style={{ filter: "url('#deuteranopia')" }} // Apply Filter
+        style={{ filter: patternsEnabled ? "none" : "url('#deuteranopia')" }} // Apply Filter unless Patterns (Access Mode) is ON
       >
 
         <div className="mb-8 md:mb-12 text-center space-y-2">
@@ -269,14 +269,14 @@ export default function ColorBlindnessExperience() {
           className={cn(
             "h-14 px-8 rounded-full shadow-xl border-2 uppercase font-bold tracking-wide transition-all",
             patternsEnabled
-              ? "bg-wong-blue text-white border-wong-blue hover:bg-wong-blue/90"
-              : "bg-white text-black border-stone-300 hover:border-black"
+              ? "bg-wong-blue text-white border-wong-blue hover:bg-blue-700 hover:border-blue-700"
+              : "bg-white text-black border-stone-300 hover:border-black hover:bg-stone-50"
           )}
         >
           {patternsEnabled ? (
-            <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Patterns ON</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Accessibility ON (Real Color)</span>
           ) : (
-            <span className="flex items-center gap-2"><AlertTriangle className="w-5 h-5" /> Accessibility OFF</span>
+            <span className="flex items-center gap-2"><AlertTriangle className="w-5 h-5" /> Accessibility OFF (Simulated)</span>
           )}
         </Button>
       </div>
