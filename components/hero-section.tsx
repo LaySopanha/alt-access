@@ -2,6 +2,7 @@
 
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, MousePointer2 } from "lucide-react"
@@ -10,6 +11,21 @@ import { useLanguage } from "@/hooks/use-language"
 
 export function HeroSection() {
   const { t } = useLanguage()
+  const [scrollY, setScrollY] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  useEffect(() => {
+    setViewportHeight(window.innerHeight)
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Calculate displacement: Only start pushing after scrolling ~40% of the screen height
+  const startPushAt = viewportHeight * 0.4
+  const displacement = Math.max(0, (scrollY - startPushAt) * 1.2)
 
   return (
     <section className="sticky top-0 z-0 min-h-[100dvh] flex flex-col justify-between bg-[#FDFCF8] overflow-hidden font-sans">
@@ -30,6 +46,20 @@ export function HeroSection() {
       {/* 2. BACKGROUND GRID (Graph Paper) */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none"
         style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+      </div>
+
+      {/* 2.5 GLASSES ILLUSTRATION (Decorative) */}
+      {/* 2.5 GLASSES ILLUSTRATION (Decorative) */}
+      <div
+        className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] max-w-[500px] max-h-[500px] opacity-20 mix-blend-multiply pointer-events-none rotate-12 transition-transform duration-75 ease-out will-change-transform"
+        style={{ transform: `translate3d(0, -${displacement}px, 0) rotate(12deg)` }}
+      >
+        <Image
+          src="/images/hero-glasses.png"
+          alt=""
+          fill
+          className="object-contain"
+        />
       </div>
 
       {/* 3. HERO LOGO (Sticky, Top-Left) */}
