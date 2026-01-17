@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Users, Lightbulb, TrendingUp, Monitor, Volume2, Type } from "lucide-react"
 
 export function InclusiveDesignSection() {
@@ -34,13 +35,23 @@ export function InclusiveDesignSection() {
                 </div>
 
                 {/* 2. The Curb Cut Effect */}
-                <div>
-                    <h3 className="text-2xl font-bold uppercase mb-8 flex items-center gap-3">
+                <div className="relative">
+                    {/* Background Illustration */}
+                    <div className="absolute -top-20 -right-20 w-[600px] h-[600px] opacity-40 mix-blend-screen pointer-events-none rotate-12">
+                        <Image
+                            src="/images/curb-cut.png"
+                            alt=""
+                            fill
+                            className="object-contain"
+                        />
+                    </div>
+
+                    <h3 className="text-2xl font-bold uppercase mb-8 flex items-center gap-3 relative z-10">
                         <TrendingUp className="w-6 h-6 text-[#ff751f]" />
                         5. The Curb-Cut Effect
                     </h3>
 
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
                         <div>
                             <p className="text-lg leading-relaxed text-blue-50 mb-6">
                                 A feature designed for accessibility often improves the experience for <strong>everyone</strong>.
