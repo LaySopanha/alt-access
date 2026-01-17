@@ -132,7 +132,7 @@ export function Navbar({ theme = "light", showLogo = false }: { theme?: "light" 
         {/* 3. Full Screen Menu Overlay - "The Campaign Menu" */}
         {(isMenuOpen || isClosing) && (
           <div className={cn(
-            "fixed inset-0 z-40 bg-wong-yellow flex flex-col justify-center items-center gap-12 duration-300",
+            "fixed inset-0 z-40 bg-wong-yellow flex flex-col justify-center items-center gap-12 duration-300 pointer-events-auto",
             isClosing ? "animate-out slide-out-to-top" : "animate-in slide-in-from-top"
           )}>
             {/* Background Texture */}
