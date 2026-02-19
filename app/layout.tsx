@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { LanguageProvider } from "@/hooks/use-language"
+import { Analytics } from "@vercel/analytics/next"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans antialiased ${_playfair.variable}`}>
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   )
