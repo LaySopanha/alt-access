@@ -203,6 +203,15 @@ export function Navbar({ theme = "light", showLogo = false }: { theme?: "light" 
                 <span className="font-sans text-sm font-bold mr-4 opacity-50 align-middle">06</span>
                 The Curriculum
               </Link>
+
+              <Link
+                href="/learning-center"
+                onClick={handleMenuToggle}
+                className="text-4xl md:text-6xl font-serif font-bold text-black hover:text-white hover:indent-8 transition-all duration-300 w-full"
+              >
+                <span className="font-sans text-sm font-bold mr-4 opacity-50 align-middle">07</span>
+                Learning Center
+              </Link>
             </nav>
 
             <div className="absolute bottom-10 left-10 md:left-20 text-black font-mono text-sm uppercase tracking-widest border-t-2 border-black pt-4">

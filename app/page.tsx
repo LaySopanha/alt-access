@@ -9,6 +9,7 @@ import { PrefaceSection } from "@/components/preface-section"
 import { InclusiveDesignSection } from "@/components/inclusive-design-section"
 import { MotivationSection } from "@/components/motivation-section"
 import { AnimatedBackground } from "@/components/animated-background"
+import { LearningCenterSection } from "@/components/learning-center-section"
 
 export default function Home() {
   return (
@@ -41,6 +42,9 @@ export default function Home() {
 
           {/* CHAPTER 6: THE CURRICULUM (Videos) */}
           <VideoSeriesSection />
+
+          {/* CHAPTER 7: THE LEARNING CENTER */}
+          <LearningCenterSection />
 
           <Footer />
         </div>
