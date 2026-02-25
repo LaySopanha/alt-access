@@ -142,7 +142,7 @@
 }
 
 @theme inline {
-  --font-sans: "Helvetica Neue", Helvetica, Arial, "Inter", "Geist", "Geist Fallback", sans-serif;
+  --font-sans: "Helvetica World", "Helvetica Neue", Helvetica, Arial, "Inter", "Geist", "Geist Fallback", sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --color-background: var(--background);
