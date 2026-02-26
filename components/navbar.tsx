@@ -15,10 +15,23 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useLanguage } from "@/hooks/use-language"
 
-export function Navbar({ theme = "light", showLogo = false }: { theme?: "light" | "dark", showLogo?: boolean }) {
+export function Navbar({ theme = "light", showLogo = false, forceSolidBg = false, gameMode = false }: { theme?: "light" | "dark", showLogo?: boolean, forceSolidBg?: boolean, gameMode?: boolean }) {
   const { language, setLanguage, t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const [isClosing, setIsClosing] = React.useState(false)
+  const [isScrolled, setIsScrolled] = React.useState(false)
+
+  // Scroll Detection — minimize as soon as user scrolls past the Hero section
+  React.useEffect(() => {
+    const handleScroll = () => {
+      // Trigger when scrolled down slightly (e.g., 50px or half a viewport)
+      // Since Hero is exactly 100vh, we can trigger slightly before leaving it 
+      // or simply rely on a fixed scroll amount so it feels immediate.
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const handleMenuToggle = () => {
     if (isMenuOpen) {
@@ -66,12 +79,29 @@ export function Navbar({ theme = "light", showLogo = false }: { theme?: "light" 
 
   const currentTheme = themes["light"] // Force campaign theme for now on home
 
-  return (
-    <header className="fixed top-0 left-0 w-full z-50 pointer-events-none">
-      <div className="container mx-auto flex justify-between items-start p-6 md:p-10 pointer-events-none">
+  const isSolid = isScrolled || forceSolidBg;
 
-        {/* 1. Logo - Optional (For subsection pages) */}
-        <div className={cn("transition-opacity duration-300 pointer-events-auto", showLogo ? "opacity-100" : "opacity-0 invisible h-0 w-0")}>
+  return (
+    <header className={cn(
+      "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+      isSolid ? "bg-[#FDFCF8] border-b border-black/5 pointer-events-auto shadow-sm" : "bg-transparent pointer-events-none"
+    )}>
+      <div className={cn(
+        "container mx-auto grid grid-cols-3 transition-all duration-500 relative z-10",
+        isScrolled ? "p-3 md:p-4 items-center" : "p-6 md:p-10 items-start"
+      )}>
+        {/* Anti-Scroll Glitch Overlay for Game Mode */}
+        {gameMode && (
+          <div
+            className="absolute inset-0 z-50 cursor-default"
+            onWheel={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          />
+        )}
+        {/* 1. Logo (Left Column) */}
+        <div className={cn("flex justify-start transition-opacity duration-300 pointer-events-auto", showLogo ? "opacity-100" : "opacity-0 invisible h-0 w-0")}>
           {showLogo && (
             <Link href="/" className="block relative hover:scale-105 transition-transform duration-300">
               <Image
@@ -79,55 +109,64 @@ export function Navbar({ theme = "light", showLogo = false }: { theme?: "light" 
                 alt="Alt Access Logo"
                 width={300}
                 height={80}
-                className="h-14 md:h-16 w-auto object-contain"
+                className={cn(
+                  "w-auto object-contain transition-all duration-300",
+                  isScrolled ? "h-10 md:h-12" : "h-14 md:h-16"
+                )}
                 priority
               />
             </Link>
           )}
         </div>
 
-        {/* 2. Minimalist Controls (No traditional Nav) */}
-        <div className="flex items-center gap-4 relative z-50 pointer-events-auto">
+        {/* 2. Center Column (Empty) */}
+        <div className="flex justify-center" />
 
-          {/* Language Toggler - Minimal Ghost Button */}
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "rounded-full border-2 transition-all duration-300",
-                  currentTheme.text,
-                  currentTheme.border,
-                  currentTheme.hover
-                )}
-              >
-                <Globe className="h-5 w-5" />
-                <span className="sr-only">Change language</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-black text-white border-white">
-              <DropdownMenuRadioGroup value={language} onValueChange={(val) => setLanguage(val as "en" | "km")}>
-                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="km">ភាសាខ្មែរ (Khmer)</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* 3. Controls (Right Column) */}
+        {!gameMode && (
+          <div className="flex justify-end items-center gap-4 relative z-50 pointer-events-auto">
+            {/* Language Toggler */}
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "rounded-full border-2 transition-all duration-300",
+                    currentTheme.text,
+                    currentTheme.border,
+                    currentTheme.hover,
+                    isScrolled ? "w-10 h-10" : "w-12 h-12"
+                  )}
+                >
+                  <Globe className={cn("transition-all", isScrolled ? "h-4 w-4" : "h-5 w-5")} />
+                  <span className="sr-only">Change language</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-black text-white border-white">
+                <DropdownMenuRadioGroup value={language} onValueChange={(val) => setLanguage(val as "en" | "km")}>
+                  <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="km">ភាសាខ្មែរ (Khmer)</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-          {/* Menu Trigger - Massive & Iconic */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              "rounded-full border-2 transition-all duration-300 w-12 h-12",
-              isMenuOpen ? "bg-black text-white border-black" : cn(currentTheme.text, currentTheme.border, currentTheme.hover)
-            )}
-            onClick={handleMenuToggle}
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            <span className="sr-only">Toggle menu</span>
-          </Button>
-        </div>
+            {/* Menu Trigger */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "rounded-full border-2 transition-all duration-300",
+                isMenuOpen ? "bg-black text-white border-black" : cn(currentTheme.text, currentTheme.border, currentTheme.hover),
+                isScrolled ? "w-10 h-10" : "w-12 h-12"
+              )}
+              onClick={handleMenuToggle}
+            >
+              {isMenuOpen ? <X className={cn("transition-all", isScrolled ? "h-5 w-5" : "h-6 w-6")} /> : <Menu className={cn("transition-all", isScrolled ? "h-5 w-5" : "h-6 w-6")} />}
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </div>
+        )}
 
         {/* 3. Full Screen Menu Overlay - "The Campaign Menu" */}
         {(isMenuOpen || isClosing) && (

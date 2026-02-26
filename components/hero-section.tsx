@@ -62,17 +62,6 @@ export function HeroSection() {
         />
       </div>
 
-      {/* 3. HERO LOGO (Sticky, Top-Left) */}
-      <Link href="/" className="absolute top-6 left-6 md:top-10 md:left-10 z-20 hover:scale-105 transition-transform duration-300">
-        <Image
-          src="/images/alt-access-black-logo.png"
-          alt="Alt Access Logo"
-          width={300}
-          height={80}
-          className="h-14 md:h-16 w-auto object-contain"
-          priority
-        />
-      </Link>
 
       {/* 4. MAIN CONTENT (Centered but Grounded) */}
       <div className="container mx-auto px-6 md:px-24 flex-1 flex flex-col items-center justify-center relative z-10 pt-20">

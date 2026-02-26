@@ -1,23 +1,19 @@
 "use client"
 
 import { BookOpen, Briefcase, Heart } from "lucide-react"
-import { SurveyCarousel } from "@/components/survey-carousel"
+import { ReportSection } from "@/components/report-section"
 
 export function MotivationSection() {
     return (
-        <section id="chapter-3" className="bg-[#FDFCF8] text-black py-40 px-8 md:px-32 lg:px-48">
+        <section id="chapter-3" className="bg-[#FDFCF8] text-black pt-[55px] pb-40 px-8 md:px-32 lg:px-48">
             <div className="max-w-6xl mx-auto">
 
                 <div className="mb-20 text-center max-w-3xl mx-auto">
-                    <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-2 block">Chapter 03</span>
                     <h2 className="font-serif text-5xl md:text-7xl font-bold mb-8">Why You Should Care.</h2>
                     <p className="font-sans text-xl text-stone-600">
                         Beyond empathy, there are three critical reasons why accessibility is a non-negotiable skill for modern developers.
                     </p>
                 </div>
-
-                {/* The Reality Check (Survey Data) */}
-                <SurveyCarousel />
 
                 <div className="grid md:grid-cols-3 gap-8 mt-24">
                     {/* 1. Legal */}

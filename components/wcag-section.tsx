@@ -1,8 +1,19 @@
 "use client"
 
+import React from "react" // Added React import
 import { Check, Info, AlertTriangle, Maximize2, Type, MousePointer2 } from "lucide-react"
+import { cn } from "@/lib/utils" // Assuming cn utility is available
 
 export function WcagSection() {
+    const [checkedItems, setCheckedItems] = React.useState<Record<number, boolean>>({})
+
+    const toggleItem = (index: number) => {
+        setCheckedItems(prev => ({
+            ...prev,
+            [index]: !prev[index]
+        }))
+    }
+
     const essentials = [
         {
             title: "Responsive",
@@ -84,13 +95,25 @@ export function WcagSection() {
 
                         <div className="space-y-6">
                             {wcagList.map((rule, i) => (
-                                <div key={i} className="flex items-center justify-between border-b border-black/10 pb-4">
+                                <button
+                                    key={i}
+                                    onClick={() => toggleItem(i)}
+                                    className="flex items-center justify-between border-b border-black/10 pb-4 w-full text-left hover:bg-black/5 transition-colors group/item"
+                                >
                                     <span className="font-mono text-stone-400 text-sm mr-4">{rule.code}</span>
-                                    <span className="font-medium text-lg flex-1">{rule.label}</span>
-                                    <div className="w-6 h-6 border-2 border-black rounded flex items-center justify-center">
-                                        {/* Empty checkbox for effect */}
+                                    <span className={cn(
+                                        "font-medium text-lg flex-1 transition-all",
+                                        checkedItems[i] ? "text-stone-400 line-through" : "text-black"
+                                    )}>
+                                        {rule.label}
+                                    </span>
+                                    <div className={cn(
+                                        "w-6 h-6 border-2 border-black rounded flex items-center justify-center transition-all",
+                                        checkedItems[i] ? "bg-black" : "bg-transparent group-hover/item:border-wong-blue"
+                                    )}>
+                                        {checkedItems[i] && <Check className="w-4 h-4 text-white" />}
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
 
