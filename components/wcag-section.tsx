@@ -40,69 +40,97 @@ export function WcagSection() {
     ]
 
     return (
-        <section id="chapter-4" className="py-40 px-8 md:px-32 lg:px-48 bg-white">
-            <div className="max-w-5xl mx-auto">
+        <section id="chapter-4" className="bg-white text-black pt-24 pb-16">
 
-                {/* Chapter Header */}
-                <div className="mb-20 border-b-2 border-black pb-8">
-                    <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-2 block">Chapter 04</span>
-                    <h2 className="font-serif text-5xl md:text-7xl font-bold text-black">The Standard.</h2>
-                    <p className="font-sans text-xl text-stone-600 mt-6 max-w-2xl leading-relaxed">
-                        WCAG compliance ensures that users can <span className="font-bold text-black">perceive, navigate, and understand</span> content without relying on sight.
+            {/* Chapter Header */}
+            <div className="px-8 md:px-24 mb-16">
+                <div className="max-w-7xl mx-auto border-b-2 border-stone-200 pb-10">
+                    <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Chapter 04</span>
+                    <h2 className="text-5xl md:text-7xl font-bold text-black leading-[0.9] tracking-tight uppercase mb-6">
+                        The<br />Standard
+                    </h2>
+                    <p className="text-xl md:text-2xl max-w-3xl leading-relaxed text-stone-600">
+                        WCAG compliance ensures that users can <span className="bg-stone-900 text-white px-1">perceive, navigate, & understand</span> content without relying on sight.
                     </p>
                 </div>
+            </div>
 
-                {/* Essentials Grid */}
-                <div className="grid md:grid-cols-2 gap-8 mb-24">
-                    {essentials.map((item, i) => (
-                        <div key={i} className="flex gap-6 p-8 bg-stone-50 border border-stone-200 rounded-xl hover:border-black transition-colors group">
-                            <div className="w-12 h-12 bg-white border-2 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all">
-                                <item.icon className="w-6 h-6 text-black" />
+            <div className="px-8 md:px-24">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+                    {/* Left Column: The Checklist (Sticky) */}
+                    <div className="lg:col-span-5">
+                        <div className="sticky top-32">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="h-0.5 w-10 bg-wong-blue"></div>
+                                <span className="font-mono text-xs uppercase tracking-widest text-stone-500">WCAG 2.1 Checklist</span>
                             </div>
-                            <div>
-                                <h3 className="font-bold text-xl mb-2">{item.title}</h3>
-                                <p className="text-stone-600 leading-relaxed">{item.desc}</p>
+
+                            <div className="bg-[#FFFFF0] p-6 md:p-8 border border-stone-200 relative overflow-hidden">
+                                {/* "Binding" Holes decoration */}
+                                <div className="absolute top-0 left-0 bottom-0 w-6 border-r border-stone-200 bg-stone-50 flex flex-col justify-evenly py-6 items-center">
+                                    {[...Array(6)].map((_, i) => (
+                                        <div key={i} className="w-3 h-3 rounded-full bg-stone-200" />
+                                    ))}
+                                </div>
+
+                                <div className="pl-5">
+                                    <h3 className="text-lg font-bold mb-6">Visual Requirements (AA)</h3>
+
+                                    <div className="space-y-3">
+                                        {wcagList.map((rule, i) => (
+                                            <div key={i} className="flex items-center justify-between border-b border-stone-100 pb-2 group">
+                                                <span className="font-mono text-xs text-wong-blue mr-3">{rule.code}</span>
+                                                <span className="text-sm flex-1 text-stone-700 group-hover:text-wong-vermilion transition-colors">{rule.label}</span>
+                                                <div className="w-4 h-4 border border-stone-300 rounded-sm bg-white group-hover:bg-wong-vermilion/10 transition-colors"></div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="mt-6 pt-4 border-t border-stone-200">
+                                        <p className="font-mono text-xs text-stone-400 uppercase tracking-widest">
+                                            Accessibility is a core requirement, not a feature.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                    ))}
-                </div>
-
-                {/* The Checklist (Paper Style) */}
-                <div className="bg-[#FFFFF0] p-10 md:p-16 border-2 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
-                    {/* "Binding" Holes decoration */}
-                    <div className="absolute top-0 left-0 bottom-0 w-12 border-r-2 border-black/10 bg-black/5 flex flex-col justify-evenly py-8 items-center">
-                        {[...Array(6)].map((_, i) => (
-                            <div key={i} className="w-4 h-4 rounded-full bg-stone-300 shadow-inner" />
-                        ))}
                     </div>
 
-                    <div className="pl-8 md:pl-16">
-                        <h3 className="font-serif text-3xl font-bold mb-10 flex items-center gap-4">
-                            <Check className="w-8 h-8 text-wong-blue" />
-                            WCAG 2.1 Checklist (Visual)
-                        </h3>
+                    {/* Right Column: Key Essentials */}
+                    <div className="lg:col-span-7">
+                        <div className="flex items-center gap-3 mb-10">
+                            <div className="h-0.5 w-10 bg-wong-vermilion"></div>
+                            <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Core Principles</span>
+                        </div>
 
-                        <div className="space-y-6">
-                            {wcagList.map((rule, i) => (
-                                <div key={i} className="flex items-center justify-between border-b border-black/10 pb-4">
-                                    <span className="font-mono text-stone-400 text-sm mr-4">{rule.code}</span>
-                                    <span className="font-medium text-lg flex-1">{rule.label}</span>
-                                    <div className="w-6 h-6 border-2 border-black rounded flex items-center justify-center">
-                                        {/* Empty checkbox for effect */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {essentials.map((item, i) => (
+                                <div key={i} className="bg-stone-50 p-6 border border-stone-200 hover:border-stone-400 transition-all group">
+                                    <div className="w-12 h-12 bg-white border border-stone-200 flex items-center justify-center mb-5 rounded group-hover:border-stone-400 transition-all">
+                                        <item.icon className="w-6 h-6 text-stone-700" />
                                     </div>
+                                    <h3 className="font-bold text-lg mb-3 tracking-tight uppercase group-hover:text-wong-vermilion transition-colors">{item.title}</h3>
+                                    <p className="text-stone-500 text-sm leading-relaxed">{item.desc}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="mt-12 pt-8 border-t-2 border-black flex items-start gap-4">
-                            <Info className="w-6 h-6 text-wong-vermilion flex-shrink-0 mt-1" />
-                            <p className="font-mono text-sm text-stone-600">
-                                <strong>NOTE:</strong> Designing for accessibility is not a "special feature". It is a core requirement for quality software.
-                            </p>
+                        <div className="mt-12 bg-stone-900 text-white p-6 md:p-8">
+                            <div className="flex items-start gap-5">
+                                <AlertTriangle className="w-8 h-8 text-wong-yellow shrink-0" />
+                                <div>
+                                    <h3 className="text-lg font-bold mb-2 uppercase">The Cost of Retrofitting</h3>
+                                    <p className="text-sm text-stone-300 leading-relaxed">
+                                        Fixing accessibility issues after a product is built costs up to <strong className="text-wong-vermilion">100x more</strong> than designing them correctly from the beginning. Learn the standards before you write code.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
-
             </div>
         </section>
     )

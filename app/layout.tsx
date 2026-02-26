@@ -1,13 +1,8 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { LanguageProvider } from "@/hooks/use-language"
 import { Analytics } from "@vercel/analytics/next"
-
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
-const _playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 
 export const metadata: Metadata = {
   // 1. The Title shown in the browser tab
@@ -38,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased ${_playfair.variable}`}>
+      <body className="font-sans antialiased">
         <LanguageProvider>{children}</LanguageProvider>
         <Analytics />
       </body>

@@ -51,49 +51,49 @@ export function SurveyCarousel() {
     const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
 
     return (
-        <div className="w-full max-w-6xl mx-auto my-24 bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 md:p-12 relative">
+        <div className="w-full max-w-6xl mx-auto bg-white border border-stone-200 p-6 md:p-10 relative">
 
             {/* Header */}
-            <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b-2 border-black/10 pb-6">
+            <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-stone-200 pb-5">
                 <div>
-                    <h2 className="font-serif text-4xl md:text-5xl font-bold mb-2">The Reality Check</h2>
-                    <p className="font-mono text-stone-600">Survey Data: 120+ IT Students</p>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-1">The Reality Check</h2>
+                    <p className="font-mono text-sm text-stone-500">Survey Data: 120+ IT Students</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button onClick={prev} variant="outline" size="icon" className="border-2 border-black rounded-none hover:bg-wong-yellow hover:text-black">
-                        <ChevronLeft className="w-6 h-6" />
+                    <Button onClick={prev} variant="outline" size="icon" className="border border-stone-300 rounded-none hover:bg-stone-100">
+                        <ChevronLeft className="w-5 h-5" />
                     </Button>
-                    <Button onClick={next} variant="outline" size="icon" className="border-2 border-black rounded-none hover:bg-wong-yellow hover:text-black">
-                        <ChevronRight className="w-6 h-6" />
+                    <Button onClick={next} variant="outline" size="icon" className="border border-stone-300 rounded-none hover:bg-stone-100">
+                        <ChevronRight className="w-5 h-5" />
                     </Button>
                 </div>
             </div>
 
             {/* Slide Content */}
-            <div className="grid md:grid-cols-12 gap-12 items-center">
+            <div className="grid md:grid-cols-12 gap-8 items-center">
 
                 {/* Text Side */}
-                <div className="md:col-span-4 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white font-mono text-sm font-bold uppercase tracking-widest">
+                <div className="md:col-span-4 space-y-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-stone-900 text-white font-mono text-xs uppercase tracking-widest">
                         {(() => {
                             const Icon = slides[current].icon;
-                            return <Icon className="w-4 h-4" />
+                            return <Icon className="w-3.5 h-3.5" />
                         })()}
                         Step {current + 1} / {slides.length}
                     </div>
 
-                    <h3 className="text-3xl font-bold leading-tight">{slides[current].title}</h3>
-                    <p className="text-xl text-stone-600">{slides[current].desc}</p>
+                    <h3 className="text-2xl font-bold leading-tight">{slides[current].title}</h3>
+                    <p className="text-lg text-stone-500">{slides[current].desc}</p>
 
-                    <div className="flex flex-col gap-2 mt-8">
+                    <div className="flex flex-col gap-1 mt-6">
                         {slides.map((s, idx) => (
                             <button
                                 key={s.id}
                                 onClick={() => setCurrent(idx)}
                                 className={cn(
-                                    "text-left px-4 py-3 font-medium transition-all border-l-4",
+                                    "text-left px-3 py-2 text-sm font-medium transition-all border-l-2",
                                     current === idx
-                                        ? "border-wong-vermilion bg-stone-100 text-black"
+                                        ? "border-wong-vermilion bg-stone-50 text-black"
                                         : "border-transparent text-stone-400 hover:text-black"
                                 )}
                             >
@@ -104,7 +104,7 @@ export function SurveyCarousel() {
                 </div>
 
                 {/* Image Side */}
-                <div className="md:col-span-8 bg-stone-100 p-4 border-2 border-black overflow-hidden relative group">
+                <div className="md:col-span-8 bg-stone-50 p-3 border border-stone-200 overflow-hidden relative group">
                     <div className="relative aspect-video w-full">
                         <Image
                             src={slides[current].src}
@@ -113,7 +113,7 @@ export function SurveyCarousel() {
                             className="object-contain"
                         />
                     </div>
-                    <p className="absolute bottom-2 right-2 text-xs font-mono text-stone-400 bg-white px-2 py-1 border border-stone-200">
+                    <p className="absolute bottom-2 right-2 text-xs font-mono text-stone-400 bg-white px-2 py-1 border border-stone-100">
                         Source: Alt Access Survey 2025
                     </p>
                 </div>

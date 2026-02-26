@@ -34,14 +34,7 @@ export function HeroSection() {
           Reference: User Image (Top Color Bar, Grid Background, Footer Logos)
       */}
 
-      {/* 1. TOP COLOR BAR */}
-      <div className="absolute top-0 left-0 w-full h-4 md:h-6 flex z-20">
-        <div className="flex-1 bg-wong-vermilion" />
-        <div className="flex-1 bg-wong-yellow" />
-        <div className="flex-1 bg-wong-sky-blue" />
-        <div className="flex-1 bg-wong-dark-blue" />
-        <div className="flex-1 bg-wong-teal" />
-      </div>
+      {/* Color bar is now part of the navbar */}
 
       {/* 2. BACKGROUND GRID (Graph Paper) */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none"
@@ -62,17 +55,7 @@ export function HeroSection() {
         />
       </div>
 
-      {/* 3. HERO LOGO (Sticky, Top-Left) */}
-      <Link href="/" className="absolute top-6 left-6 md:top-10 md:left-10 z-20 hover:scale-105 transition-transform duration-300">
-        <Image
-          src="/images/alt-access-black-logo.png"
-          alt="Alt Access Logo"
-          width={300}
-          height={80}
-          className="h-14 md:h-16 w-auto object-contain"
-          priority
-        />
-      </Link>
+      {/* 3. HERO LOGO - Removed, now always shown in navbar */}
 
       {/* 4. MAIN CONTENT (Centered but Grounded) */}
       <div className="container mx-auto px-6 md:px-24 flex-1 flex flex-col items-center justify-center relative z-10 pt-20">

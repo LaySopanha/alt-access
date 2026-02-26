@@ -66,8 +66,8 @@ export function AccessibilityGraphic({ className }: { className?: string }) {
                 { angle: 288, label: "Cognition" },
             ].map((item, i) => {
                 const radius = 180
-                const x = 400 + radius * Math.cos((item.angle * Math.PI) / 180)
-                const y = 300 + radius * Math.sin((item.angle * Math.PI) / 180)
+                const x = Math.round((400 + radius * Math.cos((item.angle * Math.PI) / 180)) * 1e6) / 1e6
+                const y = Math.round((300 + radius * Math.sin((item.angle * Math.PI) / 180)) * 1e6) / 1e6
 
                 return (
                     <g key={i}>

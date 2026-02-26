@@ -1,233 +1,160 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
-import { Code2, Users, Lightbulb, GraduationCap } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
+import { ArrowRight, Eye, Film, BookOpen } from "lucide-react"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About | AltAccess",
+  description: "Alt Access is a media and learning campaign educating Cambodian tech students about digital accessibility, supported by Prosob and funded by the European Union.",
+}
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-slate-50 font-sans selection:bg-[#ff751f] selection:text-white">
-      <Navbar theme="light" />
+    <>
+      <Navbar showLogo />
+      <main className="bg-[#FDFCF8] min-h-screen pt-14">
 
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-40 pb-20 overflow-hidden bg-[#1351aa] text-white">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1.5px,transparent_1.5px)] [background-size:32px_32px]" />
-
-        <div className="container mx-auto px-6 md:px-10 relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 bg-white/10 text-[#ff751f] text-xs font-bold tracking-widest uppercase backdrop-blur-md mb-6">
-              <span>Our Mission</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
-              Bridging the{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff751f] to-orange-300">
-                Digital Divide
-              </span>{" "}
-              in Cambodia.
-            </h1>
-            <p className="text-xl text-blue-100 leading-relaxed max-w-2xl">
-              We are cultivating a national tech ecosystem where accessibility is standard practice—creating technology
-              that serves all Cambodians, including the 120,000+ living with visual impairments.
-            </p>
-          </div>
-        </div>
-
-        {/* Diagonal Cut for dynamic transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-slate-50 [clip-path:polygon(0_100%,100%_100%,100%_0)]" />
-      </section>
-
-      {/* --- THE PROBLEM (DATA) --- */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-6 md:px-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Data Viz */}
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#1351aa]/10 to-[#ff751f]/10 rounded-3xl blur-2xl -z-10" />
-              <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
-                <div className="space-y-8">
-                  <div className="space-y-2">
-                    <div className="text-5xl font-bold text-[#1351aa]">120,000+</div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full w-full bg-[#1351aa] rounded-full" />
-                    </div>
-                    <p className="text-slate-500 font-medium">Visually impaired individuals in Cambodia</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="text-5xl font-bold text-slate-800">600,000</div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full w-full bg-slate-800 rounded-full" />
-                    </div>
-                    <p className="text-slate-500 font-medium">Tech students graduated (2015-2025)</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="text-5xl font-bold text-[#ff751f]">0</div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full w-[5%] bg-[#ff751f] rounded-full" />
-                    </div>
-                    <p className="text-slate-500 font-medium">Standard lessons on accessibility</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Narrative */}
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1351aa]">The Knowledge Gap</h2>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Despite a rapidly growing developer population in Phnom Penh, digital accessibility remains severely
-                limited. Most Cambodian tech students have <strong>never received formal training</strong> in inclusive
-                design.
-              </p>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                This results in digital products that unintentionally exclude thousands of users from essential
-                services, education, and daily life.
-              </p>
-              <div className="pt-4">
-                <Link href="/experience">
-                  <Button className="bg-[#1351aa] hover:bg-[#0f4291] text-white rounded-full px-8 h-12">
-                    See the Impact
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- THE PERSONA (NESTAR) --- */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        {/* Background Decor */}
-        <div className="absolute right-0 top-0 w-1/3 h-full bg-[#1351aa]/5 -skew-x-12" />
-
-        <div className="container mx-auto px-6 md:px-10 relative z-10">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="md:w-1/2 space-y-6">
-              <div className="inline-flex items-center gap-2 text-[#ff751f] font-bold uppercase tracking-widest text-xs">
-                <Users className="w-4 h-4" />
-                <span>Who we build for</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold text-slate-900">Meet "Nestar"</h2>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Nestar represents our core audience: <strong>Young Cambodian tech students (18-25)</strong> based in
-                Phnom Penh.
-              </p>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Inspired by a real team member, Nestar is capable, curious, and determined—but he realized during a
-                hackathon that he had <strong>zero exposure</strong> to accessible design standards. He wants to build
-                better products, he just needs the right tools.
-              </p>
-            </div>
-
-            <div className="md:w-1/2 flex justify-center">
-              {/* Persona Card */}
-              <div className="bg-white p-6 rounded-2xl shadow-2xl border-l-8 border-[#ff751f] max-w-sm w-full rotate-2 hover:rotate-0 transition-transform duration-500">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-3xl">
-                    👨‍💻
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-xl text-slate-900">Nestar</h3>
-                    <p className="text-slate-500 text-sm">CS Senior • Phnom Penh</p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                    <p className="text-xs text-slate-400 uppercase font-bold">Goal</p>
-                    <p className="text-slate-700 font-medium">To become a senior full-stack developer.</p>
-                  </div>
-                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                    <p className="text-xs text-slate-400 uppercase font-bold">Frustration</p>
-                    <p className="text-slate-700 font-medium">
-                      "I want to make my app accessible, but I don't know where to start."
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- OUR SOLUTION (GRID) --- */}
-      <section className="py-24 bg-[#0B0F19] text-white">
-        <div className="container mx-auto px-6 md:px-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">The Alt Access Solution</h2>
-            <p className="text-slate-400 text-lg">
-              We use media to spark curiosity and technology to provide the answers.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="bg-[#1e293b] p-8 rounded-2xl border border-white/10 hover:border-[#ff751f]/50 transition-colors group">
-              <div className="w-12 h-12 bg-[#1351aa]/20 rounded-xl flex items-center justify-center text-[#1351aa] mb-6 group-hover:bg-[#1351aa] group-hover:text-white transition-all">
-                <Code2 className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Interactive Learning Hub</h3>
-              <p className="text-slate-400 leading-relaxed">
-                A centralized digital archive containing WCAG resources, code snippets, and our custom accessibility
-                simulators.
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-[#1e293b] p-8 rounded-2xl border border-white/10 hover:border-[#ff751f]/50 transition-colors group">
-              <div className="w-12 h-12 bg-[#ff751f]/20 rounded-xl flex items-center justify-center text-[#ff751f] mb-6 group-hover:bg-[#ff751f] group-hover:text-white transition-all">
-                <Lightbulb className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Video Campaign</h3>
-              <p className="text-slate-400 leading-relaxed">
-                A "Vox-style" educational series that highlights real accessibility gaps and shares insights from the
-                blind community.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-[#1e293b] p-8 rounded-2xl border border-white/10 hover:border-[#ff751f]/50 transition-colors group">
-              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-500 mb-6 group-hover:bg-green-500 group-hover:text-white transition-all">
-                <GraduationCap className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">University Outreach</h3>
-              <p className="text-slate-400 leading-relaxed">
-                Physical engagement at universities and community events (Khmer Coder) to provide hands-on exposure to
-                tools.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- PARTNERS --- */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="container mx-auto px-6 md:px-10 text-center">
-          <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-10">Collaborating With</p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 grayscale hover:grayscale-0 transition-all duration-500">
+        {/* Hero - Full Impact */}
+        <section className="bg-stone-900 text-white px-8 md:px-24 py-28 relative" style={{ clipPath: 'inset(0)' }}>
+          {/* Team Gallery - Stationary Parallax */}
+          <div className="fixed inset-0 w-full h-full opacity-[0.15] mix-blend-luminosity pointer-events-none z-0">
             <Image
-              src="/images/ihpp-logo-2.webp"
-              alt="Impact Hub Phnom Penh"
-              width={280}
-              height={80}
-              className="h-16 w-auto object-contain"
-            />
-            <Image
-              src="/images/prosob.jpg"
-              alt="Prosob"
-              width={80}
-              height={80}
-              className="h-16 w-auto object-contain"
+              src="/images/team/alt-access-team-donating-to-civilians-during-conflict.PNG"
+              alt="Alt Access Team Donating"
+              fill
+              className="object-cover" style={{ objectPosition: 'center 25%' }}
+              priority
             />
           </div>
-        </div>
-      </section>
 
+          <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
+            <div className="lg:col-span-3">
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-500 mb-6 block">About Alt Access</span>
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[0.9] mb-8">
+                Building<br />Technology<br />
+                <span className="text-wong-vermilion">For Everyone.</span>
+              </h1>
+              <p className="text-lg text-stone-400 leading-relaxed max-w-lg">
+                A media and learning campaign educating Cambodia's next generation of developers about digital accessibility.
+              </p>
+            </div>
+            {/* Removed Supported By, Funded By, Built For blocks as requested */}
+          </div>
+        </section>
+
+
+
+        {/* Mission Statement */}
+        <section className="px-8 md:px-24 py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="w-12 h-0.5 bg-wong-vermilion mx-auto mb-8"></div>
+            <blockquote className="text-2xl md:text-4xl font-bold tracking-tight leading-snug text-stone-800 mb-8">
+              "Despite a rapidly growing developer population, most Cambodian tech students have never received formal training in inclusive design."
+            </blockquote>
+            <p className="text-base text-stone-500 max-w-2xl mx-auto leading-relaxed">
+              This results in digital products that unintentionally exclude thousands of users from essential services, education, and daily life. Alt Access exists to change that.
+            </p>
+          </div>
+        </section>
+
+        {/* What We Do - Cards */}
+        <section className="px-8 md:px-24 py-20 bg-white border-y border-stone-200">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-3 mb-16">
+              <div className="h-0.5 w-10 bg-black"></div>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-500">What We Do</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-stone-200">
+              {/* Card 1 */}
+              <Link href="/experience" className="group p-8 md:p-10 border-b md:border-b-0 md:border-r border-stone-200 hover:bg-stone-50 transition-colors">
+                <div className="w-10 h-10 bg-wong-vermilion/10 flex items-center justify-center mb-6">
+                  <Eye className="w-5 h-5 text-wong-vermilion" />
+                </div>
+                <span className="text-6xl font-bold text-stone-100 block mb-4">01</span>
+                <h3 className="text-xl font-bold mb-3">Interactive Simulations</h3>
+                <p className="text-sm text-stone-500 leading-relaxed mb-6">
+                  Experience what it's like to browse the web with low vision, color blindness, or total blindness.
+                </p>
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-vermilion group-hover:gap-2 transition-all">
+                  Try Now <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+
+              {/* Card 2 */}
+              <Link href="/videos" className="group p-8 md:p-10 border-b md:border-b-0 md:border-r border-stone-200 hover:bg-stone-50 transition-colors">
+                <div className="w-10 h-10 bg-wong-blue/10 flex items-center justify-center mb-6">
+                  <Film className="w-5 h-5 text-wong-blue" />
+                </div>
+                <span className="text-6xl font-bold text-stone-100 block mb-4">02</span>
+                <h3 className="text-xl font-bold mb-3">Video Series</h3>
+                <p className="text-sm text-stone-500 leading-relaxed mb-6">
+                  5 documentary-style episodes covering WCAG, the curb cut effect, and why accessible coding matters.
+                </p>
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-blue group-hover:gap-2 transition-all">
+                  Watch <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+
+              {/* Card 3 */}
+              <Link href="/learning-center" className="group p-8 md:p-10 hover:bg-stone-50 transition-colors">
+                <div className="w-10 h-10 bg-wong-yellow/20 flex items-center justify-center mb-6">
+                  <BookOpen className="w-5 h-5 text-wong-yellow" />
+                </div>
+                <span className="text-6xl font-bold text-stone-100 block mb-4">03</span>
+                <h3 className="text-xl font-bold mb-3">Learning Center</h3>
+                <p className="text-sm text-stone-500 leading-relaxed mb-6">
+                  WCAG resources, code examples, and practical guides for developers starting their accessibility journey.
+                </p>
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-yellow group-hover:gap-2 transition-all">
+                  Learn <ArrowRight className="w-3 h-3" />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Community & Impact */}
+        <section className="px-8 md:px-24 py-20 bg-stone-50 border-b border-stone-200">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-3 mb-12">
+              <div className="h-0.5 w-10 bg-wong-blue"></div>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Our Community</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="group bg-stone-200 relative aspect-[4/3] overflow-hidden border border-stone-300">
+                <Image
+                  src="/images/team/media-hackathon-group-photo.JPG"
+                  alt="Media Hackathon Participants"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
+                  <p className="text-white font-bold text-lg md:text-xl leading-tight">Media Solution Hackathon Participants</p>
+                </div>
+              </div>
+              <div className="group bg-stone-200 relative aspect-[4/3] overflow-hidden border border-stone-300">
+                <Image
+                  src="/images/team/presenting-for-HE-Chea-Vandeth-DGF.JPG"
+                  alt="Presenting to H.E. Mr. VANDETH CHEA, the Minister of Ministry of Post and Telecommunications"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
+                  <p className="text-white font-bold text-lg md:text-xl leading-tight">Presenting Accessibility Concepts to H.E. Mr. VANDETH CHEA, Minister of Ministry of Post and Telecommunications</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+      </main>
       <Footer />
-    </main>
+    </>
   )
 }

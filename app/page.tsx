@@ -25,6 +25,9 @@ export default function Home() {
           {/* PROLOGUE: Introduction & Mission */}
           <PrefaceSection />
 
+          {/* SIMULATIONS: The Practice (Moved up) */}
+          <ExperienceCards />
+
           {/* CHAPTER 1: THE SPECTRUM (Visual Impairment) */}
           <VisualImpairmentSection />
 
@@ -36,9 +39,6 @@ export default function Home() {
 
           {/* CHAPTER 4: THE STANDARD (WCAG) */}
           <WcagSection />
-
-          {/* CHAPTER 5: THE PRACTICE (Simulations) */}
-          <ExperienceCards />
 
           {/* CHAPTER 6: THE CURRICULUM (Videos) */}
           <VideoSeriesSection />

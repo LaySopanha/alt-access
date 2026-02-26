@@ -1,93 +1,177 @@
 "use client"
 
 import React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import {
     ArrowRight,
     Clock,
     BookOpen,
     CheckCircle2,
-    Globe
+    Globe,
+    Type,
+    Palette,
+    Keyboard,
+    Lightbulb,
+    GraduationCap,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { AccessibilityGraphic } from "@/components/accessibility-graphic"
+
+const modules = [
+    {
+        number: "01",
+        title: "Introduction",
+        desc: "What is web accessibility and why it matters.",
+        icon: Globe,
+    },
+    {
+        number: "02",
+        title: "WCAG Standard",
+        desc: "The global rulebook — A, AA, and AAA conformance.",
+        icon: BookOpen,
+    },
+    {
+        number: "03",
+        title: "Alternative Text",
+        desc: "Writing meaningful alt text that gives context.",
+        icon: Type,
+    },
+    {
+        number: "04",
+        title: "Color & Contrast",
+        desc: "The 4.5:1 ratio rule and color independence.",
+        icon: Palette,
+    },
+    {
+        number: "05",
+        title: "Keyboard Navigation",
+        desc: "Logical tab order and visible focus indicators.",
+        icon: Keyboard,
+    },
+    {
+        number: "06",
+        title: "Conclusion",
+        desc: "Inclusion by design, not by afterthought.",
+        icon: Lightbulb,
+    },
+]
 
 export function LearningCenterSection() {
     return (
-        <section id="chapter-7" className="bg-[#FDFCF8] py-24 border-t border-stone-200">
-            <div className="container mx-auto px-6 md:px-12 lg:px-24">
+        <section id="chapter-7" className="bg-[#FDFCF8] text-black pt-24 pb-16">
 
-                <div className="mb-16">
-                    <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-2 block">Chapter 07</span>
-                    <h2 className="font-serif text-5xl md:text-7xl font-bold text-black mb-4">The Learning Center.</h2>
-                    <p className="text-xl text-stone-600 max-w-2xl leading-relaxed">
-                        Professional training modules for developers and designers to build a more inclusive web for 2.2 billion users worldwide.
+            {/* Chapter Header */}
+            <div className="px-8 md:px-24 mb-16">
+                <div className="max-w-7xl mx-auto border-b-2 border-stone-200 pb-10">
+                    <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Chapter 07</span>
+                    <h2 className="text-5xl md:text-7xl font-bold text-black leading-[0.9] tracking-tight uppercase mb-6">
+                        The<br />Learning Center
+                    </h2>
+                    <p className="text-xl md:text-2xl max-w-3xl leading-relaxed text-stone-600">
+                        A structured, self-paced course for developers and designers. Master the
+                        principles that <span className="bg-wong-blue/20 px-1 text-stone-800">make the web work for everyone</span>.
                     </p>
                 </div>
+            </div>
 
-                <div className="bg-white rounded-[3rem] overflow-hidden border border-stone-200 shadow-xl flex flex-col lg:flex-row">
-                    {/* Billboard Graphic */}
-                    <div className="lg:w-1/2 relative min-h-[400px] bg-stone-50 flex items-center justify-center p-12 overflow-hidden">
-                        <AccessibilityGraphic className="w-full h-full max-w-[500px]" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent lg:hidden" />
-                        <div className="absolute bottom-10 left-10 text-white lg:hidden">
-                            <span className="font-mono text-xs uppercase tracking-widest bg-wong-vermilion px-2 py-1 rounded">Course Active</span>
+            <div className="px-8 md:px-24">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+                    {/* Left Column: Course Info (Sticky) */}
+                    <div className="lg:col-span-5">
+                        <div className="sticky top-32">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="h-0.5 w-10 bg-wong-vermilion"></div>
+                                <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Course Overview</span>
+                            </div>
+
+                            {/* Billboard Graphic */}
+                            <div className="bg-stone-50 border border-stone-200 p-12 mb-6 flex items-center justify-center min-h-[280px] relative overflow-hidden">
+                                <AccessibilityGraphic className="w-full h-full max-w-[400px]" />
+                                <div className="absolute bottom-4 left-4">
+                                    <span className="font-mono text-[10px] uppercase tracking-widest bg-black text-white px-3 py-1.5 font-bold">WCAG 2.2</span>
+                                </div>
+                            </div>
+
+                            {/* Course Meta */}
+                            <div className="bg-white border border-stone-200 p-6">
+                                <h3 className="text-lg font-bold mb-1 uppercase tracking-tight">Web Accessibility</h3>
+                                <p className="text-stone-500 text-sm leading-relaxed mb-6">Building for Visual Impairment</p>
+
+                                <div className="grid grid-cols-2 gap-4 border-t border-stone-100 pt-4 mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="w-4 h-4 text-stone-400" />
+                                        <span className="text-sm font-bold text-stone-800">30 Minutes</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <BookOpen className="w-4 h-4 text-stone-400" />
+                                        <span className="text-sm font-bold text-stone-800">6 Modules</span>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400 font-bold block">What you'll master</span>
+                                    <div className="grid grid-cols-1 gap-1.5">
+                                        {[
+                                            "Semantic Structure",
+                                            "Alt-Text Context",
+                                            "Color Independence",
+                                            "Keyboard Navigation",
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-center gap-2 text-sm text-stone-700">
+                                                <CheckCircle2 className="w-3.5 h-3.5 text-wong-teal shrink-0" />
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Course Details Card */}
-                    <div className="lg:w-1/2 p-10 md:p-16 flex flex-col justify-center space-y-8">
-                        <div className="space-y-4">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 text-stone-600 font-mono text-[10px] uppercase tracking-wider font-bold">
-                                <Globe className="w-3 h-3" /> Industry Standard WCAG 2.2
-                            </div>
-                            <h3 className="text-3xl md:text-5xl font-serif font-bold text-black leading-tight">
-                                Web Accessibility: Building for Visual Impairment
-                            </h3>
+                    {/* Right Column: Module List */}
+                    <div className="lg:col-span-7">
+                        <div className="flex items-center gap-3 mb-10">
+                            <div className="h-0.5 w-10 bg-wong-blue"></div>
+                            <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Curriculum</span>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-6 border-y border-stone-100 py-8">
-                            <div className="space-y-1">
-                                <div className="flex items-center gap-2 text-stone-400">
-                                    <Clock className="w-4 h-4" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Duration</span>
+                        <div className="flex flex-col gap-4">
+                            {modules.map((mod) => (
+                                <div key={mod.number} className="bg-white p-6 border border-stone-200 flex gap-6 items-start hover:border-stone-400 transition-all group">
+                                    <div className="w-12 h-12 shrink-0 bg-stone-50 text-stone-700 border border-stone-200 flex items-center justify-center group-hover:border-stone-400 transition-all">
+                                        <mod.icon className="w-6 h-6" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-1">
+                                            <span className="font-mono text-xs text-stone-300 font-bold">{mod.number}</span>
+                                            <h3 className="text-lg font-bold uppercase tracking-tight group-hover:text-wong-vermilion transition-colors">{mod.title}</h3>
+                                        </div>
+                                        <p className="text-stone-500 text-sm leading-relaxed">{mod.desc}</p>
+                                    </div>
                                 </div>
-                                <p className="font-bold text-stone-900">30 Minutes</p>
-                            </div>
-                            <div className="space-y-1">
-                                <div className="flex items-center gap-2 text-stone-400">
-                                    <BookOpen className="w-4 h-4" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest">Modules</span>
+                            ))}
+                        </div>
+
+                        {/* CTA Block */}
+                        <div className="mt-12 bg-stone-900 text-white p-6 md:p-8">
+                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1 uppercase">Ready to Learn?</h3>
+                                    <p className="text-sm text-stone-400 leading-relaxed">
+                                        Complete all 6 modules in about 30 minutes. Self-paced, interactive, and built for developers.
+                                    </p>
                                 </div>
-                                <p className="font-bold text-stone-900">11 Core Lessons</p>
-                            </div>
-                        </div>
-
-                        <div className="space-y-4">
-                            <p className="text-stone-500 font-medium italic">What you'll master:</p>
-                            <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
-                                {[
-                                    "Semantic Structure",
-                                    "Alt-Text Context",
-                                    "Color Independence",
-                                    "Keyboard Navigation Logic"
-                                ].map((item) => (
-                                    <li key={item} className="flex items-center gap-2 text-sm font-bold text-stone-800">
-                                        <CheckCircle2 className="w-4 h-4 text-green-500" /> {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="pt-6">
-                            <Button asChild className="w-full md:w-auto bg-black text-white hover:bg-stone-800 transition-all rounded-full px-10 py-8 text-lg font-bold h-auto shadow-xl group">
-                                <Link href="/learning-center" className="flex items-center gap-3">
-                                    Start Training <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                <Link
+                                    href="/learning-center"
+                                    className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 font-bold uppercase tracking-widest text-sm hover:bg-stone-100 transition-colors whitespace-nowrap group shrink-0"
+                                >
+                                    <span>Start Training</span>
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Link>
-                            </Button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>

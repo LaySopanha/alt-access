@@ -45,65 +45,80 @@ export function VisualImpairmentSection() {
   ]
 
   return (
-    <section id="chapter-1" className="bg-[#FDFCF8] text-black py-32 px-6 md:px-24">
-      <div className="max-w-4xl mx-auto">
+    <section id="chapter-1" className="bg-[#FDFCF8] text-black pt-24 pb-16">
 
-        {/* Chapter Header */}
-        <div className="mb-20 border-b-2 border-black pb-8">
-          <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-2 block">Chapter 01</span>
-          <h2 className="font-serif text-5xl md:text-7xl font-bold text-black">The Spectrum.</h2>
-          <p className="font-sans text-xl text-stone-600 mt-6 max-w-2xl leading-relaxed">
-            Visual impairment is not binary. It is a wide range of human experiences that affects how people <span className="highlight-yellow px-1">perceive, navigate, and interact</span> with your work.
+      {/* Chapter Header */}
+      <div className="px-8 md:px-24 mb-16">
+        <div className="max-w-7xl mx-auto border-b-2 border-stone-200 pb-10">
+          <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Chapter 01</span>
+          <h2 className="text-5xl md:text-7xl font-bold text-black leading-[0.9] tracking-tight uppercase mb-6">
+            The<br />Spectrum
+          </h2>
+          <p className="text-xl md:text-2xl max-w-3xl leading-relaxed text-stone-600">
+            Visual impairment is not binary. It is a wide range of human experiences that affects how people <span className="bg-wong-yellow/40 px-1">perceive & interact</span> with your work.
           </p>
         </div>
+      </div>
 
-        {/* Textbook Content: The Definition */}
-        <div className="mb-24 flex gap-8 items-start">
-          <div className="hidden md:block w-32 pt-2 border-t-4 border-wong-vermilion">
-            <span className="font-mono text-xs font-bold uppercase">Definition</span>
-          </div>
-          <div className="flex-1">
-            <p className="text-2xl md:text-3xl font-serif leading-relaxed mb-8">
-              "Visual impairment refers to a wide range of conditions that reduce a person’s ability to see clearly, even with glasses or medical treatment."
-            </p>
-            <div className="bg-stone-100 p-8 border-l-4 border-black font-sans text-stone-600 leading-relaxed">
-              <strong>Why it matters:</strong> It is not limited to complete blindness. Barriers include unreadable text, unclear navigation, missing labels, and interfaces that rely solely on visual cues.
+      <div className="px-8 md:px-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+          {/* Left Column: The Definition (Sticky) */}
+          <div className="lg:col-span-5">
+            <div className="sticky top-32">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-0.5 w-10 bg-wong-vermilion"></div>
+                <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Definition</span>
+              </div>
+
+              <p className="text-xl md:text-2xl leading-snug mb-8 text-stone-800">
+                "Visual impairment refers to a wide range of conditions that reduce a person's ability to see clearly, even with glasses or medical treatment."
+              </p>
+
+              <div className="bg-white p-6 border border-stone-200 text-base text-stone-600 leading-relaxed">
+                <strong className="text-black">Why it matters:</strong> Barriers are not just for the completely blind. They include unreadable text, unclear navigation, and interfaces that rely solely on visual cues.
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Textbook Content: The Types */}
-        <div>
-          <div className="hidden md:block w-32 pt-2 border-t-4 border-wong-blue mb-12">
-            <span className="font-mono text-xs font-bold uppercase">Taxonomy</span>
-          </div>
+          {/* Right Column: Taxonomy Grid */}
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-10">
+              <div className="h-0.5 w-10 bg-wong-blue"></div>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Taxonomy</span>
+            </div>
 
-          <div className="space-y-16">
-            {impairmentTypes.map((group, i) => (
-              <div key={i} className="grid md:grid-cols-12 gap-8">
-                <div className="md:col-span-4">
-                  <h3 className="text-2xl font-bold uppercase tracking-tight flex items-center gap-3">
-                    {group.category === "Blindness" && <EyeOff className="w-6 h-6" />}
-                    {group.category === "Low Vision" && <Activity className="w-6 h-6" />}
-                    {group.category === "Color Deficiency" && <Layers className="w-6 h-6" />}
-                    {group.category === "Field Loss" && <Search className="w-6 h-6" />}
-                    {group.category === "Sensitivity" && <Sun className="w-6 h-6" />}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {impairmentTypes.map((group, i) => (
+                <div key={i} className="bg-white p-6 border border-stone-200 hover:border-stone-400 transition-all duration-300">
+                  <h3 className="text-lg font-bold uppercase tracking-tight flex items-center gap-3 mb-5">
+                    {group.category === "Blindness" && <EyeOff className="w-5 h-5 text-wong-vermilion" />}
+                    {group.category === "Low Vision" && <Activity className="w-5 h-5 text-wong-yellow" />}
+                    {group.category === "Color Deficiency" && <Layers className="w-5 h-5 text-wong-blue" />}
+                    {group.category === "Field Loss" && <Search className="w-5 h-5 text-stone-600" />}
+                    {group.category === "Sensitivity" && <Sun className="w-5 h-5 text-stone-600" />}
                     {group.category}
                   </h3>
-                </div>
-                <div className="md:col-span-8 space-y-6">
-                  {group.items.map((item, j) => (
-                    <div key={j} className="group hover:bg-stone-50 p-4 -mx-4 rounded-lg transition-colors">
-                      <h4 className="font-bold text-lg mb-1 group-hover:text-wong-vermilion transition-colors">{item.name}</h4>
-                      <p className="text-stone-600 font-serif italic">{item.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
+                  <div className="space-y-4">
+                    {group.items.map((item, j) => (
+                      <div key={j} className="group cursor-default">
+                        <h4 className="font-semibold text-base mb-1 flex items-center gap-2 group-hover:text-wong-vermilion transition-colors">
+                          <span className="w-1.5 h-1.5 bg-stone-400 rounded-full group-hover:bg-wong-vermilion transition-colors"></span>
+                          {item.name}
+                        </h4>
+                        <p className="text-stone-500 text-sm leading-relaxed pl-4 border-l border-stone-200 group-hover:border-wong-vermilion transition-colors">
+                          {item.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   )

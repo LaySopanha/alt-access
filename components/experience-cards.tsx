@@ -49,7 +49,7 @@ export function ExperienceCards() {
   ] as const
 
   return (
-    <section id="chapter-5" className="bg-[#FDFCF8] border-b-8 border-black">
+    <section id="simulations" className="bg-[#FDFCF8] pb-32">
 
       {/* Global SVG Filters */}
       <svg className="absolute w-0 h-0 pointer-events-none">
@@ -67,15 +67,15 @@ export function ExperienceCards() {
       </svg>
 
       {/* Header Section */}
-      <div className="py-24 px-8 md:px-24 border-b-8 border-black">
-        <div className="max-w-7xl mx-auto">
-          <span className="font-mono text-sm uppercase tracking-widest text-stone-500 mb-4 block">
-            Chapter 05 / The Practice
+      <div className="pt-24 pb-16 px-8 md:px-24">
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+          <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6 block">
+            The Practice
           </span>
-          <h2 className="text-6xl md:text-8xl font-black text-black mb-8 tracking-tighter uppercase leading-none">
-            Simulation<br />Laboratory
+          <h2 className="text-5xl md:text-7xl font-bold text-black mb-6 tracking-tight">
+            Feel how the visually impaired experience the web
           </h2>
-          <p className="text-xl md:text-2xl font-medium max-w-2xl leading-relaxed text-stone-700">
+          <p className="text-xl font-medium max-w-2xl leading-relaxed text-stone-600">
             Theory teaches you "what". Experience teaches you "why".
             Step into the user's perspective to test your assumptions.
           </p>
@@ -83,45 +83,21 @@ export function ExperienceCards() {
       </div>
 
       {/* Experience Grid */}
-      <div className="w-full">
-        {experiences.map((exp, index) => {
-          // @ts-ignore
-          const content = t.experiences[exp.key]
-          const Icon = exp.icon
+      <div className="px-8 md:px-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {experiences.map((exp, index) => {
+            // @ts-ignore
+            const content = t.experiences[exp.key]
+            const Icon = exp.icon
 
-          return (
-            <Link
-              key={exp.id}
-              href={exp.href}
-              className="group block border-b-4 border-black last:border-b-0"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px] lg:min-h-[500px]">
-
-                {/* Text Content */}
-                <div className="lg:col-span-5 p-8 md:p-16 flex flex-col justify-between bg-white relative z-10">
-                  <div>
-                    <div className="flex items-center gap-4 mb-8">
-                      <span className="font-mono text-sm font-bold border-2 border-black px-2 py-1">
-                        SIM-{exp.id}
-                      </span>
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-4xl md:text-6xl font-black uppercase mb-6 leading-[0.9] group-hover:translate-x-2 transition-transform duration-300">
-                      {content.title}
-                    </h3>
-                    <p className="text-lg font-medium text-stone-600 leading-relaxed max-w-md">
-                      {content.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-12 flex items-center gap-4 font-mono text-sm uppercase tracking-widest font-bold group-hover:gap-6 transition-all">
-                    <span>Enter Simulation</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
-                </div>
-
+            return (
+              <Link
+                key={exp.id}
+                href={exp.href}
+                className="group flex flex-col bg-white border border-stone-200 hover:border-black transition-colors"
+              >
                 {/* Visual Preview */}
-                <div className="lg:col-span-7 relative bg-stone-100 overflow-hidden border-t-4 lg:border-t-0 lg:border-l-4 border-black">
+                <div className="relative aspect-[4/3] bg-stone-100 overflow-hidden border-b border-stone-200">
                   <Image
                     src={exp.image}
                     alt={content.title}
@@ -132,13 +108,36 @@ export function ExperienceCards() {
                     )}
                   />
                   {/* Interaction Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 pointer-events-none" />
                   {exp.overlay}
                 </div>
-              </div>
-            </Link>
-          )
-        })}
+
+                {/* Text Content */}
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="font-mono text-sm font-bold uppercase tracking-widest text-stone-500">
+                      SIM-{exp.id}
+                    </span>
+                    <Icon className="w-5 h-5 text-stone-500" />
+                  </div>
+
+                  <h3 className="text-3xl md:text-4xl font-black mb-4 tracking-tight leading-tight">
+                    {content.title}
+                  </h3>
+
+                  <p className="text-lg font-medium text-stone-700 mb-8 flex-1 leading-relaxed">
+                    {content.description}
+                  </p>
+
+                  <div className="flex items-center gap-3 font-mono text-sm uppercase tracking-widest font-bold group-hover:text-wong-vermilion transition-colors">
+                    <span>Enter Simulation</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

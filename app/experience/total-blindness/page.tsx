@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Eye, EyeOff, Volume2, Lock, Unlock, DoorOpen, Search, Key } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye, EyeOff, Volume2, Lock, Unlock, DoorOpen, Search, Key, ShoppingCart, CreditCard } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { useLanguage } from "@/hooks/use-language"
 import { translations } from "@/lib/translations"
 import { cn } from "@/lib/utils"
 
-// Interactive Items Type
+// Interactive Items Type (Scenario 1)
 type GameItem = {
   id: string
   name: string
@@ -21,10 +21,20 @@ type GameItem = {
   icon?: any
 }
 
+// Scenarios
+type Scenario = 1 | 2 | null
+
 export default function TotalBlindnessExperience() {
-  const [started, setStarted] = useState(false)
+  const [scenario, setScenario] = useState<Scenario>(null)
   const [isBlackout, setIsBlackout] = useState(true) // Default to Blindness ON
+
+  // Scenario 1 State
   const [hasKey, setHasKey] = useState(false)
+
+  // Scenario 2 State
+  const [formStep, setFormStep] = useState(1)
+
+  // Shared State
   const [gameFinished, setGameFinished] = useState(false)
   const [focusedItem, setFocusedItem] = useState<string | null>(null)
 
@@ -81,27 +91,33 @@ export default function TotalBlindnessExperience() {
 
   // Effect: Announce entry
   useEffect(() => {
-    if (started && !gameFinished) {
+    if (scenario !== null && !gameFinished) {
       setTimeout(() => {
-        speak("You have entered a dark room. Use Tab to find objects. Press Enter to interact. Find the key to escape.")
+        if (scenario === 1) {
+          speak("You have entered a dark room. Use Tab to find objects. Press Enter to interact. Find the key to escape.")
+        } else {
+          speak("Checkout form loaded. Please enter your name and shipping details. Use Tab to navigate fields. Press Enter to submit.")
+        }
       }, 1000)
     }
-  }, [started, gameFinished])
+  }, [scenario, gameFinished])
 
-  // Interaction Logic
-  const handleItemFocus = (item: GameItem) => {
-    setFocusedItem(item.name)
-    speak(item.name + ". " + item.description)
+  // --- INTERACTION LOGIC ---
+
+  // TTS Feedback
+  const handleItemFocus = (text: string) => {
+    setFocusedItem(text)
+    speak(text)
   }
 
-  const handleItemInteraction = (item: GameItem) => {
+  // Scenario 1 Logic
+  const handleRoomInteraction = (item: GameItem) => {
     if (item.isKey) {
       if (hasKey) {
         speak("You already have the key. Use it on the door.")
       } else {
         setHasKey(true)
         speak(item.actionResult)
-        // Sound Effect for Key Pickup?
       }
     } else if (item.isExit) {
       if (hasKey) {
@@ -115,18 +131,29 @@ export default function TotalBlindnessExperience() {
     }
   }
 
+  // Scenario 2 Logic
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (formStep === 1) {
+      speak("Step 1 complete. Proceeding to payment details.")
+      setFormStep(2)
+    } else {
+      speak("Payment successful. Your order is confirmed.")
+      setGameFinished(true)
+    }
+  }
+
   // --- START SCREEN ---
-  if (!started) {
+  if (scenario === null) {
     return (
       <main className="min-h-screen bg-[#FDFCF8] text-black relative flex flex-col font-sans selection:bg-wong-orange selection:text-black overflow-hidden">
         <Navbar theme="light" showLogo={true} />
 
         <div className="flex-1 flex flex-col justify-center py-10 px-6 md:px-24">
-          {/* Same Intro Design as before, just updated text */}
-          <div className="max-w-4xl mx-auto w-full">
+          <div className="max-w-5xl mx-auto w-full">
             <div className="mb-8">
               <Link
-                href="/#chapter-5"
+                href="/#simulations"
                 className="inline-flex items-center gap-2 group border-b-2 border-transparent hover:border-black transition-all pb-1 text-stone-600 hover:text-black"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -142,44 +169,55 @@ export default function TotalBlindnessExperience() {
                 Total Blindness.
               </h1>
               <p className="font-sans text-xl md:text-2xl text-stone-600 max-w-2xl leading-relaxed font-light mb-8">
-                Experience the web without a screen. Navigate a dark room using only audio cues.
+                Experience the web without a screen. Navigate entirely using keyboard inputs and audio cues.
               </p>
+            </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">1</div>
-                  <p className="text-lg leading-relaxed">Turn on your audio. You will need it to navigate.</p>
+            {/* Scenario Selection Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Scenario 1 */}
+              <div className="bg-white p-8 border-2 border-stone-200 rounded-2xl flex flex-col justify-between hover:border-black transition-colors group">
+                <div>
+                  <div className="bg-wong-yellow/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 overflow-hidden relative">
+                    <Search className="w-8 h-8 text-wong-yellow relative z-10" />
+                  </div>
+                  <h3 className="text-3xl font-bold font-serif mb-4">M1: The Dark Room</h3>
+                  <p className="text-stone-600 mb-8 leading-relaxed">
+                    A conceptual exercise. Tab through a dark room, listen to descriptions, and find the key to escape.
+                  </p>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">2</div>
-                  <p className="text-lg leading-relaxed">Use <span className="font-bold bg-stone-200 px-2 py-0.5 rounded">TAB</span> to move between objects.</p>
+                <Button
+                  size="lg"
+                  onClick={() => setScenario(1)}
+                  className="w-full bg-black hover:bg-stone-800 text-white border-2 border-transparent hover:border-black px-8 py-6 text-lg font-bold uppercase tracking-wider transition-all flex items-center justify-between group-hover:scale-[1.02]"
+                >
+                  <span>Play Mission</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+
+              {/* Scenario 2 */}
+              <div className="bg-white p-8 border-2 border-stone-200 rounded-2xl flex flex-col justify-between hover:border-black transition-colors group">
+                <div>
+                  <div className="bg-wong-blue/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 overflow-hidden relative">
+                    <ShoppingCart className="w-8 h-8 text-wong-blue relative z-10" />
+                  </div>
+                  <h3 className="text-3xl font-bold font-serif mb-4">M2: The Checkout</h3>
+                  <p className="text-stone-600 mb-8 leading-relaxed">
+                    Try to buy a product using a form that fails to associate labels with inputs properly. A common real-world barrier.
+                  </p>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold shrink-0">3</div>
-                  <p className="text-lg leading-relaxed">Use <span className="font-bold bg-stone-200 px-2 py-0.5 rounded">ENTER</span> to interact.</p>
-                </div>
+                <Button
+                  size="lg"
+                  onClick={() => setScenario(2)}
+                  className="w-full bg-black hover:bg-stone-800 text-white border-2 border-transparent hover:border-black px-8 py-6 text-lg font-bold uppercase tracking-wider transition-all flex items-center justify-between group-hover:scale-[1.02]"
+                >
+                  <span>Play Mission</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </div>
 
-            {/* Fun Fact Area */}
-            <div className="bg-wong-yellow/10 border-l-4 border-wong-yellow p-6 mb-12 rounded-r-lg">
-              <h3 className="font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
-                <Volume2 className="w-4 h-4" />
-                Did you know?
-              </h3>
-              <p className="text-stone-700 italic">
-                "Experienced screen reader users often listen to speech at <strong>2x or 3x speed</strong> (approx. 450 words per minute) to navigate quickly—much faster than visual scanning!"
-              </p>
-            </div>
-
-            <Button
-              size="lg"
-              onClick={() => setStarted(true)}
-              className="w-full md:w-auto bg-black hover:bg-stone-800 text-white rounded-none border-2 border-transparent hover:border-black px-12 py-8 text-xl font-bold uppercase tracking-wider transition-all flex items-center justify-between group"
-            >
-              <span>Enter Dark Room</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </Button>
           </div>
         </div>
       </main>
@@ -193,28 +231,36 @@ export default function TotalBlindnessExperience() {
         <Navbar theme="light" showLogo={true} />
         <div className="max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-700">
           <DoorOpen className="w-24 h-24 mx-auto mb-8 text-black" />
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 font-serif">You Escaped!</h2>
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 font-serif">Success!</h2>
           <p className="text-xl md:text-2xl font-medium mb-12 max-w-lg mx-auto leading-relaxed">
-            You successfully navigated the dark room using only screen reader cues.
+            {scenario === 1
+              ? "You successfully navigated the dark room using only screen reader cues."
+              : "You successfully completed the checkout process despite the inaccessible form."}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => {
-                setStarted(false)
+                setScenario(null)
                 setGameFinished(false)
                 setHasKey(false)
+                setFormStep(1)
                 setIsBlackout(true)
               }}
               variant="outline"
               className="border-black text-black hover:bg-black hover:text-white h-14 px-8 text-lg uppercase tracking-wide font-bold"
             >
-              Try Again
+              Menu
             </Button>
-            <Link href="/experience/low-vision">
-              <Button className="bg-black text-white hover:bg-gray-900 border-2 border-transparent h-14 px-8 text-lg uppercase tracking-wide font-bold">
-                Next Lesson
-              </Button>
-            </Link>
+            <Button
+              onClick={() => {
+                setGameFinished(false)
+                setHasKey(false)
+                setFormStep(1)
+              }}
+              className="bg-black text-white hover:bg-gray-900 border-2 border-transparent h-14 px-8 text-lg uppercase tracking-wide font-bold"
+            >
+              Play Again
+            </Button>
           </div>
         </div>
       </main>
@@ -255,49 +301,179 @@ export default function TotalBlindnessExperience() {
         {isBlackout ? <EyeOff className="w-6 h-6" /> : <Eye className="w-6 h-6 text-black" />}
       </button>
 
-      {/* 3. GAME ROOM (The DOM Structure) */}
-      <div className="min-h-screen bg-stone-100 flex flex-col items-center justify-center p-6 pt-32">
+      {/* 3. GAME CONTENT (The DOM Structure) */}
+      <div className="min-h-screen bg-stone-100 flex flex-col items-center justify-center p-6 pt-32 pb-32">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold font-serif mb-2">The Locked Room</h2>
-          <p className="text-muted-foreground">Tab to navigate. Enter to inspect.</p>
+          <h2 className="text-3xl font-bold font-serif mb-2">
+            {scenario === 1 ? "The Locked Room" : "Secure Checkout"}
+          </h2>
+          <p className="text-muted-foreground">Tab to navigate. Enter to interact.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
-          {roomItems.map((item) => (
-            <button
-              key={item.id}
-              className="group relative h-48 bg-white border-2 border-stone-200 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 hover:border-black focus:border-wong-orange focus:ring-4 focus:ring-wong-orange/20 transition-all outline-none"
-              onFocus={() => handleItemFocus(item)}
-              onClick={() => handleItemInteraction(item)}
-            >
-              <div className="bg-stone-50 p-4 rounded-full group-hover:scale-110 transition-transform">
-                <item.icon className="w-8 h-8 text-stone-700" />
-              </div>
-              <span className="font-bold text-lg">{item.name}</span>
-
-              {/* Visual Feedback for Sighted Users */}
-              {item.isKey && hasKey && (
-                <span className="absolute top-4 right-4 text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full border border-green-200">Collected</span>
-              )}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-12 p-4 bg-white rounded-lg border border-stone-200 max-w-lg w-full text-center">
-          <h3 className="uppercase tracking-widest text-xs font-bold text-stone-400 mb-2">Inventory</h3>
-          <div className="flex justify-center gap-4">
-            {hasKey ? (
-              <div className="flex items-center gap-2 text-wong-orange font-bold animate-in fade-in zoom-in">
-                <Key className="w-5 h-5" />
-                <span>Rusty Key</span>
-              </div>
-            ) : (
-              <span className="text-stone-300 italic">Empty</span>
-            )}
-          </div>
-        </div>
+        {scenario === 1 ? (
+          <GameOneContent
+            roomItems={roomItems}
+            hasKey={hasKey}
+            onFocus={(item) => handleItemFocus(item.name + ". " + item.description)}
+            onInteract={handleRoomInteraction}
+          />
+        ) : (
+          <GameTwoContent
+            step={formStep}
+            isBlackout={isBlackout}
+            onFocus={handleItemFocus}
+            onSubmit={handleFormSubmit}
+          />
+        )}
       </div>
 
     </div>
+  )
+}
+
+// --- SUBCOMPONENTS FOR SCENARIOS ---
+
+function GameOneContent({ roomItems, hasKey, onFocus, onInteract }: { roomItems: GameItem[], hasKey: boolean, onFocus: (item: GameItem) => void, onInteract: (item: GameItem) => void }) {
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
+        {roomItems.map((item) => (
+          <button
+            key={item.id}
+            className="group relative h-48 bg-white border-2 border-stone-200 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 hover:border-black focus:border-wong-orange focus:ring-4 focus:ring-wong-orange/20 transition-all outline-none"
+            onFocus={() => onFocus(item)}
+            onClick={() => onInteract(item)}
+            aria-hidden="true" // Hide from actual screen readers so our fake TTS handles it
+          >
+            <div className="bg-stone-50 p-4 rounded-full group-hover:scale-110 transition-transform">
+              <item.icon className="w-8 h-8 text-stone-700" />
+            </div>
+            <span className="font-bold text-lg">{item.name}</span>
+
+            {/* Visual Feedback for Sighted Users */}
+            {item.isKey && hasKey && (
+              <span className="absolute top-4 right-4 text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full border border-green-200">Collected</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-12 p-4 bg-white rounded-lg border border-stone-200 max-w-lg w-full text-center" aria-hidden="true">
+        <h3 className="uppercase tracking-widest text-xs font-bold text-stone-400 mb-2">Inventory</h3>
+        <div className="flex justify-center gap-4">
+          {hasKey ? (
+            <div className="flex items-center gap-2 text-wong-orange font-bold animate-in fade-in zoom-in">
+              <Key className="w-5 h-5" />
+              <span>Rusty Key</span>
+            </div>
+          ) : (
+            <span className="text-stone-300 italic">Empty</span>
+          )}
+        </div>
+      </div>
+    </>
+  )
+}
+
+function GameTwoContent({ step, isBlackout, onFocus, onSubmit }: { step: number, isBlackout: boolean, onFocus: (str: string) => void, onSubmit: (e: React.FormEvent) => void }) {
+  // Simulated form that is poorly accessible
+  // When blackout is true (simulating TTS), the focus events read unhelpful text
+  // When blackout is false (cheating), visual labels are shown, BUT the actual TTS strings still read badly unless accessibility was 'fixed' (for scope, we just let them cheat visually)
+
+  return (
+    <form onSubmit={onSubmit} className="bg-white p-8 md:p-12 rounded-3xl shadow-xl max-w-2xl w-full border border-stone-200">
+
+      <div className="flex justify-between items-center mb-8 pb-4 border-b">
+        <h3 className="text-2xl font-serif font-bold">Checkout</h3>
+        <span className="text-stone-500 font-mono text-sm">Step {step} of 2</span>
+      </div>
+
+      {step === 1 && (
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <label className={cn("block font-medium", isBlackout ? "invisible" : "")}>First Name</label>
+            <input
+              type="text"
+              required
+              className="w-full border-2 border-stone-200 rounded-lg p-3 focus:outline-none focus:border-black"
+              onFocus={() => onFocus(isBlackout ? "Input text field." : "First Name input.")}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className={cn("block font-medium", isBlackout ? "invisible" : "")}>Last Name</label>
+            <input
+              type="text"
+              required
+              className="w-full border-2 border-stone-200 rounded-lg p-3 focus:outline-none focus:border-black"
+              onFocus={() => onFocus(isBlackout ? "Input text field." : "Last Name input.")}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className={cn("block font-medium drop-shadow-sm", isBlackout ? "invisible" : "")}>Shipping Address</label>
+            <textarea
+              required
+              className="w-full border-2 border-stone-200 rounded-lg p-3 focus:outline-none focus:border-black min-h-[100px]"
+              onFocus={() => onFocus(isBlackout ? "Text area." : "Shipping Address area.")}
+            />
+          </div>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <label className={cn("block font-medium", isBlackout ? "invisible" : "")}>Credit Card Number</label>
+            <div className="relative">
+              <CreditCard className="absolute left-3 top-3.5 text-stone-400 w-5 h-5" aria-hidden="true" />
+              <input
+                type="text"
+                required
+                className="w-full border-2 border-stone-200 rounded-lg p-3 pl-10 focus:outline-none focus:border-black"
+                onFocus={() => onFocus(isBlackout ? "Input text field." : "Credit Card Number input.")}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className={cn("block font-medium", isBlackout ? "invisible" : "")}>Expiry (MM/YY)</label>
+              <input
+                type="text"
+                required
+                className="w-full border-2 border-stone-200 rounded-lg p-3 focus:outline-none focus:border-black"
+                onFocus={() => onFocus(isBlackout ? "Input text field." : "Expiry date input.")}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className={cn("block font-medium", isBlackout ? "invisible" : "")}>CVC</label>
+              <input
+                type="text"
+                required
+                className="w-full border-2 border-stone-200 rounded-lg p-3 focus:outline-none focus:border-black"
+                onFocus={() => onFocus(isBlackout ? "Input text field." : "Security code input.")}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-12 flex justify-end gap-4">
+        <Button
+          type="button"
+          variant="outline"
+          className="h-12 px-8 uppercase font-bold tracking-wider"
+          onFocus={() => onFocus(isBlackout ? "Button. Blank." : "Cancel button.")}
+        >
+          {isBlackout ? "" : "Cancel"}
+        </Button>
+        <Button
+          type="submit"
+          className="h-12 px-8 uppercase font-bold tracking-wider bg-black text-white hover:bg-stone-800"
+          onFocus={() => onFocus(isBlackout ? "Button. Submit form." : "Next Step button.")}
+        >
+          {step === 1 ? "Next Step" : "Pay Now"}
+        </Button>
+      </div>
+
+    </form>
   )
 }
