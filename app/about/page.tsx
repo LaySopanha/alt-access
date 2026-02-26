@@ -14,10 +14,10 @@ export default function AboutPage() {
   return (
     <>
       <Navbar showLogo />
-      <main className="bg-[#FDFCF8] min-h-screen pt-14">
+      <main className="bg-[#FDFCF8] min-h-screen pt-14" role="main">
 
         {/* Hero - Full Impact */}
-        <section className="bg-stone-900 text-white px-8 md:px-24 py-28 relative" style={{ clipPath: 'inset(0)' }}>
+        <section className="bg-stone-900 text-white px-8 md:px-24 py-28 relative" style={{ clipPath: 'inset(0)' }} aria-labelledby="about-hero-title">
           {/* Team Gallery - Stationary Parallax */}
           <div className="fixed inset-0 w-full h-full opacity-[0.15] mix-blend-luminosity pointer-events-none z-0">
             <Image
@@ -31,7 +31,7 @@ export default function AboutPage() {
 
           <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
             <div className="lg:col-span-3">
-              <span className="font-mono text-xs uppercase tracking-widest text-stone-500 mb-6 block">About Alt Access</span>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-500 mb-6 block" id="about-hero-title">About Alt Access</span>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[0.9] mb-8">
                 Building<br />Technology<br />
                 <span className="text-wong-vermilion">For Everyone.</span>
@@ -47,24 +47,25 @@ export default function AboutPage() {
 
 
         {/* Mission Statement */}
-        <section className="px-8 md:px-24 py-24">
+        <section className="px-8 md:px-24 py-24" aria-labelledby="mission-title">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="w-12 h-0.5 bg-wong-vermilion mx-auto mb-8"></div>
+            <div className="w-12 h-0.5 bg-wong-vermilion mx-auto mb-8" aria-hidden="true"></div>
+            <h2 id="mission-title" className="sr-only">Mission Statement</h2>
             <blockquote className="text-2xl md:text-4xl font-bold tracking-tight leading-snug text-stone-800 mb-8">
               "Despite a rapidly growing developer population, most Cambodian tech students have never received formal training in inclusive design."
             </blockquote>
-            <p className="text-base text-stone-500 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base text-stone-700 max-w-2xl mx-auto leading-relaxed">
               This results in digital products that unintentionally exclude thousands of users from essential services, education, and daily life. Alt Access exists to change that.
             </p>
           </div>
         </section>
 
         {/* What We Do - Cards */}
-        <section className="px-8 md:px-24 py-20 bg-white border-y border-stone-200">
+        <section className="px-8 md:px-24 py-20 bg-white border-y border-stone-200" aria-labelledby="what-we-do-title">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-3 mb-16">
-              <div className="h-0.5 w-10 bg-black"></div>
-              <span className="font-mono text-xs uppercase tracking-widest text-stone-500">What We Do</span>
+              <div className="h-0.5 w-10 bg-black" aria-hidden="true"></div>
+              <h2 id="what-we-do-title" className="font-mono text-xs uppercase tracking-widest text-stone-500">What We Do</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-stone-200">
@@ -78,8 +79,8 @@ export default function AboutPage() {
                 <p className="text-sm text-stone-500 leading-relaxed mb-6">
                   Experience what it's like to browse the web with low vision, color blindness, or total blindness.
                 </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-vermilion group-hover:gap-2 transition-all">
-                  Try Now <ArrowRight className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-vermilion group-hover:gap-2 transition-all" aria-label="Try Interactive Simulations">
+                  Try Now <ArrowRight className="w-3 h-3" aria-hidden="true" />
                 </span>
               </Link>
 
@@ -93,8 +94,8 @@ export default function AboutPage() {
                 <p className="text-sm text-stone-500 leading-relaxed mb-6">
                   5 documentary-style episodes covering WCAG, the curb cut effect, and why accessible coding matters.
                 </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-blue group-hover:gap-2 transition-all">
-                  Watch <ArrowRight className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-blue group-hover:gap-2 transition-all" aria-label="Watch Video Series">
+                  Watch <ArrowRight className="w-3 h-3" aria-hidden="true" />
                 </span>
               </Link>
 
@@ -108,8 +109,8 @@ export default function AboutPage() {
                 <p className="text-sm text-stone-500 leading-relaxed mb-6">
                   WCAG resources, code examples, and practical guides for developers starting their accessibility journey.
                 </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-yellow group-hover:gap-2 transition-all">
-                  Learn <ArrowRight className="w-3 h-3" />
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-yellow group-hover:gap-2 transition-all" aria-label="Learn at Learning Center">
+                  Learn <ArrowRight className="w-3 h-3" aria-hidden="true" />
                 </span>
               </Link>
             </div>
@@ -117,11 +118,11 @@ export default function AboutPage() {
         </section>
 
         {/* Our Community & Impact */}
-        <section className="px-8 md:px-24 py-20 bg-stone-50 border-b border-stone-200">
+        <section className="px-8 md:px-24 py-20 bg-stone-50 border-b border-stone-200" aria-labelledby="community-title">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-3 mb-12">
-              <div className="h-0.5 w-10 bg-wong-blue"></div>
-              <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Our Community</span>
+              <div className="h-0.5 w-10 bg-wong-blue" aria-hidden="true"></div>
+              <h2 id="community-title" className="font-mono text-xs uppercase tracking-widest text-stone-500">Our Community</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
