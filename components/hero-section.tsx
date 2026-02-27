@@ -41,19 +41,6 @@ export function HeroSection() {
         style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
       </div>
 
-      {/* 2.5 GLASSES ILLUSTRATION (Decorative) */}
-      {/* 2.5 GLASSES ILLUSTRATION (Decorative) */}
-      <div
-        className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] max-w-[500px] max-h-[500px] opacity-20 mix-blend-multiply pointer-events-none rotate-12 transition-transform duration-75 ease-out will-change-transform"
-        style={{ transform: `translate3d(0, -${displacement}px, 0) rotate(12deg)` }}
-      >
-        <Image
-          src="/images/hero-glasses.png"
-          alt=""
-          fill
-          className="object-contain"
-        />
-      </div>
 
       {/* 3. HERO LOGO - Removed, now always shown in navbar */}
 
@@ -64,16 +51,21 @@ export function HeroSection() {
           {/* Title Block */}
           <div className="text-center max-w-5xl flex flex-col items-center">
             {/* Removed Centered Logo */}
-            <h1 className="font-bold text-7xl md:text-9xl mb-6 text-wong-vermilion tracking-tight">
-              Alt Access
-            </h1>
+            <Image
+              src="/images/alt-access-black-logo.png"
+              alt="Alt Access"
+              width={600}
+              height={150}
+              className="h-48 md:h-72 w-auto object-contain mb-6"
+              priority
+            />
             <p className="text-2xl md:text-4xl font-bold text-black mb-12">
-              The Digital Guide to Accessibility.
+              {t.hero.subtitle}
             </p>
 
             {/* Scroll Indicator (Instead of Button) */}
             <div className="flex flex-col items-center gap-4 animate-bounce mt-12 opacity-50">
-              <span className="font-mono text-sm uppercase tracking-widest text-black">Scroll to Read</span>
+              <span className="font-mono text-sm uppercase tracking-widest text-black">{t.hero.scrollToRead}</span>
               <ArrowRight className="w-6 h-6 rotate-90 text-black" />
             </div>
           </div>

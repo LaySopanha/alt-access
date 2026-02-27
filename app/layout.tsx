@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
 import { LanguageProvider } from "@/hooks/use-language"
+import { LanguageBodyClass } from "@/components/language-body-class"
 import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
@@ -34,9 +35,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <LanguageBodyClass>{children}</LanguageBodyClass>
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>
   )
 }
+

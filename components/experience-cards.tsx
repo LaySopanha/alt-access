@@ -21,7 +21,7 @@ export function ExperienceCards() {
       overlay: (
         <div className="absolute inset-0 bg-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
           <span className="font-mono text-xl tracking-widest uppercase animate-pulse border-2 border-white px-6 py-2 text-white">
-            Audio Only
+            {t.experienceCards.audioOnly}
           </span>
         </div>
       )
@@ -70,14 +70,13 @@ export function ExperienceCards() {
       <div className="pt-24 pb-16 px-8 md:px-24">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
           <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6 block">
-            The Practice
+            {t.experienceCards.label}
           </span>
           <h2 className="text-5xl md:text-7xl font-bold text-black mb-6 tracking-tight">
-            Feel how the visually impaired experience the web
+            {t.experienceCards.title}
           </h2>
           <p className="text-xl font-medium max-w-2xl leading-relaxed text-stone-600">
-            Theory teaches you "what". Experience teaches you "why".
-            Step into the user's perspective to test your assumptions.
+            {t.experienceCards.description}
           </p>
         </div>
       </div>
@@ -130,7 +129,7 @@ export function ExperienceCards() {
                   </p>
 
                   <div className="flex items-center gap-3 font-mono text-sm uppercase tracking-widest font-bold group-hover:text-wong-vermilion transition-colors">
-                    <span>Enter Simulation</span>
+                    <span>{t.experienceCards.enterSimulation}</span>
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 </div>

@@ -5,50 +5,24 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight, BarChart3, PieChart, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useLanguage } from "@/hooks/use-language"
 
-const slides = [
-    {
-        id: "purpose",
-        title: "The Purpose",
-        desc: "Why we needed to ask.",
-        src: "/images/survey/survey-purpose.png",
-        icon: Users
-    },
-    {
-        id: "status",
-        title: "Who Responded?",
-        desc: "92% Undergraduate Students.",
-        src: "/images/survey/survey-status.png",
-        icon: Users
-    },
-    {
-        id: "major",
-        title: "The Field",
-        desc: "Future CS & IT Professionals.",
-        src: "/images/survey/survey-major.png",
-        icon: PieChart
-    },
-    {
-        id: "exposure",
-        title: "The Reality",
-        desc: "69% Have Zero Training.",
-        src: "/images/survey/survey-results.png",
-        icon: BarChart3
-    },
-    {
-        id: "questions",
-        title: "The Methodology",
-        desc: "Targeted Discovery.",
-        src: "/images/survey/survey-questions.png",
-        icon: Users
-    }
+const slideImages = [
+    "/images/survey/survey-purpose.png",
+    "/images/survey/survey-status.png",
+    "/images/survey/survey-major.png",
+    "/images/survey/survey-results.png",
+    "/images/survey/survey-questions.png",
 ]
+
+const slideIcons = [Users, Users, PieChart, BarChart3, Users]
 
 export function SurveyCarousel() {
     const [current, setCurrent] = useState(0)
+    const { t } = useLanguage()
 
-    const next = () => setCurrent((prev) => (prev + 1) % slides.length)
-    const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
+    const next = () => setCurrent((prev) => (prev + 1) % t.survey.slides.length)
+    const prev = () => setCurrent((prev) => (prev - 1 + t.survey.slides.length) % t.survey.slides.length)
 
     return (
         <div className="w-full max-w-6xl mx-auto bg-white border border-stone-200 p-6 md:p-10 relative">
@@ -56,8 +30,8 @@ export function SurveyCarousel() {
             {/* Header */}
             <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-stone-200 pb-5">
                 <div>
-                    <h2 className="text-3xl md:text-4xl font-bold mb-1">The Reality Check</h2>
-                    <p className="font-mono text-sm text-stone-500">Survey Data: 120+ IT Students</p>
+                    <h2 className="text-3xl md:text-4xl font-bold mb-1">{t.survey.title}</h2>
+                    <p className="font-mono text-sm text-stone-500">{t.survey.subtitle}</p>
                 </div>
                 <div className="flex gap-2">
                     <Button onClick={prev} variant="outline" size="icon" className="border border-stone-300 rounded-none hover:bg-stone-100">
@@ -76,19 +50,19 @@ export function SurveyCarousel() {
                 <div className="md:col-span-4 space-y-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-stone-900 text-white font-mono text-xs uppercase tracking-widest">
                         {(() => {
-                            const Icon = slides[current].icon;
+                            const Icon = slideIcons[current];
                             return <Icon className="w-3.5 h-3.5" />
                         })()}
-                        Step {current + 1} / {slides.length}
+                        {t.survey.step} {current + 1} / {t.survey.slides.length}
                     </div>
 
-                    <h3 className="text-2xl font-bold leading-tight">{slides[current].title}</h3>
-                    <p className="text-lg text-stone-500">{slides[current].desc}</p>
+                    <h3 className="text-2xl font-bold leading-tight">{t.survey.slides[current].title}</h3>
+                    <p className="text-lg text-stone-500">{t.survey.slides[current].desc}</p>
 
                     <div className="flex flex-col gap-1 mt-6">
-                        {slides.map((s, idx) => (
+                        {t.survey.slides.map((s: { title: string; desc: string }, idx: number) => (
                             <button
-                                key={s.id}
+                                key={idx}
                                 onClick={() => setCurrent(idx)}
                                 className={cn(
                                     "text-left px-3 py-2 text-sm font-medium transition-all border-l-2",
@@ -107,14 +81,14 @@ export function SurveyCarousel() {
                 <div className="md:col-span-8 bg-stone-50 p-3 border border-stone-200 overflow-hidden relative group">
                     <div className="relative aspect-video w-full">
                         <Image
-                            src={slides[current].src}
-                            alt={slides[current].title}
+                            src={slideImages[current]}
+                            alt={t.survey.slides[current].title}
                             fill
                             className="object-contain"
                         />
                     </div>
                     <p className="absolute bottom-2 right-2 text-xs font-mono text-stone-400 bg-white px-2 py-1 border border-stone-100">
-                        Source: Alt Access Survey 2025
+                        {t.survey.source}
                     </p>
                 </div>
 

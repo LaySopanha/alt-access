@@ -1,7 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { useLanguage } from "@/hooks/use-language"
 import {
   ArrowRight,
   Eye,
@@ -20,12 +23,6 @@ import {
   MousePointerClick,
   Sparkles,
 } from "lucide-react"
-
-export const metadata = {
-  title: "Simulations | AltAccess",
-  description:
-    "Experience the web through different perspectives. Interactive simulations for Low Vision, Color Blindness, and Total Blindness.",
-}
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -176,6 +173,7 @@ const steps = [
     description:
       "Pick from three disability categories — each designed around real barriers people face on the web every day.",
     icon: MousePointerClick,
+    image: "/images/resource/one-hand-using-phone-picture.png",
   },
   {
     step: "02",
@@ -183,6 +181,7 @@ const steps = [
     description:
       "Complete interactive missions under simulated conditions. Feel the frustration when interfaces fail to be accessible.",
     icon: Zap,
+    image: "/images/resource/two-hand-using-phone-picture.png",
   },
   {
     step: "03",
@@ -190,6 +189,7 @@ const steps = [
     description:
       "Discover the WCAG guidelines and design patterns that eliminate these barriers — and see the fix in action.",
     icon: BookOpen,
+    image: "/images/resource/coding-WACG-code-picture.png",
   },
 ]
 
@@ -198,10 +198,11 @@ const steps = [
 /* ------------------------------------------------------------------ */
 
 export default function ExperienceOverviewPage() {
+  const { t } = useLanguage()
   return (
     <>
       <Navbar showLogo />
-      <main className="bg-[#FDFCF8] min-h-screen pt-14 flex flex-col font-sans">
+      <main className="bg-[#FDFCF8] min-h-screen pt-14 flex flex-col font-sans overflow-x-hidden">
 
         {/* ========================================================= */}
         {/*  HERO                                                      */}
@@ -221,29 +222,37 @@ export default function ExperienceOverviewPage() {
             </svg>
           </div>
 
+          {/* Decorative SVG illustration */}
+          <div className="absolute top-1/2 -right-[1%] -translate-y-1/2 w-[50%] h-[90%] opacity-[0.9] pointer-events-none hidden lg:block">
+            <Image
+              src="/images/resource/what-is-accessability-picture.png"
+              alt=""
+              fill
+              className="object-contain object-right"
+            />
+          </div>
+
           <div className="max-w-5xl relative z-10">
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#E69F00] mb-6 block">
-              Interactive Experiences
+              {t.experiencePage.heroLabel}
             </span>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.9] mb-8">
-              Step Into
+              {t.experiencePage.heroTitle1}
               <br />
-              Their Shoes.
+              {t.experiencePage.heroTitle2}
             </h1>
 
             <p className="text-lg md:text-xl text-stone-400 leading-relaxed max-w-2xl mb-12">
-              To build accessible technology, you first need to understand the
-              barriers. Our interactive simulations let you experience the web
-              through the lens of users with different visual abilities.
+              {t.experiencePage.heroDescription}
             </p>
 
             {/* stat pills */}
             <div className="flex flex-wrap gap-4">
               {[
-                { label: "3 Simulations", icon: Sparkles },
-                { label: "6 Missions", icon: Zap },
-                { label: "Real‑World Barriers", icon: Globe },
+                { label: t.experiencePage.simulations, icon: Sparkles },
+                { label: t.experiencePage.missions, icon: Zap },
+                { label: t.experiencePage.realWorldBarriers, icon: Globe },
               ].map((pill) => (
                 <div
                   key={pill.label}
@@ -267,12 +276,12 @@ export default function ExperienceOverviewPage() {
             {/* section header */}
             <div className="mb-16 md:mb-20">
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-stone-400 mb-4 block">
-                The Simulations
+                {t.experiencePage.sectionLabel}
               </span>
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black leading-tight">
-                Three perspectives.
+                {t.experiencePage.sectionTitle1}
                 <br />
-                <span className="text-stone-400">One mission: empathy.</span>
+                <span className="text-stone-400">{t.experiencePage.sectionTitle2}</span>
               </h2>
             </div>
 
@@ -358,7 +367,7 @@ export default function ExperienceOverviewPage() {
                           href={`/experience/${sim.slug}`}
                           className="inline-flex items-center justify-between w-full bg-black text-white px-8 py-5 font-bold uppercase tracking-widest text-sm hover:bg-stone-800 transition-colors"
                         >
-                          <span>Start Simulation</span>
+                          <span>{t.experiencePage.startSimulation}</span>
                           <ArrowRight className="w-5 h-5" />
                         </Link>
                       </div>
@@ -402,7 +411,7 @@ export default function ExperienceOverviewPage() {
                       {/* insight */}
                       <div className="p-8 md:p-10 bg-stone-50">
                         <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3 block">
-                          Key Insight
+                          {t.experiencePage.keyInsight}
                         </span>
                         <p className="text-stone-700 leading-relaxed mb-4 font-medium">
                           {sim.insight}
@@ -432,36 +441,46 @@ export default function ExperienceOverviewPage() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 md:mb-20 text-center">
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-stone-400 mb-4 block">
-                The Process
+                {t.experiencePage.howItWorksLabel}
               </span>
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-black leading-tight">
-                How It Works
+                {t.experiencePage.howItWorksTitle}
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {steps.map((s, i) => {
                 const StepIcon = s.icon
                 return (
-                  <div key={s.step} className="relative text-center group">
-                    {/* connector line (desktop) */}
-                    {i < steps.length - 1 && (
-                      <div className="hidden md:block absolute top-12 left-[60%] w-[calc(100%-20%)] h-px bg-stone-200" />
-                    )}
-
-                    <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-stone-900 text-white mb-8 mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <StepIcon className="w-10 h-10" />
-                      <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#E69F00] text-black font-mono text-xs font-bold flex items-center justify-center">
-                        {s.step}
-                      </span>
+                  <div key={s.step} className="relative group bg-white border border-stone-200 overflow-hidden hover:border-stone-300 transition-colors">
+                    {/* Image Header */}
+                    <div className="relative aspect-[4/3] bg-stone-100 overflow-hidden">
+                      <Image
+                        src={s.image}
+                        alt={s.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      {/* overlay step number */}
+                      <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest">
+                        STEP {s.step}
+                      </div>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-4 tracking-tight">
-                      {s.title}
-                    </h3>
-                    <p className="text-stone-500 leading-relaxed max-w-sm mx-auto">
-                      {s.description}
-                    </p>
+                    {/* Content */}
+                    <div className="p-8">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 rounded-full bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-900 group-hover:bg-stone-900 group-hover:text-[#E69F00] transition-colors">
+                          <StepIcon className="w-5 h-5" />
+                        </div>
+                        <h3 className="text-xl md:text-2xl font-bold tracking-tight">
+                          {s.title}
+                        </h3>
+                      </div>
+                      <p className="text-stone-500 leading-relaxed md:text-lg">
+                        {s.description}
+                      </p>
+                    </div>
                   </div>
                 )
               })}
@@ -474,28 +493,35 @@ export default function ExperienceOverviewPage() {
         {/* ========================================================= */}
         <section className="px-8 md:px-24 pb-24 md:pb-32">
           <div className="max-w-7xl mx-auto">
-            <div className="relative bg-black text-white p-12 md:p-20 overflow-hidden">
-              {/* decorative circles */}
-              <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full border border-white/[0.06]" />
-              <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full border border-white/[0.04]" />
+            <div className="relative bg-black text-white p-12 md:p-20 overflow-hidden group">
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/images/resource/two-hand-using-phone-picture2.png"
+                  alt="Accessible tech usage CTA"
+                  fill
+                  className="object-cover opacity-[0.35] mix-blend-screen group-hover:scale-105 group-hover:opacity-[0.45] transition-all duration-[2000ms]"
+                />
+                {/* overlay gradient to ensure text readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+              </div>
 
-              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                <div>
-                  <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                    Ready to begin?
+              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 h-full">
+                <div className="flex-1 max-w-2xl">
+                  <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+                    {t.experiencePage.ctaTitle}
                   </h2>
-                  <p className="text-stone-400 text-lg max-w-lg leading-relaxed">
-                    Start with any simulation. Each takes only a few minutes but
-                    will permanently change how you think about web design.
+                  <p className="text-stone-300 text-lg md:text-xl leading-relaxed">
+                    {t.experiencePage.ctaDesc}
                   </p>
                 </div>
 
                 <Link
                   href="/experience/total-blindness"
-                  className="inline-flex items-center gap-3 bg-[#E69F00] text-black px-10 py-5 font-bold uppercase tracking-widest text-sm hover:bg-[#d49200] transition-colors whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-3 bg-[#E69F00] text-black px-10 py-5 font-bold uppercase tracking-widest text-sm hover:bg-[#d49200] transition-colors whitespace-nowrap shrink-0 group/btn"
                 >
-                  <span>Start First Simulation</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <span>{t.experiencePage.ctaButton}</span>
+                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>

@@ -1,42 +1,16 @@
 "use client"
 
-import { Check, Info, AlertTriangle, Maximize2, Type, MousePointer2 } from "lucide-react"
+import { Check, AlertTriangle, Maximize2, Type, MousePointer2 } from "lucide-react"
+import { useLanguage } from "@/hooks/use-language"
 
 export function WcagSection() {
-    const essentials = [
-        {
-            title: "Responsive",
-            desc: "Website must work on all devices (Mobile, Tablet, Desktop).",
-            icon: Maximize2
-        },
-        {
-            title: "Keyboard Only",
-            desc: "All interactive elements must be accessible without a mouse.",
-            icon: MousePointer2
-        },
-        {
-            title: "Text Alternatives",
-            desc: "Images must have alt text. Videos must have captions.",
-            icon: Type
-        },
-        {
-            title: "Contrast",
-            desc: "Text must have sufficient color contrast against backgrounds.",
-            icon: AlertTriangle
-        }
-    ]
+    const { t } = useLanguage()
 
-    const wcagList = [
-        { code: "1.1.1", label: "Text Alternatives for non-text content" },
-        { code: "1.4.3", label: "Sufficient Contrast (AA Level)" },
-        { code: "1.4.1", label: "Don't rely on Color alone" },
-        { code: "1.4.4", label: "Resize text up to 200%" },
-        { code: "1.4.10", label: "Reflow without horizontal scroll" },
-        { code: "2.1.1", label: "Full Keyboard Accessibility" },
-        { code: "2.4.7", label: "Visible Focus Indicators" },
-        { code: "1.3.1", label: "Clear Page Structure (Headings)" },
-        { code: "4.1.2", label: "Screen Reader Compatibility" },
-        { code: "2.3.1", label: "No Flashing Content" }
+    const essentials = [
+        { icon: Maximize2, ...t.wcag.essentials[0] },
+        { icon: MousePointer2, ...t.wcag.essentials[1] },
+        { icon: Type, ...t.wcag.essentials[2] },
+        { icon: AlertTriangle, ...t.wcag.essentials[3] },
     ]
 
     return (
@@ -45,13 +19,11 @@ export function WcagSection() {
             {/* Chapter Header */}
             <div className="px-8 md:px-24 mb-16">
                 <div className="max-w-7xl mx-auto border-b-2 border-stone-200 pb-10">
-                    <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Chapter 04</span>
+                    <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">{t.wcag.chapterLabel}</span>
                     <h2 className="text-5xl md:text-7xl font-bold text-black leading-[0.9] tracking-tight uppercase mb-6">
-                        The<br />Standard
+                        {t.wcag.title1}<br />{t.wcag.title2}
                     </h2>
-                    <p className="text-xl md:text-2xl max-w-3xl leading-relaxed text-stone-600">
-                        WCAG compliance ensures that users can <span className="bg-stone-900 text-white px-1">perceive, navigate, & understand</span> content without relying on sight.
-                    </p>
+                    <p className="text-xl md:text-2xl max-w-3xl leading-relaxed text-stone-600" dangerouslySetInnerHTML={{ __html: t.wcag.subtitle }} />
                 </div>
             </div>
 
@@ -63,7 +35,7 @@ export function WcagSection() {
                         <div className="sticky top-32">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="h-0.5 w-10 bg-wong-blue"></div>
-                                <span className="font-mono text-xs uppercase tracking-widest text-stone-500">WCAG 2.1 Checklist</span>
+                                <span className="font-mono text-xs uppercase tracking-widest text-stone-500">{t.wcag.checklistLabel}</span>
                             </div>
 
                             <div className="bg-[#FFFFF0] p-6 md:p-8 border border-stone-200 relative overflow-hidden">
@@ -75,10 +47,10 @@ export function WcagSection() {
                                 </div>
 
                                 <div className="pl-5">
-                                    <h3 className="text-lg font-bold mb-6">Visual Requirements (AA)</h3>
+                                    <h3 className="text-lg font-bold mb-6">{t.wcag.visualReqs}</h3>
 
                                     <div className="space-y-3">
-                                        {wcagList.map((rule, i) => (
+                                        {t.wcag.wcagList.map((rule: { code: string; label: string }, i: number) => (
                                             <div key={i} className="flex items-center justify-between border-b border-stone-100 pb-2 group">
                                                 <span className="font-mono text-xs text-wong-blue mr-3">{rule.code}</span>
                                                 <span className="text-sm flex-1 text-stone-700 group-hover:text-wong-vermilion transition-colors">{rule.label}</span>
@@ -89,7 +61,7 @@ export function WcagSection() {
 
                                     <div className="mt-6 pt-4 border-t border-stone-200">
                                         <p className="font-mono text-xs text-stone-400 uppercase tracking-widest">
-                                            Accessibility is a core requirement, not a feature.
+                                            {t.wcag.checklistFooter}
                                         </p>
                                     </div>
                                 </div>
@@ -102,7 +74,7 @@ export function WcagSection() {
                     <div className="lg:col-span-7">
                         <div className="flex items-center gap-3 mb-10">
                             <div className="h-0.5 w-10 bg-wong-vermilion"></div>
-                            <span className="font-mono text-xs uppercase tracking-widest text-stone-500">Core Principles</span>
+                            <span className="font-mono text-xs uppercase tracking-widest text-stone-500">{t.wcag.corePrinciples}</span>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,10 +93,8 @@ export function WcagSection() {
                             <div className="flex items-start gap-5">
                                 <AlertTriangle className="w-8 h-8 text-wong-yellow shrink-0" />
                                 <div>
-                                    <h3 className="text-lg font-bold mb-2 uppercase">The Cost of Retrofitting</h3>
-                                    <p className="text-sm text-stone-300 leading-relaxed">
-                                        Fixing accessibility issues after a product is built costs up to <strong className="text-wong-vermilion">100x more</strong> than designing them correctly from the beginning. Learn the standards before you write code.
-                                    </p>
+                                    <h3 className="text-lg font-bold mb-2 uppercase">{t.wcag.retrofitTitle}</h3>
+                                    <p className="text-sm text-stone-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: t.wcag.retrofitDesc }} />
                                 </div>
                             </div>
                         </div>

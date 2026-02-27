@@ -1,3 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* Helvetica Now Display — Local Font Faces */
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplay.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayIt.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayMedium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayBold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayBdIt.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayBlack.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Now";
+  src: url("/fonts/helvetica-now/HelveticaNowDisplayLight.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -142,9 +201,10 @@
 }
 
 @theme inline {
-  --font-sans: "Helvetica World", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-serif: "Helvetica World", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-khmer: "Kantumruy Pro", "Helvetica Now", "Helvetica Neue", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -203,10 +263,29 @@
 
   html {
     font-size: 80%;
+    overflow-x: hidden;
+    font-family: "Helvetica Now", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  *,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
   }
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .lang-km,
+  .lang-km * {
+    font-family: var(--font-khmer) !important;
+  }
+
+  .lang-km .font-mono {
+    font-family: var(--font-mono) !important;
   }
 
   /* Added continuous scroll animation */
