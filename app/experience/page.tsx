@@ -223,11 +223,13 @@ export default function ExperienceOverviewPage() {
           </div>
 
           {/* Decorative SVG illustration */}
-          <div className="absolute top-1/2 -right-[1%] -translate-y-1/2 w-[50%] h-[90%] opacity-[0.9] pointer-events-none hidden lg:block">
+          <div className="absolute top-1/2 -right-[-3%] -translate-y-1/2 w-[50%] h-[90%] opacity-[0.9] pointer-events-none hidden lg:block">
             <Image
               src="/images/resource/what-is-accessability-picture.png"
               alt=""
               fill
+              priority
+              sizes="50vw"
               className="object-contain object-right"
             />
           </div>
@@ -302,6 +304,7 @@ export default function ExperienceOverviewPage() {
                           src={sim.image}
                           alt={sim.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                         {/* number overlay */}
@@ -459,6 +462,7 @@ export default function ExperienceOverviewPage() {
                         src={s.image}
                         alt={s.title}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       {/* overlay step number */}
@@ -500,6 +504,7 @@ export default function ExperienceOverviewPage() {
                   src="/images/resource/two-hand-using-phone-picture2.png"
                   alt="Accessible tech usage CTA"
                   fill
+                  sizes="100vw"
                   className="object-cover opacity-[0.35] mix-blend-screen group-hover:scale-105 group-hover:opacity-[0.45] transition-all duration-[2000ms]"
                 />
                 {/* overlay gradient to ensure text readability */}

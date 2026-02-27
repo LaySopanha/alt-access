@@ -54,6 +54,7 @@ export function InclusiveDesignSection() {
                                     src="/images/curb-cut.png"
                                     alt=""
                                     fill
+                                    sizes="192px"
                                     className="object-cover"
                                 />
                             </div>

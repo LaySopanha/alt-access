@@ -153,6 +153,7 @@ export default async function VideoDetailPage({ params }: Props) {
                           src={v.thumbnail}
                           alt={v.title}
                           fill
+                          sizes="160px"
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">

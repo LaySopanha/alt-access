@@ -18,33 +18,52 @@ export default function VideoGalleryPage() {
       <main className="bg-[#FDFCF8] min-h-screen pt-20">
 
         {/* Header + Stats */}
-        <div className="px-8 md:px-24 py-16 border-b border-stone-200">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-            <div>
+        <div className="px-8 md:px-24 py-16 lg:py-24 border-b border-stone-200">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+
+            {/* Left: Text & Stats */}
+            <div className="flex flex-col justify-center">
               <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Video Library</span>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-                Learn Through Video
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[0.9]">
+                Learn Through <br className="hidden md:block" />Video.
               </h1>
-              <p className="text-lg text-stone-500 max-w-lg">
+              <p className="text-xl text-stone-500 mb-12 leading-relaxed">
                 Our video series covers the fundamentals of web accessibility — from understanding visual impairments to mastering WCAG guidelines.
               </p>
+
+              {/* Stats Block */}
+              <div className="flex flex-wrap gap-8 md:gap-12 items-center">
+                <div className="text-left">
+                  <div className="text-3xl md:text-4xl font-bold text-wong-vermilion">{videos.length}</div>
+                  <div className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-stone-400 mt-2">Videos</div>
+                </div>
+                <div className="w-px h-10 bg-stone-300" />
+                <div className="text-left">
+                  <div className="text-3xl md:text-4xl font-bold text-wong-vermilion">5</div>
+                  <div className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-stone-400 mt-2">Topics</div>
+                </div>
+                <div className="w-px h-10 bg-stone-300" />
+                <div className="text-left">
+                  <div className="text-3xl md:text-4xl font-bold text-wong-vermilion">EN/KH</div>
+                  <div className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-stone-400 mt-2">Languages</div>
+                </div>
+              </div>
             </div>
-            <div className="flex gap-8 lg:justify-end">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-wong-vermilion">{videos.length}</div>
-                <div className="text-xs font-mono uppercase tracking-widest text-stone-400 mt-1">Videos</div>
-              </div>
-              <div className="w-px bg-stone-200" />
-              <div className="text-center">
-                <div className="text-3xl font-bold text-wong-vermilion">5</div>
-                <div className="text-xs font-mono uppercase tracking-widest text-stone-400 mt-1">Topics</div>
-              </div>
-              <div className="w-px bg-stone-200" />
-              <div className="text-center">
-                <div className="text-3xl font-bold text-wong-vermilion">EN/KH</div>
-                <div className="text-xs font-mono uppercase tracking-widest text-stone-400 mt-1">Languages</div>
+
+            {/* Right: Camera Graphic */}
+            <div className="hidden lg:flex justify-end relative h-full min-h-[350px] items-center">
+              <div className="relative w-full max-w-[450px] aspect-[4/3]">
+                <Image
+                  src="/images/resource/camara.png"
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-contain object-right mix-blend-multiply opacity-90 drop-shadow-xl"
+                  priority
+                />
               </div>
             </div>
+
           </div>
         </div>
 
@@ -65,6 +84,8 @@ export default function VideoGalleryPage() {
                     src={videos[0].thumbnail}
                     alt={videos[0].title}
                     fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -112,6 +133,7 @@ export default function VideoGalleryPage() {
                         src={video.thumbnail}
                         alt={video.title}
                         fill
+                        sizes="(max-width: 640px) 100vw, 40vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors flex items-center justify-center">

@@ -275,8 +275,12 @@
     font-family: inherit;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-wong-yellow selection:text-black;
   }
 
   .lang-km,

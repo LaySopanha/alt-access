@@ -131,6 +131,7 @@ export default function AboutPage() {
                   src="/images/team/media-hackathon-group-photo.JPG"
                   alt="Media Hackathon Participants"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
@@ -142,6 +143,7 @@ export default function AboutPage() {
                   src="/images/team/presenting-for-HE-Chea-Vandeth-DGF.JPG"
                   alt="Presenting to H.E. Mr. VANDETH CHEA, the Minister of Ministry of Post and Telecommunications"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">

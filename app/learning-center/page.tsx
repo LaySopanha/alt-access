@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import {
     ArrowRight,
@@ -247,10 +248,12 @@ const curriculum: Lesson[] = [
                     <>
                         <div className="border border-stone-200 overflow-hidden my-2">
                             <div className="aspect-[16/6] relative">
-                                <img
+                                <Image
                                     src="/images/alt_text_example_puppy_1771853299653.png"
                                     alt="Golden retriever puppy sleeping on a blue rug"
-                                    className="object-cover w-full h-full"
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 800px"
+                                    className="object-cover"
                                 />
                             </div>
                         </div>
@@ -304,11 +307,15 @@ const curriculum: Lesson[] = [
                             for people in bright sunlight.
                         </p>
                         <div className="border border-stone-200 overflow-hidden my-2">
-                            <img
-                                src="/images/color_contrast_ui_example_retry_1771853493581.png"
-                                alt="UI comparison of high versus low contrast"
-                                className="object-cover w-full h-full"
-                            />
+                            <div className="relative aspect-[3/2] w-full">
+                                <Image
+                                    src="/images/color_contrast_ui_example_retry_1771853493581.png"
+                                    alt="UI comparison of high versus low contrast"
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 800px"
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </>
                 ),
@@ -399,12 +406,16 @@ const curriculum: Lesson[] = [
                             the <kbd className="bg-stone-100 border border-stone-300 text-stone-700 px-2 py-0.5 text-sm font-mono">Tab</kbd> key
                             to jump between interactive elements on a page.
                         </p>
-                        <div className="border border-stone-200 overflow-hidden bg-stone-50 flex items-center justify-center my-2">
-                            <img
-                                src="/images/keyboard_tab_key_focus_retry_1771853398093.png"
-                                alt="Keyboard tab key focus illustration"
-                                className="object-contain w-3/4 h-auto py-8"
-                            />
+                        <div className="border border-stone-200 overflow-hidden bg-stone-50 flex items-center justify-center my-2 py-8 px-4">
+                            <div className="relative aspect-[16/9] w-3/4 max-w-lg">
+                                <Image
+                                    src="/images/keyboard_tab_key_focus_retry_1771853398093.png"
+                                    alt="Keyboard tab key focus illustration"
+                                    fill
+                                    sizes="(max-width: 1024px) 75vw, 600px"
+                                    className="object-contain"
+                                />
+                            </div>
                         </div>
                     </>
                 ),
