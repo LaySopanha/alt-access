@@ -56,6 +56,7 @@ export function HeroSection() {
               alt="Alt Access"
               width={600}
               height={150}
+              quality={85}
               className="h-48 md:h-72 w-auto object-contain mb-6"
               priority
             />

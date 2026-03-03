@@ -101,6 +101,7 @@ export function ExperienceCards() {
                     src={exp.image}
                     alt={content.title}
                     fill
+                    quality={75}
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className={cn(
                       "object-cover transition-all duration-700 group-hover:scale-105",

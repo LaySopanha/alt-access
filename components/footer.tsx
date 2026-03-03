@@ -21,6 +21,7 @@ export function Footer() {
               alt="Alt Access Logo"
               width={160}
               height={50}
+              quality={85}
               className="h-12 w-auto object-contain object-left mb-6"
             />
             <p className="font-sans text-base font-medium leading-relaxed max-w-xs text-stone-600">
@@ -72,6 +73,7 @@ export function Footer() {
               alt="European Union"
               width={100}
               height={50}
+              quality={85}
               className="h-12 w-auto object-contain"
             />
 
@@ -81,6 +83,7 @@ export function Footer() {
               alt="IMS"
               width={140}
               height={70}
+              quality={85}
               className="h-14 w-auto object-contain"
             />
 
@@ -91,6 +94,7 @@ export function Footer() {
                 alt="Prosob"
                 width={90}
                 height={45}
+                quality={85}
                 className="h-10 w-auto object-contain mix-blend-multiply"
               />
 
@@ -100,6 +104,7 @@ export function Footer() {
                 alt="Impact Hub"
                 width={120}
                 height={60}
+                quality={85}
                 className="h-10 w-auto object-contain"
               />
             </div>

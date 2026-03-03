@@ -24,6 +24,7 @@ export default function AboutPage() {
               src="/images/team/alt-access-team-donating-to-civilians-during-conflict.PNG"
               alt="Alt Access Team Donating"
               fill
+              quality={60}
               className="object-cover" style={{ objectPosition: 'center 25%' }}
               priority
             />
@@ -68,50 +69,101 @@ export default function AboutPage() {
               <h2 id="what-we-do-title" className="font-mono text-xs uppercase tracking-widest text-stone-500">What We Do</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-stone-200">
-              {/* Card 1 */}
-              <Link href="/experience" className="group p-8 md:p-10 border-b md:border-b-0 md:border-r border-stone-200 hover:bg-stone-50 transition-colors">
-                <div className="w-10 h-10 bg-wong-vermilion/10 flex items-center justify-center mb-6">
-                  <Eye className="w-5 h-5 text-wong-vermilion" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Card 1 - Interactive Simulations */}
+              <Link href="/experience" className="group relative flex flex-col overflow-hidden border-2 border-stone-300 bg-white hover:border-wong-vermilion transition-all duration-300 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wong-vermilion">
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    src="/images/resource/hand-typing-type-writter.png"
+                    alt="Hands typing on a typewriter, representing interactive simulation experience"
+                    fill
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
+                  <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                    <span className="text-4xl font-black text-white/90 leading-none">01</span>
+                    <div className="w-8 h-8 bg-wong-vermilion flex items-center justify-center">
+                      <Eye className="w-4 h-4 text-white" aria-hidden="true" />
+                    </div>
+                  </div>
                 </div>
-                <span className="text-6xl font-bold text-stone-100 block mb-4">01</span>
-                <h3 className="text-xl font-bold mb-3">Interactive Simulations</h3>
-                <p className="text-sm text-stone-500 leading-relaxed mb-6">
-                  Experience what it's like to browse the web with low vision, color blindness, or total blindness.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-vermilion group-hover:gap-2 transition-all" aria-label="Try Interactive Simulations">
-                  Try Now <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                </span>
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-6">
+                  <h3 className="text-xl font-bold text-stone-900 mb-2">Interactive Simulations</h3>
+                  <p className="text-sm text-stone-700 leading-relaxed mb-6 flex-1">
+                    Experience what it&apos;s like to browse the web with low vision, color blindness, or total blindness.
+                  </p>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-wong-vermilion group-hover:gap-3 transition-all" aria-label="Try Interactive Simulations">
+                    Try Now <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </span>
+                </div>
               </Link>
 
-              {/* Card 2 */}
-              <Link href="/videos" className="group p-8 md:p-10 border-b md:border-b-0 md:border-r border-stone-200 hover:bg-stone-50 transition-colors">
-                <div className="w-10 h-10 bg-wong-blue/10 flex items-center justify-center mb-6">
-                  <Film className="w-5 h-5 text-wong-blue" />
+              {/* Card 2 - Video Series */}
+              <Link href="/videos" className="group relative flex flex-col overflow-hidden border-2 border-stone-300 bg-white hover:border-wong-blue transition-all duration-300 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wong-blue">
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    src="/images/resource/microphone-pop-out-laptop.png"
+                    alt="Microphone popping out of a laptop, representing the video series content"
+                    fill
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
+                  <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                    <span className="text-4xl font-black text-white/90 leading-none">02</span>
+                    <div className="w-8 h-8 bg-wong-blue flex items-center justify-center">
+                      <Film className="w-4 h-4 text-white" aria-hidden="true" />
+                    </div>
+                  </div>
                 </div>
-                <span className="text-6xl font-bold text-stone-100 block mb-4">02</span>
-                <h3 className="text-xl font-bold mb-3">Video Series</h3>
-                <p className="text-sm text-stone-500 leading-relaxed mb-6">
-                  5 documentary-style episodes covering WCAG, the curb cut effect, and why accessible coding matters.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-blue group-hover:gap-2 transition-all" aria-label="Watch Video Series">
-                  Watch <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                </span>
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-6">
+                  <h3 className="text-xl font-bold text-stone-900 mb-2">Video Series</h3>
+                  <p className="text-sm text-stone-700 leading-relaxed mb-6 flex-1">
+                    5 documentary-style episodes covering WCAG, the curb cut effect, and why accessible coding matters.
+                  </p>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-wong-blue group-hover:gap-3 transition-all" aria-label="Watch Video Series">
+                    Watch <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </span>
+                </div>
               </Link>
 
-              {/* Card 3 */}
-              <Link href="/learning-center" className="group p-8 md:p-10 hover:bg-stone-50 transition-colors">
-                <div className="w-10 h-10 bg-wong-yellow/20 flex items-center justify-center mb-6">
-                  <BookOpen className="w-5 h-5 text-wong-yellow" />
+              {/* Card 3 - Learning Center */}
+              <Link href="/learning-center" className="group relative flex flex-col overflow-hidden border-2 border-stone-300 bg-white hover:border-wong-yellow transition-all duration-300 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wong-yellow">
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    src="/images/resource/book-flipping.png"
+                    alt="Pages of a book flipping open, representing the learning center resources"
+                    fill
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10" />
+                  <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                    <span className="text-4xl font-black text-white/90 leading-none">03</span>
+                    <div className="w-8 h-8 bg-wong-yellow flex items-center justify-center">
+                      <BookOpen className="w-4 h-4 text-white" aria-hidden="true" />
+                    </div>
+                  </div>
                 </div>
-                <span className="text-6xl font-bold text-stone-100 block mb-4">03</span>
-                <h3 className="text-xl font-bold mb-3">Learning Center</h3>
-                <p className="text-sm text-stone-500 leading-relaxed mb-6">
-                  WCAG resources, code examples, and practical guides for developers starting their accessibility journey.
-                </p>
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-wong-yellow group-hover:gap-2 transition-all" aria-label="Learn at Learning Center">
-                  Learn <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                </span>
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-6">
+                  <h3 className="text-xl font-bold text-stone-900 mb-2">Learning Center</h3>
+                  <p className="text-sm text-stone-700 leading-relaxed mb-6 flex-1">
+                    WCAG resources, code examples, and practical guides for developers starting their accessibility journey.
+                  </p>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-wong-yellow group-hover:gap-3 transition-all" aria-label="Learn at Learning Center">
+                    Learn <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </span>
+                </div>
               </Link>
             </div>
           </div>
@@ -131,6 +183,7 @@ export default function AboutPage() {
                   src="/images/team/media-hackathon-group-photo.JPG"
                   alt="Media Hackathon Participants"
                   fill
+                  quality={75}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -143,6 +196,7 @@ export default function AboutPage() {
                   src="/images/team/presenting-for-HE-Chea-Vandeth-DGF.JPG"
                   alt="Presenting to H.E. Mr. VANDETH CHEA, the Minister of Ministry of Post and Telecommunications"
                   fill
+                  quality={75}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />

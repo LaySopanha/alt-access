@@ -86,6 +86,7 @@ export default async function VideoDetailPage({ params }: Props) {
                     alt="AltAccess"
                     width={100}
                     height={30}
+                    quality={85}
                     className="h-5 w-auto"
                   />
                   <span className="text-xs text-stone-400 font-mono uppercase">Alt Access Campaign</span>
@@ -153,6 +154,7 @@ export default async function VideoDetailPage({ params }: Props) {
                           src={v.thumbnail}
                           alt={v.title}
                           fill
+                          quality={75}
                           sizes="160px"
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />

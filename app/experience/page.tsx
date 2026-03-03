@@ -229,6 +229,7 @@ export default function ExperienceOverviewPage() {
               alt=""
               fill
               priority
+              quality={75}
               sizes="50vw"
               className="object-contain object-right"
             />
@@ -304,6 +305,7 @@ export default function ExperienceOverviewPage() {
                           src={sim.image}
                           alt={sim.title}
                           fill
+                          quality={75}
                           sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
@@ -462,6 +464,7 @@ export default function ExperienceOverviewPage() {
                         src={s.image}
                         alt={s.title}
                         fill
+                        quality={75}
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
@@ -504,6 +507,7 @@ export default function ExperienceOverviewPage() {
                   src="/images/resource/two-hand-using-phone-picture2.png"
                   alt="Accessible tech usage CTA"
                   fill
+                  quality={60}
                   sizes="100vw"
                   className="object-cover opacity-[0.35] mix-blend-screen group-hover:scale-105 group-hover:opacity-[0.45] transition-all duration-[2000ms]"
                 />

@@ -252,6 +252,7 @@ const curriculum: Lesson[] = [
                                     src="/images/alt_text_example_puppy_1771853299653.png"
                                     alt="Golden retriever puppy sleeping on a blue rug"
                                     fill
+                                    quality={75}
                                     sizes="(max-width: 1024px) 100vw, 800px"
                                     className="object-cover"
                                 />
@@ -312,6 +313,7 @@ const curriculum: Lesson[] = [
                                     src="/images/color_contrast_ui_example_retry_1771853493581.png"
                                     alt="UI comparison of high versus low contrast"
                                     fill
+                                    quality={75}
                                     sizes="(max-width: 1024px) 100vw, 800px"
                                     className="object-cover"
                                 />
@@ -412,6 +414,7 @@ const curriculum: Lesson[] = [
                                     src="/images/keyboard_tab_key_focus_retry_1771853398093.png"
                                     alt="Keyboard tab key focus illustration"
                                     fill
+                                    quality={75}
                                     sizes="(max-width: 1024px) 75vw, 600px"
                                     className="object-contain"
                                 />

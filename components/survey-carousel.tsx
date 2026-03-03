@@ -84,6 +84,7 @@ export function SurveyCarousel() {
                             src={slideImages[current]}
                             alt={t.survey.slides[current].title}
                             fill
+                            quality={75}
                             sizes="(max-width: 768px) 100vw, 66vw"
                             className="object-contain"
                         />

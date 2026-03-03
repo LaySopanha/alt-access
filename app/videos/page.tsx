@@ -57,6 +57,7 @@ export default function VideoGalleryPage() {
                   src="/images/resource/camara.png"
                   alt=""
                   fill
+                  quality={75}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-contain object-right mix-blend-multiply opacity-90 drop-shadow-xl"
                   priority
@@ -85,6 +86,7 @@ export default function VideoGalleryPage() {
                     alt={videos[0].title}
                     fill
                     priority
+                    quality={75}
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                   />
@@ -133,6 +135,7 @@ export default function VideoGalleryPage() {
                         src={video.thumbnail}
                         alt={video.title}
                         fill
+                        quality={75}
                         sizes="(max-width: 640px) 100vw, 40vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />

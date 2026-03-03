@@ -33,6 +33,7 @@ export function PrefaceSection() {
                                     alt="European Union"
                                     width={160}
                                     height={60}
+                                    quality={85}
                                     className="h-14 w-auto object-contain"
                                 />
                                 <Image
@@ -40,6 +41,7 @@ export function PrefaceSection() {
                                     alt="Impact Hub Phnom Penh"
                                     width={160}
                                     height={60}
+                                    quality={85}
                                     className="h-14 w-auto object-contain"
                                 />
                                 <Image
@@ -47,6 +49,7 @@ export function PrefaceSection() {
                                     alt="Prosob"
                                     width={160}
                                     height={60}
+                                    quality={85}
                                     className="h-14 w-auto object-contain"
                                 />
                                 <Image
@@ -54,6 +57,7 @@ export function PrefaceSection() {
                                     alt="IMS"
                                     width={160}
                                     height={60}
+                                    quality={85}
                                     className="h-14 w-auto object-contain"
                                 />
                             </div>
