@@ -36,7 +36,7 @@ export function Footer() {
             <div>
               <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Read</span>
               <ul className="space-y-3 font-bold text-lg">
-                <li><Link href="#chapter-1" className="hover:text-wong-vermilion transition-colors">The Spectrum</Link></li>
+                <li><Link href="#chapter-1" className="hover:text-wong-vermilion transition-colors" aria-label="Jump to The Spectrum section">The Spectrum</Link></li>
                 <li><Link href="#chapter-2" className="hover:text-wong-vermilion transition-colors">Design</Link></li>
                 <li><Link href="#chapter-3" className="hover:text-wong-vermilion transition-colors">Motivation</Link></li>
               </ul>
