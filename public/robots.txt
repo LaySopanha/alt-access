@@ -1,0 +1,13 @@
+# https://altaccess.site robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /success
+
+# Allow all search engine image crawlers
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Sitemap location
+Sitemap: https://altaccess.site/sitemap.xml

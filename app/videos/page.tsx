@@ -7,8 +7,31 @@ import { Play, Clock, Film, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Video Hub | AltAccess",
-  description: "Watch our collection of accessibility education videos. Learn about visual impairments, WCAG guidelines, the curb cut effect, and why accessible coding matters.",
+  title: "Video Hub",
+  description:
+    "Watch our collection of accessibility education videos in English and Khmer. Learn about visual impairments, WCAG guidelines, the curb cut effect, and why accessible coding matters — for developers globally and in Cambodia.",
+  alternates: { canonical: "/videos" },
+  openGraph: {
+    title: "Video Hub | Alt Access",
+    description:
+      "Watch accessibility education videos in English & Khmer — visual impairments, WCAG guidelines, the curb cut effect, and inclusive coding for developers worldwide.",
+    url: "https://altaccess.site/videos",
+    images: [
+      {
+        url: "/images/resource/what-is-accessability-picture.png",
+        width: 1200,
+        height: 630,
+        alt: "Alt Access Video Hub",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Video Hub | Alt Access",
+    description:
+      "Watch accessibility education videos — visual impairments, WCAG guidelines, the curb cut effect, and inclusive coding.",
+    images: ["/images/resource/what-is-accessability-picture.png"],
+  },
 };
 
 export default function VideoGalleryPage() {

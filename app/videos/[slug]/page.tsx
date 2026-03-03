@@ -18,6 +18,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: video.seoTitle,
     description: video.seoDescription,
+    alternates: { canonical: `/videos/${slug}` },
+    openGraph: {
+      title: video.seoTitle,
+      description: video.seoDescription,
+      url: `https://altaccess.site/videos/${slug}`,
+      images: [{ url: video.thumbnail, width: 1280, height: 720, alt: video.seoTitle }],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: video.seoTitle,
+      description: video.seoDescription,
+      images: [video.thumbnail],
+    },
   };
 }
 

@@ -6,8 +6,31 @@ import { ArrowRight, Eye, Film, BookOpen } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "About | AltAccess",
-  description: "Alt Access is a media and learning campaign educating Cambodian tech students about digital accessibility, supported by Prosob and funded by the European Union.",
+  title: "About",
+  description:
+    "Alt Access is a global media and learning campaign with a focus on Cambodia, educating tech students about digital accessibility in English and Khmer. Supported by Prosob and funded by the European Union.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About | Alt Access",
+    description:
+      "A global media and learning campaign focused on Cambodia, educating the next generation of developers about digital accessibility — in English and Khmer.",
+    url: "https://altaccess.site/about",
+    images: [
+      {
+        url: "/images/team/alt-access-team-donating-to-civilians-during-conflict.PNG",
+        width: 1200,
+        height: 630,
+        alt: "Alt Access team",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About | Alt Access",
+    description:
+      "A global accessibility campaign focused on Cambodia, educating developers in English & Khmer. Supported by Prosob & the EU.",
+    images: ["/images/team/alt-access-team-donating-to-civilians-during-conflict.PNG"],
+  },
 }
 
 export default function AboutPage() {
