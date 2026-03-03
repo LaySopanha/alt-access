@@ -640,61 +640,102 @@ export default function LearningCenterPage() {
                         </aside>
 
                         {/* ============================================= */}
-                        {/*  MOBILE NAV BAR                                */}
+                        {/*  MOBILE NAV BAR (FLOATING ACTION SHEET)        */}
                         {/* ============================================= */}
-                        <div className="lg:hidden fixed top-14 left-0 right-0 z-30 bg-white border-b border-stone-200">
-                            <button
-                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                                className="w-full flex items-center justify-between px-6 py-3"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <span className="font-mono text-[10px] text-wong-vermilion font-bold">
-                                        {(activeLesson + 1).toString().padStart(2, "0")}
-                                    </span>
-                                    <span className="text-sm font-bold uppercase tracking-tight truncate">
-                                        {currentLesson.title}
-                                    </span>
-                                </div>
-                                {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                            </button>
-
-                            {/* Mobile dropdown */}
+                        <div className="lg:hidden fixed bottom-6 left-4 right-4 z-40 print:hidden">
+                            {/* Mobile dropdown (slides up from button) */}
                             {isSidebarOpen && (
-                                <div className="bg-white border-t border-stone-100 max-h-80 overflow-y-auto">
+                                <div className="absolute bottom-[calc(100%+12px)] left-0 right-0 bg-white border-2 border-black max-h-[60vh] overflow-y-auto flex flex-col animate-in slide-in-from-bottom-2 duration-200 shadow-[4px_4px_0_0_#000]">
+                                    <div className="sticky top-0 bg-stone-900 text-white px-6 py-4 border-b-2 border-black flex justify-between items-center z-10">
+                                        <span className="font-mono text-[10px] uppercase font-bold tracking-widest text-[#cccccc]">Curriculum</span>
+                                        <span className="font-mono text-[10px] font-bold text-wong-yellow">{Math.round(progress)}% Complete</span>
+                                    </div>
                                     {curriculum.map((item, i) => (
                                         <button
                                             key={item.id}
                                             onClick={() => goTo(i)}
                                             className={cn(
-                                                "w-full text-left px-6 py-3 flex items-center gap-3 border-l-4",
+                                                "w-full text-left px-6 py-4 flex items-center gap-4 border-b-2 border-stone-200 transition-colors last:border-b-0",
                                                 activeLesson === i
-                                                    ? "border-wong-vermilion bg-wong-vermilion/5 font-bold"
-                                                    : "border-transparent hover:bg-stone-50"
+                                                    ? "bg-stone-100 font-bold border-l-4 border-l-wong-vermilion"
+                                                    : "border-l-4 border-l-transparent hover:bg-stone-50"
                                             )}
                                         >
-                                            <span className={cn(
-                                                "font-mono text-xs",
-                                                activeLesson === i ? "text-wong-vermilion" : "text-stone-300"
+                                            <div className={cn(
+                                                "w-8 h-8 shrink-0 flex items-center justify-center border-2 border-black",
+                                                activeLesson === i
+                                                    ? "bg-wong-vermilion text-white"
+                                                    : "bg-white text-black"
                                             )}>
-                                                {(i + 1).toString().padStart(2, "0")}
-                                            </span>
-                                            <span className={cn(
-                                                "text-sm uppercase tracking-tight",
-                                                activeLesson === i ? "text-black" : "text-stone-500"
-                                            )}>
-                                                {item.title}
-                                            </span>
+                                                <item.icon className="w-5 h-5" />
+                                            </div>
+                                            <div className="flex-1 min-w-0 flex items-center gap-3">
+                                                <span className={cn(
+                                                    "font-mono text-[10px] font-bold",
+                                                    activeLesson === i ? "text-black" : "text-stone-400"
+                                                )}>
+                                                    {(i + 1).toString().padStart(2, "0")}
+                                                </span>
+                                                <span className={cn(
+                                                    "text-sm uppercase tracking-tight truncate",
+                                                    activeLesson === i ? "text-black" : "text-stone-600"
+                                                )}>
+                                                    {item.title}
+                                                </span>
+                                            </div>
+                                            {activeLesson === i && (
+                                                <CheckCircle2 className="w-5 h-5 text-wong-vermilion shrink-0" />
+                                            )}
                                         </button>
                                     ))}
                                 </div>
                             )}
+
+                            <button
+                                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                                className={cn(
+                                    "w-full flex items-center justify-between px-5 py-4 transition-all duration-200 border-2 border-black",
+                                    isSidebarOpen
+                                        ? "bg-stone-900 text-white translate-y-1 shadow-[0px_0px_0_0_#000]"
+                                        : "bg-wong-yellow text-black hover:bg-[#EACD00] shadow-[4px_4px_0_0_#000] active:translate-y-1 active:shadow-[0px_0px_0_0_#000]"
+                                )}
+                            >
+                                <div className="flex items-center gap-4 overflow-hidden">
+                                    <div className={cn(
+                                        "shrink-0 flex items-center justify-center w-8 h-8 border-2",
+                                        isSidebarOpen ? "bg-wong-vermilion border-white text-white" : "bg-black border-black text-white"
+                                    )}>
+                                        <BookOpen className="w-4 h-4" />
+                                    </div>
+                                    <div className="flex flex-col text-left">
+                                        <span className={cn(
+                                            "font-mono text-[9px] uppercase tracking-widest font-bold leading-none mb-1",
+                                            isSidebarOpen ? "text-[#cccccc]" : "text-stone-700"
+                                        )}>
+                                            Module {(activeLesson + 1).toString().padStart(2, "0")}
+                                        </span>
+                                        <span className="text-sm font-bold uppercase tracking-tight truncate leading-none">
+                                            {currentLesson.title}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 shrink-0 ml-4">
+                                    <span className="text-[10px] uppercase font-bold font-mono hidden sm:inline-block">Contents</span>
+                                    <div className={cn(
+                                        "w-8 h-8 border-2 flex flex-col items-center justify-center transition-colors px-1 py-1",
+                                        isSidebarOpen ? "border-white" : "border-black"
+                                    )}>
+                                        {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                                    </div>
+                                </div>
+                            </button>
                         </div>
 
                         {/* ============================================= */}
                         {/*  MAIN CONTENT                                  */}
                         {/* ============================================= */}
                         <div className="flex-1 min-w-0 lg:pl-0">
-                            <article className="max-w-4xl mx-auto px-4 md:px-12 py-10 lg:py-16 pt-24 lg:pt-16">
+                            <article className="max-w-4xl mx-auto px-4 md:px-12 py-10 lg:py-16 pt-24 lg:pt-16 pb-32 lg:pb-16">
 
                                 {/* Lesson Header */}
                                 <div className="mb-12 border-b-2 border-stone-200 pb-8">
