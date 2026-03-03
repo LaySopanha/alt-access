@@ -34,20 +34,22 @@ export function Footer() {
           {/* Navigation Links */}
           <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Read</span>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Explore</span>
               <ul className="space-y-3 font-bold text-lg">
-                <li><Link href="#chapter-1" className="hover:text-wong-vermilion transition-colors" aria-label="Jump to The Spectrum section">The Spectrum</Link></li>
-                <li><Link href="#chapter-2" className="hover:text-wong-vermilion transition-colors">Design</Link></li>
-                <li><Link href="#chapter-3" className="hover:text-wong-vermilion transition-colors">Motivation</Link></li>
+                <li><Link href="/" className="hover:text-wong-vermilion transition-colors">Home</Link></li>
+                <li><Link href="/about" className="hover:text-wong-vermilion transition-colors">About</Link></li>
+                <li><Link href="/videos" className="hover:text-wong-vermilion transition-colors">Videos</Link></li>
+                <li><Link href="/learning-center" className="hover:text-wong-vermilion transition-colors">Learning Center</Link></li>
               </ul>
             </div>
 
             <div>
-              <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Practice</span>
+              <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 block">Simulations</span>
               <ul className="space-y-3 font-bold text-lg">
-                <li><Link href="#chapter-4" className="hover:text-wong-vermilion transition-colors">The Standard</Link></li>
-                <li><Link href="#simulations" className="hover:text-wong-vermilion transition-colors">Simulations</Link></li>
-                <li><Link href="#chapter-6" className="hover:text-wong-vermilion transition-colors">Campaign</Link></li>
+                <li><Link href="/experience" className="hover:text-wong-vermilion transition-colors">All Simulations</Link></li>
+                <li><Link href="/experience/total-blindness" className="hover:text-wong-vermilion transition-colors">Total Blindness</Link></li>
+                <li><Link href="/experience/low-vision" className="hover:text-wong-vermilion transition-colors">Low Vision</Link></li>
+                <li><Link href="/experience/color-blindness" className="hover:text-wong-vermilion transition-colors">Color Blindness</Link></li>
               </ul>
             </div>
 
