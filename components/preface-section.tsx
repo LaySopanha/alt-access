@@ -5,6 +5,7 @@ import { ArrowDown } from "lucide-react"
 import { useLanguage } from "@/hooks/use-language"
 
 export function PrefaceSection() {
+    
     const { t } = useLanguage()
 
     return (
@@ -16,10 +17,12 @@ export function PrefaceSection() {
 
                     {/* Left: The Hook */}
                     <div>
+
                         <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6 block">{t.preface.label}</span>
                         <h2 className="text-4xl md:text-6xl font-bold leading-[0.95] tracking-tight mb-8">
                             {t.preface.title1}<br />{t.preface.title2}
                         </h2>
+
                         <p className="text-xl text-stone-500 leading-relaxed max-w-md mb-12">
                             {t.preface.description}
                         </p>

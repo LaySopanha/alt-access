@@ -84,7 +84,7 @@ export function Footer() {
               width={140}
               height={70}
               quality={85}
-              className="h-26 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
 
             <Image
