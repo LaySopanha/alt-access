@@ -27,39 +27,40 @@ export function PrefaceSection() {
                         {/* Partner Logos */}
                         <div className="border-t border-stone-200 pt-8">
                             <span className="font-mono text-xs uppercase tracking-widest text-stone-400 block mb-6">{t.preface.supportedBy}</span>
-                            <div className="flex items-center gap-10 flex-wrap">
+                            <div className="flex items-center gap-6 flex-nowrap">
                                 <Image
                                     src="/images/EU-logo.png"
                                     alt="European Union"
-                                    width={160}
-                                    height={60}
+                                    width={120}
+                                    height={45}
                                     quality={85}
-                                    className="h-14 w-auto object-contain"
-                                />
-                                <Image
-                                    src="/images/impacthub-pp-logo.png"
-                                    alt="Impact Hub Phnom Penh"
-                                    width={160}
-                                    height={60}
-                                    quality={85}
-                                    className="h-14 w-auto object-contain"
-                                />
-                                <Image
-                                    src="/images/prosob.jpg"
-                                    alt="Prosob"
-                                    width={160}
-                                    height={60}
-                                    quality={85}
-                                    className="h-14 w-auto object-contain"
+                                    className="h-10 w-auto object-contain"
                                 />
                                 <Image
                                     src="/images/IMS-logo.png"
                                     alt="IMS"
-                                    width={160}
-                                    height={60}
+                                    width={120}
+                                    height={45}
                                     quality={85}
-                                    className="h-14 w-auto object-contain"
+                                    className="h-10 w-auto object-contain"
                                 />
+                                <Image
+                                    src="/images/impacthub-pp-logo.png"
+                                    alt="Impact Hub Phnom Penh"
+                                    width={120}
+                                    height={45}
+                                    quality={85}
+                                    className="h-10 w-auto object-contain"
+                                />
+                                <Image
+                                    src="/images/prosob.jpg"
+                                    alt="Prosob"
+                                    width={120}
+                                    height={45}
+                                    quality={85}
+                                    className="h-10 w-auto object-contain mix-blend-multiply"
+                                />
+
                             </div>
                         </div>
                     </div>

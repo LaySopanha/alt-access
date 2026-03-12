@@ -69,47 +69,41 @@ export function Footer() {
           <span className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-6 block">With Support From</span>
 
           <div className="flex flex-wrap items-center justify-start gap-x-12 gap-y-8 opacity-100">
-            {/* 1. EU Logo - Reference */}
             <Image
               src="/images/EU-logo.png"
               alt="European Union"
               width={100}
               height={50}
               quality={85}
-              className="h-12 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
 
-            {/* 2. IMS - Needs to be bigger */}
             <Image
               src="/images/IMS-logo.png"
               alt="IMS"
               width={140}
               height={70}
               quality={85}
-              className="h-14 w-auto object-contain"
+              className="h-26 w-auto object-contain"
             />
 
-            {/* 3. Prosob - Smaller to match Impact Hub */}
-            <div className="flex items-center gap-8">
-              <Image
-                src="/images/prosob.jpg"
-                alt="Prosob"
-                width={90}
-                height={45}
-                quality={85}
-                className="h-10 w-auto object-contain mix-blend-multiply"
-              />
+            <Image
+              src="/images/prosob.jpg"
+              alt="Prosob"
+              width={90}
+              height={45}
+              quality={85}
+              className="h-10 w-auto object-contain mix-blend-multiply"
+            />
 
-              {/* 4. Impact Hub - Reference for Prosob */}
-              <Image
-                src="/images/impacthub-pp-logo.png"
-                alt="Impact Hub"
-                width={120}
-                height={60}
-                quality={85}
-                className="h-10 w-auto object-contain"
-              />
-            </div>
+            <Image
+              src="/images/impacthub-pp-logo.png"
+              alt="Impact Hub"
+              width={120}
+              height={60}
+              quality={85}
+              className="h-10 w-auto object-contain"
+            />
           </div>
         </div>
 
